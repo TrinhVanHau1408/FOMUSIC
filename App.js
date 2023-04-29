@@ -7,24 +7,19 @@
 
 import React from 'react';
 import { NavigationContainer } from "@react-navigation/native";
-import { MainStackNavigator } from './MainStackNavigator';
+import { MainStackNavigator } from './navigation/MainStackNavigator';
 import { Test } from './views';
 
 
-// function App() {
-
-//   return (
-//     <NavigationContainer>
-//       <MainStackNavigator />
-//     </NavigationContainer>
-//   );
-// }
-
 function App() {
+
   return (
-    <Test />
-  )
+    <NavigationContainer>
+      <MainStackNavigator />
+    </NavigationContainer>
+  );
 }
+
 
 
 export default App;
