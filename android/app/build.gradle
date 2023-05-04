@@ -96,6 +96,11 @@ android {
     namespace "com.fomusicapp"
     defaultConfig {
         applicationId "com.fomusicapp"
+
+        //Add SDKVersion at here
+        compileSdkVersion 33
+        //
+
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
