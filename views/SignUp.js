@@ -92,14 +92,15 @@ const styles = StyleSheet.create({
   {
     padding:4,
     margin:0,
-    color:"#555454"
+    color:"#555454",
+    flex: 1
   },
   Icon:
   {
     marginLeft:10,
     marginTop:4,
     marginRight:8,
-    marginTopBottom:4
+    marginBottom:4
   },
   TextContainer:
   {
