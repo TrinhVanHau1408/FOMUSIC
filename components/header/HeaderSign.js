@@ -3,9 +3,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'reac
 import IconBack from '../../assets/arrow-back-simple.png';
 import IconSign from '../../assets/logo-fomusic.png'
 
-const HeaderSign = ({
-    title = "LOG IN"
-    }) => {
+const HeaderSign = ({title = "SIGN UP"}) => {
 
     return (<View style={styles.container}>
         <View style={styles.containerBack}>
