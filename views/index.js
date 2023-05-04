@@ -6,5 +6,6 @@ import Login from "./Login"
 export {
     Test,
     SignUp,
+    
     Login,
 }
