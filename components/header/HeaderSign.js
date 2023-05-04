@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'reac
 import IconBack from '../../assets/arrow-back-simple.png';
 import IconSign from '../../assets/logo-fomusic.png'
 
-const HeaderSign = ({title = "SIGN UP"}) => {
+const HeaderSign = () => {
 
     return (<View style={styles.container}>
         <View style={styles.containerBack}>
@@ -14,9 +14,9 @@ const HeaderSign = ({title = "SIGN UP"}) => {
                 <Image source={IconSign} style={styles.logo}></Image>
             </View>
             <View style={styles.containerText}>
-                <Text style={styles.text}>{title}</Text>
+                <Text style={styles.text}>Title</Text>
             </View>
-            
+
         </View>
     </View>)
 }
@@ -27,23 +27,23 @@ const styles = StyleSheet.create({
     },
     containerBack: {
         flex: 1,
-        padding:4,
-        margin:4
+        padding: 4,
+        margin: 4
     },
     containerIcon: {
         flex: 4,
         alignItems: "center",
-        margin:5,
+        margin: 5,
     },
-    containerLogo:{
+    containerLogo: {
         flex: 4,
         alignItems: "center",
-        padding:5
+        padding: 5
     },
     IconBack:
     {
-        width:28,
-        height:28
+        width: 28,
+        height: 28
     },
     containerText:
     {
@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
     },
     logo:
     {
-        width:70,
-        resizeMode:"contain"
+        width: 70,
+        resizeMode: "contain"
     },
     text:
     {
-        color:"#8950F8",
-        fontSize:16,
-        fontWeight:"bold"
+        color: "#8950F8",
+        fontSize: 16,
+        fontWeight: "bold"
     }
 })
 

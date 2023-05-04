@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
-export function Test({navigation}) {
+export default function Test({navigation}) {
   return (
     <View style={styles.view}>
         <Text style={{

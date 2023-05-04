@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Image } from 'react-native'
 import { icons } from "../constants";
-import { Home, Test } from "../views";
+import { Test } from "../views";
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -64,7 +64,7 @@ const MainTabNavigator = () => (
   <Tab.Navigator
     screenOptions={options}
   >
-    <Tab.Screen name="home1" component={Home} />
+    <Tab.Screen name="home1" component={Test} />
     <Tab.Screen name="library" component={Test} />
     <Tab.Screen name="search" component={Test} />
     <Tab.Screen name="menu" component={Test} />
