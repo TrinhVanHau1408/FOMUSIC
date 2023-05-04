@@ -26,6 +26,10 @@ export default {
     share: require('../assets/share-1.png'),
     upload: require('../assets/upload.png'),
     userCircle: require('../assets/user-circle-dam.png'),
-    userCircleBlack: require('../assets/user-circle.png')
+    userCircleBlack: require('../assets/user-circle.png'),
+    home: require('../assets/home.png'),
+    search: require('../assets/search.png'),
+    menu: require('../assets/menu.png'),
+    library: require('../assets/library.png'),
 
 }

@@ -8,7 +8,7 @@ import IconSquare from '../assets/user-square.png';
 import IconMail from '../assets/mail.png';
 import IconPassword from '../assets/lock.png';
 import IconCheckbox from '../assets/check-circle-2.png'
-import MyInput from '../components/MyInput';
+
 
 const SignUpScreen = () => {
   const [username, setUsername] = useState('');
@@ -21,11 +21,9 @@ const SignUpScreen = () => {
   return (
     <View style={styles.container}>
         <View style={styles.headerContainer}>
-            <HeaderSign/>
+            <HeaderSign title={'Sign up'}/>
         </View>
         <View style={styles.contentContainer}>
-
-            <MyInput icon={IconSquare} myPlaceholder={'Name'} />
             <View style={styles.InputTextContainer}>
                 <Image source={IconSquare} style={styles.Icon}></Image>
                 <TextInput placeholder="Name" style={styles.InputText} />

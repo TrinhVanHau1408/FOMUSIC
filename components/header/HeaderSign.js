@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'reac
 import IconBack from '../../assets/arrow-back-simple.png';
 import IconSign from '../../assets/logo-fomusic.png'
 
-const HeaderSign = () => {
+const HeaderSign = ({title}) => {
 
     return (<View style={styles.container}>
         <View style={styles.containerBack}>
@@ -14,7 +14,7 @@ const HeaderSign = () => {
                 <Image source={IconSign} style={styles.logo}></Image>
             </View>
             <View style={styles.containerText}>
-                <Text style={styles.text}>Title</Text>
+                <Text style={styles.text}>{title}</Text>
             </View>
 
         </View>
