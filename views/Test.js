@@ -8,13 +8,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
-export default function Test({navigation}) {
+export function Test({navigation}) {
   return (
     <View style={styles.view}>
         <Text style={{
           textAlign: 'center',
           color: '#ffffff',
-        }}>FOMUSIC </Text>
+        }}>aaaaaa </Text>
     </View>
   )
 }
