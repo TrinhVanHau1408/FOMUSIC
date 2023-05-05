@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import { icons } from '../../constants';
+import { icons, colors } from '../../constants';
 
-const HeaderSign = ({title}) => {
+const HeaderSign = ({ title }) => {
 
     return (<View style={styles.container}>
         <View style={styles.containerBack}>
-            <Image source={icons.arrowBack} style={styles.IconBack}></Image>
+            <Image
+                source={icons.arrowBack}
+                style={styles.IconBack}
+            />
         </View>
         <View style={styles.containerIcon}>
             <View style={styles.containerLogo}>
@@ -15,39 +18,44 @@ const HeaderSign = ({title}) => {
             <View style={styles.containerText}>
                 <Text style={styles.text}>{title}</Text>
             </View>
-
         </View>
     </View>)
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        fontFamily: 'Montserrat',
     },
     containerBack: {
         flex: 1,
         padding: 4,
         margin: 4
     },
-    containerIcon: {
-        flex: 4,
-        alignItems: "center",
-        margin: 5,
-    },
-    containerLogo: {
-        flex: 4,
-        alignItems: "center",
-        padding: 5
-    },
     IconBack:
     {
         width: 28,
         height: 28
     },
+    containerIcon: {
+        flex: 4,
+        alignItems: "center",
+        margin: 5,
+
+    },
+    containerLogo: {
+
+        alignItems: "center",
+        padding: 5,
+        width: 99,
+        height: 92,
+        tintColor: colors.primary,
+    },
+
     containerText:
     {
-        flex: 1,
-        alignItems: "center"
+        alignItems: "center",
+
     },
     logo:
     {
@@ -56,9 +64,11 @@ const styles = StyleSheet.create({
     },
     text:
     {
-        color: "#8950F8",
-        fontSize: 16,
-        fontWeight: "bold"
+        color: colors.primary,
+        fontWeight: 700,
+        fontSize: 24,
+        fontStyle: 'normal',
+        lineHeight: 30,
     }
 })
 
