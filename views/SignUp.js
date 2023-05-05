@@ -24,21 +24,31 @@ const SignUp = () => {
         <MyInput icon={icons.lock} placeholder={'Password'} />
         <View style={styles.TextContainer}>
           <Image source={icons.checkedCircle} />
-          <Text style={{ fontFamily: 'Montserrat', marginLeft: 5, fontSize: 13, fontWeight: 500, lineHeight: 17, color: '#000000' }}>I agree to the processing of Personal data</Text>
+          <Text
+            style={{
+              fontFamily: 'Montserrat',
+              marginLeft: 5,
+              fontSize: 13,
+              fontWeight: 500,
+              lineHeight: 17,
+              color: '#000000'
+            }}>
+            I agree to the processing of Personal data
+          </Text>
         </View>
 
         <MyButton title={'Create account'} />
 
-        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{fontSize: 13, color: "#555454" }}>Already have an acount?</Text>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 17 }}>
+          <Text style={{ fontSize: 13, color: "#555454" }}>Already have an acount?</Text>
           <TouchableOpacity>
-            <Text style={{ fontWeight: "bold", textDecorationLine: 'underline', color: '#8950F8', paddingHorizontal: 4, paddingVertical: 4}}>Login</Text>
+            <Text style={{ fontWeight: "bold", textDecorationLine: 'underline', color: '#8950F8', paddingHorizontal: 4, paddingVertical: 4 }}>Login</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', marginTop: 10 }}>
-          <View style={{ flex: 4, height: 2, backgroundColor: '#555454', marginTop: 10 }} />
+          <View style={{ flex: 4, height: 1, backgroundColor: '#555454', marginTop: 10, marginLeft: 10 }} />
           <Text style={{ flex: 1, marginLeft: "auto", marginRight: "auto", textAlign: 'center' }}>OR</Text>
-          <View style={{ flex: 4, height: 2, backgroundColor: '#555454', marginTop: 10 }} />
+          <View style={{ flex: 4, height: 1, backgroundColor: '#555454', marginTop: 10, marginRight: 10 }} />
         </View>
       </View>
       <View style={styles.footerContainer}>
