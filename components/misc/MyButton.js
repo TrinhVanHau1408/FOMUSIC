@@ -15,8 +15,6 @@ export default function MyButton(props) {
 const styles = StyleSheet.create({
   container: {
     fontFamily: 'Montserrat',
-    marginTop: 26,
-    marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10

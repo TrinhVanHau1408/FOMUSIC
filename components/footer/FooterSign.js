@@ -26,6 +26,7 @@ const FooterSign = () => {
 
 const styles = StyleSheet.create({
     rowIcon: {
+        flex: 2,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

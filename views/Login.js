@@ -4,11 +4,17 @@ import HeaderSign from '../components/header/HeaderSign';
 import FooterSign from '../components/footer/FooterSign';
 import MyInput from '../components/misc/MyInput';
 import { icons } from '../constants';
+import MyButton from '../components/misc/MyButton';
+import OrLine from '../components/misc/OrLine';
+import MyNavigation from '../components/misc/MyNavigation';
 
-const LogIn = () => {
+const LogIn = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const handleNavigatorRegister = () => {
+    navigation.navigate('Register')
+  }
   const handleSignUp = () => {
     // handle sign up logic here
   };
@@ -16,39 +22,28 @@ const LogIn = () => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <HeaderSign />
+        <HeaderSign title={'Login'} />
       </View>
       <View style={styles.contentContainer}>
         <MyInput icon={icons.mail} placeholder={'Email'} />
         <MyInput icon={icons.lock} placeholder={'Password'} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-          <TouchableOpacity style={{ marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#8950F8', padding: 5, borderRadius: 15, width: '50%' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ marginLeft: 'auto', marginRight: 'auto', fontSize: 16, fontWeight: 'bold', color: '#fff' }}>Login</Text>
-            </View>
-          </TouchableOpacity>
+
+        <View style={{ marginTop: 36 }}>
+          <MyButton title={'Login'} />
         </View>
         <View style={styles.TextContainer}>
-          <Text style={{
-            width: 123, height: 16, marginLeft: 'auto', marginRight: 'auto',
-            color: '#8950F8', fontFamily: 'Monsterat', fontWeight: 'bold', fontSize: 13, lineHeight: 16,
-            alignItems: 'center', textAlign: 'center'
-          }}>Forgot Password</Text>
+          <TouchableOpacity>
+            <Text style={styles.textForgotPassword}>Forgot Password?</Text>
+          </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: 'row', marginTop: 10 }}>
-          <View style={{ flex: 4, height: 0.5, backgroundColor: '#555454', marginTop: 10, marginLeft: 20, marginRight: 10 }} />
-          <Text style={{ flex: 1, marginLeft: "auto", marginRight: "auto", textAlign: 'center', fontWeight: 'bold', color: '#000000' }}>OR</Text>
-          <View style={{ flex: 4, height: 0.5, backgroundColor: '#555454', marginTop: 10, marginLeft: 10, marginRight: 20 }} />
-        </View>
+        <OrLine />
       </View>
 
       <View style={styles.footerContainer}>
         <FooterSign />
       </View>
 
-      <Text style={{ marginLeft: 'auto', marginRight: 'auto', fontSize: 13, color: "#555454" }}>Don’t have an account?
-        <Text style={{ fontWeight: "bold", color: '#8950F8' }}> Register</Text>
-      </Text>
+      <MyNavigation title='Don’t have an account?' textButton={'Register'}  handleNavigator={handleNavigatorRegister}/>
     </View>
   );
 };
@@ -67,39 +62,33 @@ const styles = StyleSheet.create({
     flex: 5,
   },
   footerContainer: {
-    flex: 1,
+    flex: 2,
+    display: 'flex',
+    justifyContent: 'flex-start'
   },
-  InputTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: "#8950F8",
-    borderWidth: 1,
-    margin: 5,
-    marginLeft: 15,
-    marginRight: 15,
-    borderRadius: 20
-  },
-  InputText:
-  {
-    padding: 4,
-    margin: 0,
-    color: "#555454",
-    flex: 1
-  },
-  Icon:
-  {
-    marginLeft: 10,
-    marginTop: 4,
-    marginRight: 8,
-    marginBottom: 4
-  },
+
   TextContainer:
   {
+    display: 'flex',
+    justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 5,
     marginLeft: 15,
     marginRight: 15,
+    marginBottom: 54,
+
+  },
+
+  textForgotPassword: {
+    width: 123,
+    height: 16,
+    color: '#8950F8',
+    fontFamily: 'Monsterat',
+    fontWeight: 'bold',
+    fontSize: 13,
+    lineHeight: 16,
+    alignItems: 'center',
+    textAlign: 'center'
   }
 });
 

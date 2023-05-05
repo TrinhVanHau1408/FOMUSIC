@@ -9,6 +9,7 @@ import { Test } from "../views";
 const Tab = createBottomTabNavigator();
 const options = ({ route }) => ({
 
+  
   tabBarShowLabel: false,
   headerShown: false,
   tabBarIcon: ({ focused, color, size }) => {

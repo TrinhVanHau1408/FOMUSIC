@@ -1,13 +1,13 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Test, SignUp, Login } from "../views";
+import { Test, Register, Login } from "../views";
 import { MainTabNavigator } from "./MainTabNavigator";
 
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = () => (
   <Stack.Navigator
-    initialRouteName="SignUp"
+    initialRouteName="Register"
     screenOptions={{
       headerShown: false
     }} >
@@ -17,7 +17,7 @@ const MainStackNavigator = () => (
       options={{ headerShown: false }}
     />
     <Stack.Screen name="Home" component={Test} />
-    <Stack.Screen name="SignUp" component={SignUp} />
+    <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" component={Login} />
   </Stack.Navigator>
 );
