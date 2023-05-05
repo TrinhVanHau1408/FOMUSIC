@@ -1,39 +1,45 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { colors } from '../../constants';
 export default function MyInput(props) {
 
-    const {icon, placeholder} = props;
-    return (
-        <View style={styles.InputTextContainer}>
-            <Image source={icon} style={styles.Icon}></Image>
-            <TextInput placeholder={placeholder} style={styles.InputText} />
-        </View>
-    )
+  const { icon, placeholder } = props;
+  return (
+    <View style={styles.InputTextContainer}>
+      <Image source={icon} style={styles.Icon} />
+      <TextInput placeholder={placeholder} style={styles.InputText} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-    InputTextContainer: {
-        flexDirection: 'row',
-        alignItems: 'center', 
-        borderColor:"#8950F8",
-        borderWidth:1,
-        margin:5,
-        marginLeft:15,
-        marginRight:15,
-        borderRadius:20
-      },
-      InputText:
-      {
-        padding:4,
-        margin:0,
-        color:"#555454",
-        flex: 1
-      },
-      Icon:
-      {
-        marginLeft:10,
-        marginTop:4,
-        marginRight:8,
-        marginBottom:4
-      },
+  InputTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: colors.primary,
+    borderWidth: 1,
+    margin: 5,
+    marginTop: 16,
+    marginLeft: 15,
+    marginRight: 15,
+    borderRadius: 20
+  },
+  InputText:
+  {
+    padding: 4,
+    margin: 0,
+    height: 40,
+    color: "#555454",
+    flex: 1
+  },
+  Icon:
+  {
+    marginLeft: 10,
+    marginTop: 4,
+    marginRight: 8,
+    marginBottom: 4,
+    tintColor: colors.primary,
+    height: 24,
+    width: 24,
+  },
 })

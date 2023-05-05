@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import { icons } from '../constants'
+import { colors, icons } from '../constants'
 import HeaderSign from '../components/header/HeaderSign';
 import FooterSign from '../components/footer/FooterSign';
 import MyInput from '../components/misc/MyInput';
+import MyButton from '../components/misc/MyButton';
 const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -18,24 +19,22 @@ const SignUp = () => {
         <HeaderSign title={'Sign up'} />
       </View>
       <View style={styles.contentContainer}>
-        <MyInput icons={icons.userSquare} placeholder={'Name'} />
-        <MyInput icons={icons.mail} placeholder={'Email'} />
-        <MyInput icons={icons.lock} placeholder={'Password'} />
-
+        <MyInput icon={icons.userSquare} placeholder={'Name'} />
+        <MyInput icon={icons.mail} placeholder={'Email'} />
+        <MyInput icon={icons.lock} placeholder={'Password'} />
         <View style={styles.TextContainer}>
-          <Image source={icons.checkedCircle}></Image>
-          <Text style={{ marginLeft: 5 }}>I agree to the processing of Personal data</Text>
+          <Image source={icons.checkedCircle} />
+          <Text style={{ fontFamily: 'Montserrat', marginLeft: 5, fontSize: 13, fontWeight: 500, lineHeight: 17, color: '#000000' }}>I agree to the processing of Personal data</Text>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-          <TouchableOpacity style={{ marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#8950F8', padding: 5, borderRadius: 15, width: '50%' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ marginLeft: 'auto', marginRight: 'auto', fontSize: 16, fontWeight: 'bold', color: '#fff' }}>Create Account</Text>
-            </View>
+
+        <MyButton title={'Create account'} />
+
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{fontSize: 13, color: "#555454" }}>Already have an acount?</Text>
+          <TouchableOpacity>
+            <Text style={{ fontWeight: "bold", textDecorationLine: 'underline', color: '#8950F8', paddingHorizontal: 4, paddingVertical: 4}}>Login</Text>
           </TouchableOpacity>
         </View>
-        <Text style={{ marginLeft: 'auto', marginRight: 'auto', fontSize: 13, color: "#555454" }}>Already have an acount?
-          <Text style={{ fontWeight: "bold", color: '#8950F8' }}> Login</Text>
-        </Text>
         <View style={{ flexDirection: 'row', marginTop: 10 }}>
           <View style={{ flex: 4, height: 2, backgroundColor: '#555454', marginTop: 10 }} />
           <Text style={{ flex: 1, marginLeft: "auto", marginRight: "auto", textAlign: 'center' }}>OR</Text>
@@ -63,7 +62,10 @@ const styles = StyleSheet.create({
     flex: 5,
   },
   footerContainer: {
-    flex: 1,
+
+    flex: 2,
+    display: 'flex',
+    alignItems: 'center'
   },
   InputTextContainer: {
     flexDirection: 'row',
@@ -87,7 +89,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 4,
     marginRight: 8,
-    marginBottom: 4
+    marginBottom: 4,
+    width: 20,
+    height: 20,
+    color: colors.primary,
   },
   TextContainer:
   {

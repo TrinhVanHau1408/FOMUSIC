@@ -19,8 +19,8 @@ const LogIn = () => {
         <HeaderSign />
       </View>
       <View style={styles.contentContainer}>
-        <MyInput icons={icons.mail} placeholder={'Email'} />
-        <MyInput icons={icons.lock} placeholder={'Password'} />
+        <MyInput icon={icons.mail} placeholder={'Email'} />
+        <MyInput icon={icons.lock} placeholder={'Password'} />
         <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
           <TouchableOpacity style={{ marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#8950F8', padding: 5, borderRadius: 15, width: '50%' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
