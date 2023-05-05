@@ -13,7 +13,10 @@ export default {
     logOut: require('../assets/images/log-out-1.png'), 
     loop: require('../assets/images/loop.png'),
     skipNext: require('../assets/images/skip-next.png'),
+    skipNextControl: require('../assets/images/skip-next-control.png'),
     skipPre: require('../assets/images/skip-previous.png'),
+    skipPreControl: require('../assets/images/skip-previous-control.png'),
+
     mail: require('../assets/images/mail.png'),
     more: require('../assets/images/more-vertical.png'),
     musicNote1: require('../assets/images/music-note-1.png'),
@@ -27,6 +30,7 @@ export default {
     upload: require('../assets/images/upload.png'),
     userCircle: require('../assets/images/user-circle-dam.png'),
     userCircleBlack: require('../assets/images/user-circle.png'),
+    userSquare: require('../assets/images/user-square.png'),
     home: require('../assets/images/home.png'),
     search: require('../assets/images/search.png'),
     menu: require('../assets/images/menu.png'),

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import IconSquare from '../assets/user-square.png';
 export default function MyInput(props) {
 
     const {icon, placeholder} = props;

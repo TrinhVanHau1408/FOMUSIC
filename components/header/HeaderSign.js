@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import IconBack from '../../assets/arrow-back-simple.png';
-import IconSign from '../../assets/logo-fomusic.png'
+import { icons } from '../../constants';
 
 const HeaderSign = ({title}) => {
 
     return (<View style={styles.container}>
         <View style={styles.containerBack}>
-            <Image source={IconBack} style={styles.IconBack}></Image>
+            <Image source={icons.arrowBack} style={styles.IconBack}></Image>
         </View>
         <View style={styles.containerIcon}>
             <View style={styles.containerLogo}>
-                <Image source={IconSign} style={styles.logo}></Image>
+                <Image source={icons.logoFomusic} style={styles.logo}></Image>
             </View>
             <View style={styles.containerText}>
                 <Text style={styles.text}>{title}</Text>
