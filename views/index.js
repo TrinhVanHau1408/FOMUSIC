@@ -4,6 +4,8 @@ import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import VerifyAccount from "./VerifyAccount";
 import NewPassword from "./NewPassword";
+import Home from "./Home";
+
 export {
     Test,
     Register,
@@ -11,5 +13,5 @@ export {
     ForgotPassword,
     VerifyAccount,
     NewPassword,
-    
+    Home,
 }

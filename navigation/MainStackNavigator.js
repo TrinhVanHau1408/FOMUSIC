@@ -1,13 +1,13 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Test, Register, Login, ForgotPassword, VerifyAccount, NewPassword } from "../views";
+import { Test, Register, Login, ForgotPassword, VerifyAccount, NewPassword, Home } from "../views";
 import { MainTabNavigator } from "./MainTabNavigator";
 
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = ({ navigation }) => (
   <Stack.Navigator
-    initialRouteName = 'Login'
+    initialRouteName = 'Home1'
     screenOptions={{
       headerShown: false
     }} >
@@ -16,7 +16,7 @@ const MainStackNavigator = ({ navigation }) => (
       component={MainTabNavigator}
       options={{ headerShown: false }}
     />
-    <Stack.Screen name="Home" component={Test} />
+    <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
