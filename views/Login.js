@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import HeaderSign from '../components/header/HeaderSign';
 import FooterSign from '../components/footer/FooterSign';
 import MyInput from '../components/misc/MyInput';
@@ -7,6 +7,7 @@ import { icons } from '../constants';
 import MyButton from '../components/misc/MyButton';
 import OrLine from '../components/misc/OrLine';
 import MyNavigation from '../components/misc/MyNavigation';
+
 
 const LogIn = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -20,7 +21,7 @@ const LogIn = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
         <HeaderSign title={'Login'} />
       </View>
@@ -47,7 +48,7 @@ const LogIn = ({navigation}) => {
         <FooterSign />
       </View> */}
       
-    </View>
+    </ScrollView>
   );
 };
 
