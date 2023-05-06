@@ -11,12 +11,12 @@ const HeaderApp = ({
         <Image source={icons.userCircleBlack} style={{tintColor: colors.second}}/>
       </View>
       <View style={styles.imageLeft}>
-        <Image source={icons.musicNote1} style={{tintColor: colors.primary,resizeMode:'contain'}}/>
+        <Image source={icons.musicNote1} style={{tintColor: colors.primary,resizeMode:'contain', width:124}}/>
       </View>
       <View style={styles.imageRight}>
-        <Image source={icons.musicNote2} style={{tintColor: colors.primary, resizeMode:'contain'}}/>
+        <Image source={icons.musicNote2} style={{tintColor: colors.primary, resizeMode:'contain', width:117}}/>
       </View>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>Home</Text>
     </View>
   )
 }
@@ -27,24 +27,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    imageContainer: {
-      position: 'relative',
-      height:"25%",
-    },
     imageLeft:
     {
-      position:'relative',
+      position:'absolute',
       tintColor: colors.primary,
-      top: -70,
+      top: -82,
       left: 0,
-      height:50,
       zIndex:-1,
     },
     imageRight:
     {
       position:'absolute',
       tintColor: colors.primary,
-      top:0,
+      top:-13,
       right: 0,
       zIndex:-1,
       height:"10%"
