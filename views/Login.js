@@ -37,13 +37,16 @@ const LogIn = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <OrLine />
-      </View>
-
-      <View style={styles.footerContainer}>
+        <View style={{flex:1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <FooterSign />
+        <MyNavigation title='Don’t have an account?' textButton={'Register'}  handleNavigator={handleNavigatorRegister}/>
+      </View>
       </View>
 
-      <MyNavigation title='Don’t have an account?' textButton={'Register'}  handleNavigator={handleNavigatorRegister}/>
+      {/* <View style={styles.footerContainer}>
+        <FooterSign />
+      </View> */}
+      
     </View>
   );
 };
