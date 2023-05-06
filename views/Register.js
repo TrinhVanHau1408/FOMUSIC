@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { colors, icons } from '../constants'
 import HeaderSign from '../components/header/HeaderSign';
 import FooterSign from '../components/footer/FooterSign';
@@ -20,7 +20,7 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
         <HeaderSign title={'Sign up'} />
       </View>
@@ -53,7 +53,7 @@ const Register = ({ navigation }) => {
         </View>
       </View>
 
-    </View>
+    </ScrollView>
   );
 };
 
