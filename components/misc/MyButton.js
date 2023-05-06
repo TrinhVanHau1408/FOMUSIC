@@ -2,10 +2,13 @@ import React from 'react'
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { colors, icons } from '../constants'
 export default function MyButton(props) {
-  const {title} = props;
+  const {title, handleNavigator} = props;
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity 
+      style={styles.button}
+      onPress={handleNavigator}
+      >
         <Text style={styles.title}>{title}</Text>
       </TouchableOpacity>
     </View>
