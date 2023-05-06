@@ -12,7 +12,12 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleNavigatorLogin = () => {
-    navigation.navigate('Login')
+    navigation.navigate('Login');
+
+  }
+
+  const goBack = () => {
+    navigation.goBack();
   }
 
   const handleSignUp = () => {
@@ -22,7 +27,7 @@ const Register = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
-        <HeaderSign title={'Sign up'} />
+        <HeaderSign title={'Sign up'}  goBack={goBack}/>
       </View>
       <View style={styles.contentContainer}>
         <MyInput icon={icons.userSquare} placeholder={'Name'} />
