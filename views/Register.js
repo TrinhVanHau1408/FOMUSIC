@@ -48,10 +48,11 @@ const Register = ({ navigation }) => {
           textButton='Login'
           handleNavigator={handleNavigatorLogin} />
         <OrLine />
+        <View style={styles.footerContainer}>
+          <FooterSign />
+        </View>
       </View>
-      <View style={styles.footerContainer}>
-        <FooterSign />
-      </View>
+
     </View>
   );
 };
@@ -71,9 +72,10 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
 
-    flex: 2,
+    flex: 1,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   TextContainer:
   {

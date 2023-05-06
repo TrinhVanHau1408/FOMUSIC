@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { colors } from '../../constants'
 export default function MyNavigation(props) {
-    const { title, textButton, handleNavigator} = props;
+    const { title, textButton, handleNavigator } = props;
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
@@ -17,11 +17,11 @@ export default function MyNavigation(props) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 3,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        marginBottom: 50,
     },
 
     title: {
