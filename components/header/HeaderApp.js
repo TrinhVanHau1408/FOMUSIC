@@ -7,6 +7,15 @@ const HeaderApp = ({
 }) => {
   return (
     <View style={styles.container}>
+      <View style={styles.user}>
+        <Image source={icons.userCircleBlack} style={{tintColor: colors.second}}/>
+      </View>
+      <View style={styles.imageLeft}>
+        <Image source={icons.musicNote1} style={{tintColor: colors.primary,resizeMode:'contain'}}/>
+      </View>
+      <View style={styles.imageRight}>
+        <Image source={icons.musicNote2} style={{tintColor: colors.primary, resizeMode:'contain'}}/>
+      </View>
       <Text style={styles.title}>{title}</Text>
     </View>
   )
@@ -24,18 +33,21 @@ const styles = StyleSheet.create({
     },
     imageLeft:
     {
-      position:'absolute',
+      position:'relative',
       tintColor: colors.primary,
-      top: -100,
-      height:150,
+      top: -70,
       left: 0,
+      height:50,
+      zIndex:-1,
     },
     imageRight:
     {
       position:'absolute',
       tintColor: colors.primary,
       top:0,
-      right: 0
+      right: 0,
+      zIndex:-1,
+      height:"10%"
     },
     title:
     {
@@ -44,5 +56,12 @@ const styles = StyleSheet.create({
       color: colors.primary,
       fontWeight: 'bold',
       fontSize:20
+    },
+    user:
+    {
+      position:'absolute',
+      top:'40%',
+      right:"6%",
+      color: colors.second,
     }
 })
