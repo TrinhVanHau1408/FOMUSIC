@@ -46,14 +46,15 @@ const getItemCount = _data => 50;
 export default function Library() {
 
   return (
-    <SafeAreaView style={{ flex: 1, marginHorizontal: 24 }}>
+    <SafeAreaView style={{ flex: 1, }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderApp title={'Library'} />
         <View>
           <Image source={icons.musicNote1} style={{ position: 'absolute', left: 0, bottom: '15%', height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
           <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0, bottom: '15%', height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
         </View>
-        <View>
+       <View style={{ marginHorizontal: 24}}>
+       <View >
           <TitleAlbum name={'Listening history'} />
           <FlatList
             data={dataAlbum}
@@ -121,6 +122,7 @@ export default function Library() {
           />
         </View>
         <View style={{ flex: 1, height: 50 }}></View>
+       </View>
       </ScrollView>
     </SafeAreaView>
   )
