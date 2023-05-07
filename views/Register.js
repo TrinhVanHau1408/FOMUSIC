@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { colors, icons } from '../constants'
 import HeaderSign from '../components/header/HeaderSign';
 import FooterSign from '../components/footer/FooterSign';
@@ -13,7 +13,12 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleNavigatorLogin = () => {
-    navigation.navigate('Login')
+    navigation.navigate('Login');
+
+  }
+
+  const goBack = () => {
+    navigation.goBack();
   }
 
   const handleSignUp = () => {
@@ -21,9 +26,9 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
-        <HeaderSign title={'Sign up'} />
+        <HeaderSign title={'Sign up'}  goBack={goBack}/>
       </View>
       <View style={styles.contentContainer}>
         <MyInput icon={icons.userSquare} placeholder={'Name'} />
@@ -49,11 +54,12 @@ const Register = ({ navigation }) => {
           textButton='Login'
           handleNavigator={handleNavigatorLogin} />
         <OrLine />
+        <View style={styles.footerContainer}>
+          <FooterSign />
+        </View>
       </View>
-      <View style={styles.footerContainer}>
-        <FooterSign />
-      </View>
-    </View>
+
+    </ScrollView>
   );
 };
 
@@ -72,9 +78,10 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
 
-    flex: 2,
+    flex: 1,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   TextContainer:
   {

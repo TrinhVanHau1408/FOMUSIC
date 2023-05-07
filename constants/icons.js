@@ -37,6 +37,8 @@ export default {
     search: require('../assets/images/search.png'),
     menu: require('../assets/images/menu.png'),
     library: require('../assets/images/library.png'),
+    option: require('../assets/images/option.png'),
+    follow: require('../assets/images/follow.png'),
 
     arrowBackBlack: require('../assets/images/arrow-back-black.png'),
     iconGoToPlaylist: require('../assets/images/Icon.png'),

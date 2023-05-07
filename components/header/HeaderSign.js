@@ -2,21 +2,26 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { icons, colors } from '../../constants';
 
-const HeaderSign = ({ title }) => {
+const HeaderSign = ({ title, goBack }) => {
+
+   
 
     return (<View style={styles.container}>
-        <View style={styles.containerBack}>
+        <TouchableOpacity
+            style={styles.containerBack}
+            onPress={goBack}
+        >
             <Image
                 source={icons.arrowBack}
                 style={styles.IconBack}
             />
-        </View>
+        </TouchableOpacity>
         <View style={styles.containerIcon}>
             <View style={styles.containerLogo}>
                 <Image source={icons.logoFomusic} style={styles.logo}></Image>
             </View>
             <View style={styles.containerText}>
-                <Text style={styles.text}>{title}</Text>
+                <Text style={styles.text}>{title.toUpperCase()}</Text>
             </View>
         </View>
     </View>)

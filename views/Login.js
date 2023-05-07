@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import HeaderSign from '../components/header/HeaderSign';
 import FooterSign from '../components/footer/FooterSign';
 import MyInput from '../components/misc/MyInput';
@@ -8,43 +8,58 @@ import MyButton from '../components/misc/MyButton';
 import OrLine from '../components/misc/OrLine';
 import MyNavigation from '../components/misc/MyNavigation';
 
-const LogIn = ({navigation}) => {
+
+const LogIn = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleNavigatorRegister = () => {
-    navigation.navigate('Register')
+    navigation.navigate('Register');
+   
   }
-  const handleSignUp = () => {
-    // handle sign up logic here
+
+  const handleNavigatorForgotPassword = () => {
+    navigation.navigate('ForgotPassword');
+  }
+
+  const goBack = () => {
+    navigation.goBack();
+  }
+  const handleLogin = () => {
+    navigation.navigate('Home1');
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
-        <HeaderSign title={'Login'} />
+        <HeaderSign title={'Login'} goBack={goBack} />
       </View>
       <View style={styles.contentContainer}>
         <MyInput icon={icons.mail} placeholder={'Email'} />
         <MyInput icon={icons.lock} placeholder={'Password'} />
 
         <View style={{ marginTop: 36 }}>
-          <MyButton title={'Login'} />
+          <MyButton title={'Login'}  handleNavigator={handleLogin}/>
         </View>
         <View style={styles.TextContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleNavigatorForgotPassword}
+          >
             <Text style={styles.textForgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
         <OrLine />
+        <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <FooterSign />
+          <MyNavigation title='Don’t have an account?' textButton={'Register'} handleNavigator={handleNavigatorRegister} />
+        </View>
       </View>
 
-      <View style={styles.footerContainer}>
+      {/* <View style={styles.footerContainer}>
         <FooterSign />
-      </View>
+      </View> */}
 
-      <MyNavigation title='Don’t have an account?' textButton={'Register'}  handleNavigator={handleNavigatorRegister}/>
-    </View>
+    </ScrollView>
   );
 };
 

@@ -3,23 +3,25 @@ import { View, TouchableOpacity, Text, StyleSheet, Image, Alert, Dimensions } fr
 import { icons, images } from '../../constants'
 const heigtScreen = Dimensions.get('window').height;
 
-export default function ControlMusic({ navigation }) {
+export default function ControlMusic({ song }) {
 
+    const {songName, songImg, artistName} = song;
+    // Alert.alert('Control',songName + ' '+ songImg + ' ' + artistName)
     const handleSkipPrevious = () => Alert.alert('Test button', 'Skip previous');
     const handlePause = () => Alert.alert('Test button', 'Pause');
     const handleSkipNext = () => Alert.alert('Test button', 'Skip next');
     return (
-        <View>
+        // <View>
             <View style={styles.container}>
                 <View style={styles.controlMusic}>
                     <View style={{ overflow: 'hidden' }}>
-                        <Image style={styles.imgMusic} source={images.demo} />
+                        <Image style={styles.imgMusic} source={songImg} />
                     </View>
                     <View style={styles.info}>
-                        <Text style={styles.infoNameMusic}>Sweetest Pie</Text>
+                        <Text style={styles.infoNameMusic}>{songName}</Text>
                         <Text
                             style={styles.infoNameArtist}
-                        >Dua Lipa & Megan Thee Stallion</Text>
+                        >{artistName}</Text>
                     </View>
                     <View style={styles.control} >
                         <TouchableOpacity
@@ -43,7 +45,7 @@ export default function ControlMusic({ navigation }) {
                 </View>
                 <View style={{ flex: 1 }}></View>
             </View>
-        </View>
+        // </View>
     );
 };
 
@@ -52,12 +54,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         position: 'absolute',
-        top: heigtScreen - 200,
+        bottom: 0,
         marginHorizontal: 2,
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
         width: '99%',
-        height: 174,
+        height: 150,
         backgroundColor: '#8950F8',
     },
 

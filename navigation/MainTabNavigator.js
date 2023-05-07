@@ -3,13 +3,22 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Image } from 'react-native'
 import { icons } from "../constants";
-import { Test } from "../views";
+import {
+  Test,
+  Home,
+  Library,
+  Artist,
+  Playlist,
+  Album,
+  Following,
+  Like
+} from "../views";
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
 const options = ({ route }) => ({
 
-  
+
   tabBarShowLabel: false,
   headerShown: false,
   tabBarIcon: ({ focused, color, size }) => {
@@ -30,7 +39,7 @@ const options = ({ route }) => ({
     // }
 
     let icon = screenName == 'home1' ? icons.home : (
-      screenName == 'library' ? icons.library : (
+      screenName == 'Library' ? icons.library : (
         screenName == 'search' ? icons.search : icons.menu));
 
     return <Image
@@ -46,6 +55,7 @@ const options = ({ route }) => ({
   tabBarStyle: {
     backgroundColor: '#FFFFFF',
     borderTopWidth: 6,
+    borderTopColor: 'rgba(121, 121, 121, 0.1)',
     borderTopRightWidth: 6,
     paddingTop: 24,
     paddingBottom: 24,
@@ -63,10 +73,12 @@ const options = ({ route }) => ({
 const MainTabNavigator = () => (
 
   <Tab.Navigator
+    initialRouteName="Library"
     screenOptions={options}
   >
-    <Tab.Screen name="home1" component={Test} />
-    <Tab.Screen name="library" component={Test} />
+    <Tab.Screen name="home1" component={Home} />
+    {/* <Tab.Screen name="Library" component={Library} /> */}
+    <Tab.Screen name="Library" component={Like} />
     <Tab.Screen name="search" component={Test} />
     <Tab.Screen name="menu" component={Test} />
   </Tab.Navigator>
