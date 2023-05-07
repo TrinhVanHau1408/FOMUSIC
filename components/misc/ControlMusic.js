@@ -9,7 +9,7 @@ export default function ControlMusic({ navigation }) {
     const handlePause = () => Alert.alert('Test button', 'Pause');
     const handleSkipNext = () => Alert.alert('Test button', 'Skip next');
     return (
-        <View>
+        // <View>
             <View style={styles.container}>
                 <View style={styles.controlMusic}>
                     <View style={{ overflow: 'hidden' }}>
@@ -43,7 +43,7 @@ export default function ControlMusic({ navigation }) {
                 </View>
                 <View style={{ flex: 1 }}></View>
             </View>
-        </View>
+        // </View>
     );
 };
 
@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         position: 'absolute',
-        top: heigtScreen - 125,
+        bottom: 0,
         marginHorizontal: 2,
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
         width: '99%',
-        height: 174,
+        height: 150,
         backgroundColor: '#8950F8',
     },
 

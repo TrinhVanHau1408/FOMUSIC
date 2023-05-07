@@ -6,7 +6,7 @@ const HeaderApp = (props) => {
 
   const { title, iconLeft, iconRight } = props;
   return (
-    <View style={(iconLeft && iconRight) ? styles.container2 :(iconLeft?styles.container3: styles.container1)}>
+    <View style={(iconLeft && iconRight) ? styles.container2 : (iconLeft ? styles.container3 : styles.container1)}>
       {iconLeft && <TouchableOpacity>
         <Image source={iconLeft} style={{ tintColor: colors.primary }} />
       </TouchableOpacity>}

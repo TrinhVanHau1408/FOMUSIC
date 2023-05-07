@@ -10,6 +10,7 @@ import Artist from "./Artist";
 import Playlist from "./Playlist";
 import Album from "./Album";
 import Following from "./Following";
+import Like from "./Like";
 export {
     Test,
     Register,
@@ -22,5 +23,6 @@ export {
     Artist,
     Playlist,
     Album,
-    Following
+    Following,
+    Like
 }
