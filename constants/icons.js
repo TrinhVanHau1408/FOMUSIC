@@ -36,4 +36,5 @@ export default {
     menu: require('../assets/images/menu.png'),
     library: require('../assets/images/library.png'),
     option: require('../assets/images/option.png'),
+    follow: require('../assets/images/follow.png'),
 }

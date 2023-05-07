@@ -37,7 +37,7 @@ export default function Artist() {
   }
   return (
     <View>
-      <HeaderApp title={'Artist'} iconLeft={icons.arrowBack} iconRight={icons.userCircle} />
+      <HeaderApp title={'Artist'} iconLeft={icons.arrowBack} iconRight={icons.follow} />
       <View style={styles.infoArtist}>
         <Image source={images.defaultAvt} style={{ height: 150, width: 150, borderRadius: 100 }} />
         <Text style={styles.pageName}>Big Bang</Text>

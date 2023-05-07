@@ -9,6 +9,7 @@ import Library from "./Library";
 import Artist from "./Artist";
 import Playlist from "./Playlist";
 import Album from "./Album";
+import Following from "./Following";
 export {
     Test,
     Register,
@@ -20,5 +21,6 @@ export {
     Library,
     Artist,
     Playlist,
-    Album
+    Album,
+    Following
 }
