@@ -1,24 +1,19 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { icons, colors } from '../../constants'
 
 const HeaderApp = (props) => {
 
-  const { title } = props;
+  const { title, iconLeft, iconRight } = props;
   return (
-    <View style={styles.container}>
-      {/* <View style={styles.user}>
-        <Image source={icons.userCircleBlack} style={{tintColor: colors.second}}/>
-      </View>
-      <View style={styles.imageLeft}>
-        <Image source={icons.musicNote1} style={{tintColor: colors.primary,resizeMode:'contain', width:124}}/>
-      </View>
-      <View style={styles.imageRight}>
-        <Image source={icons.musicNote2} style={{tintColor: colors.primary, resizeMode:'contain', width:117}}/>
-      </View> */}
-
-      <Text style={styles.title}>{title}</Text>
-
+    <View style={(iconLeft && iconRight) ? styles.container2 : styles.container1}>
+      {iconLeft && <TouchableOpacity>
+        <Image source={iconLeft} style={{ tintColor: colors.primary }} />
+      </TouchableOpacity>}
+      <Text style={[styles.title, (iconLeft && iconRight) ? styles.color2 : styles.color1]}>{title}</Text>
+      {iconRight && <TouchableOpacity>
+        <Image source={iconRight} style={{ tintColor: colors.primary }} />
+      </TouchableOpacity>}
     </View>
   )
 }
@@ -26,9 +21,16 @@ const HeaderApp = (props) => {
 export default HeaderApp
 
 const styles = StyleSheet.create({
-  container: {
-
+  container1: {
     padding: 15,
+  },
+  container2: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    textAlign: 'center'
 
   },
   // imageLeft:
@@ -50,11 +52,16 @@ const styles = StyleSheet.create({
   // },
   title:
   {
-    marginTop: 20,
     textAlign: 'center',
-    color: colors.primary,
     fontWeight: 'bold',
     fontSize: 20
+  },
+
+  color1: {
+    color: colors.primary,
+  },
+  color2: {
+    color: '#000000',
   },
   user:
   {

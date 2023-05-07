@@ -6,6 +6,7 @@ import VerifyAccount from "./VerifyAccount";
 import NewPassword from "./NewPassword";
 import Home from "./Home";
 import Library from "./Library";
+import Artist from "./Artist";
 export {
     Test,
     Register,
@@ -15,4 +16,5 @@ export {
     NewPassword,
     Home,
     Library,
+    Artist
 }
