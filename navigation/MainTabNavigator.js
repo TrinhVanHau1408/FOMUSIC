@@ -9,7 +9,8 @@ import {
   Library,
   Artist,
   Playlist,
-  Album
+  Album,
+  Following
 } from "../views";
 
 // const Tab = createMaterialBottomTabNavigator();
@@ -75,7 +76,7 @@ const MainTabNavigator = () => (
   >
     <Tab.Screen name="home1" component={Home} />
     {/* <Tab.Screen name="Library" component={Library} /> */}
-    <Tab.Screen name="Library" component={Album} />
+    <Tab.Screen name="Library" component={Following} />
     <Tab.Screen name="search" component={Test} />
     <Tab.Screen name="menu" component={Test} />
   </Tab.Navigator>
