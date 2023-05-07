@@ -10,7 +10,8 @@ import {
   Artist,
   Playlist,
   Album,
-  Following
+  Following,
+  Like
 } from "../views";
 
 // const Tab = createMaterialBottomTabNavigator();
@@ -54,6 +55,7 @@ const options = ({ route }) => ({
   tabBarStyle: {
     backgroundColor: '#FFFFFF',
     borderTopWidth: 6,
+    borderTopColor: 'rgba(121, 121, 121, 0.1)',
     borderTopRightWidth: 6,
     paddingTop: 24,
     paddingBottom: 24,
@@ -76,7 +78,7 @@ const MainTabNavigator = () => (
   >
     <Tab.Screen name="home1" component={Home} />
     {/* <Tab.Screen name="Library" component={Library} /> */}
-    <Tab.Screen name="Library" component={Following} />
+    <Tab.Screen name="Library" component={Like} />
     <Tab.Screen name="search" component={Test} />
     <Tab.Screen name="menu" component={Test} />
   </Tab.Navigator>

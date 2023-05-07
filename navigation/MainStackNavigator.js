@@ -12,7 +12,8 @@ import {
   Artist,
   Playlist,
   Album,
-  Following} from "../views";
+  Following,
+  Like} from "../views";
 import { MainTabNavigator } from "./MainTabNavigator";
 
 const Stack = createNativeStackNavigator();
@@ -39,6 +40,7 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Playlist" component={Playlist} />
     <Stack.Screen name="Album" component={Album} />
     <Stack.Screen name="Following" component={Following} />
+    <Stack.Screen name="Like" component={Like} />
   </Stack.Navigator>
 );
 
