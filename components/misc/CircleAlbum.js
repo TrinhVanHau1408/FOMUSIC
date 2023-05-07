@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, images } from '../../constants';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function CircleAlbum(props) {
 
-    const { id, name, img } = props
+    const { id, name, img, handleButton } = props
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+            style={styles.buttonƯ}
+            onPress={handleButton}
+            >
                 <Image source={img ? img : images.demo} style={styles.img} />
                 <Text style={styles.textName}>{name}</Text>
             </TouchableOpacity>
