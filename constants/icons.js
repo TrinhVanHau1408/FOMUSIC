@@ -8,10 +8,12 @@ export default {
     google: require('../assets/images/Google.png'),
     twitter: require('../assets/images/twitter.png'),
     heart: require('../assets/images/heart.png'),
+    heart1: require('../assets/images/heart1.png'),
     unHeart: require('../assets/images/heart1.png'),
     lock: require('../assets/images/lock.png'),
     logOut: require('../assets/images/log-out-1.png'), 
     loop: require('../assets/images/loop.png'),
+    signalCellular: require('../assets/images/signal-cellular-3-bar.png'),
     skipNext: require('../assets/images/skip-next.png'),
     skipNextControl: require('../assets/images/skip-next-control.png'),
     skipPre: require('../assets/images/skip-previous.png'),
@@ -37,4 +39,14 @@ export default {
     library: require('../assets/images/library.png'),
     option: require('../assets/images/option.png'),
     follow: require('../assets/images/follow.png'),
+
+    arrowBackBlack: require('../assets/images/arrow-back-black.png'),
+    iconGoToPlaylist: require('../assets/images/Icon.png'),
+    loopBlack: require('../assets/images/loop_black.png'),
+    random: require('../assets/images/random.png'),
+    heartAdd: require('../assets/images/heart-add.png'),
+    listAdd: require('../assets/images/list-add.png'),
+    removeCircle: require('../assets/images/remove-circle.png'),
+    playlistAdd: require('../assets/images/add-to-list.png'),
+
 }
