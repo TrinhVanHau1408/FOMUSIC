@@ -10,7 +10,8 @@ import {
   Home, 
   Library, 
   Artist,
-  Playlist} from "../views";
+  Playlist,
+  Album} from "../views";
 import { MainTabNavigator } from "./MainTabNavigator";
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,7 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Library" component={Library} />
     <Stack.Screen name="Artist" component={Artist} />
     <Stack.Screen name="Playlist" component={Playlist} />
+    <Stack.Screen name="Album" component={Album} />
   </Stack.Navigator>
 );
 

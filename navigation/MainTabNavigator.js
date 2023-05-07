@@ -3,18 +3,20 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Image } from 'react-native'
 import { icons } from "../constants";
-import { 
-  Test, 
-  Home, 
-  Library, 
+import {
+  Test,
+  Home,
+  Library,
   Artist,
-  Playlist} from "../views";
+  Playlist,
+  Album
+} from "../views";
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
 const options = ({ route }) => ({
 
-  
+
   tabBarShowLabel: false,
   headerShown: false,
   tabBarIcon: ({ focused, color, size }) => {
@@ -68,12 +70,12 @@ const options = ({ route }) => ({
 const MainTabNavigator = () => (
 
   <Tab.Navigator
-  initialRouteName="Library"
+    initialRouteName="Library"
     screenOptions={options}
   >
     <Tab.Screen name="home1" component={Home} />
     {/* <Tab.Screen name="Library" component={Library} /> */}
-    <Tab.Screen name="Library" component={Playlist} />
+    <Tab.Screen name="Library" component={Album} />
     <Tab.Screen name="search" component={Test} />
     <Tab.Screen name="menu" component={Test} />
   </Tab.Navigator>

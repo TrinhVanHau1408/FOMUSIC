@@ -6,11 +6,11 @@ const HeaderApp = (props) => {
 
   const { title, iconLeft, iconRight } = props;
   return (
-    <View style={(iconLeft && iconRight) ? styles.container2 : styles.container1}>
+    <View style={(iconLeft && iconRight) ? styles.container2 :(iconLeft?styles.container3: styles.container1)}>
       {iconLeft && <TouchableOpacity>
         <Image source={iconLeft} style={{ tintColor: colors.primary }} />
       </TouchableOpacity>}
-      <Text style={[styles.title, (iconLeft && iconRight) ? styles.color2 : styles.color1]}>{title}</Text>
+      <Text style={[styles.title, (iconLeft || iconRight) ? styles.color2 : styles.color1]}>{title}</Text>
       {iconRight && <TouchableOpacity>
         <Image source={iconRight} style={{ tintColor: colors.primary }} />
       </TouchableOpacity>}
@@ -28,6 +28,14 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    textAlign: 'center'
+
+  },
+  container3: {
+    display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
     padding: 15,
     textAlign: 'center'
@@ -54,7 +62,9 @@ const styles = StyleSheet.create({
   {
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
+    textAlign: 'center',
+    flex: 1,
   },
 
   color1: {

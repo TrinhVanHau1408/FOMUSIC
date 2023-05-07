@@ -8,6 +8,7 @@ import Home from "./Home";
 import Library from "./Library";
 import Artist from "./Artist";
 import Playlist from "./Playlist";
+import Album from "./Album";
 export {
     Test,
     Register,
@@ -18,5 +19,6 @@ export {
     Home,
     Library,
     Artist,
-    Playlist
+    Playlist,
+    Album
 }
