@@ -1,14 +1,14 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { 
-  Test, 
-  Register, 
-  Login, 
-  ForgotPassword, 
-  VerifyAccount, 
-  NewPassword, 
-  Home, 
-  Library, 
+import {
+  Test,
+  Register,
+  Login,
+  ForgotPassword,
+  VerifyAccount,
+  NewPassword,
+  Home,
+  Library,
   Artist,
   Playlist,
   Album,
@@ -16,12 +16,15 @@ import {
   Like,
   DetailPlaylist} from "../views";
 import { MainTabNavigator } from "./MainTabNavigator";
+import Playing from "../views/Playing";
+import PlayingMore from "../views/PlayingMore";
+import PlayingFullLyric from "../views/PlayingFullLyric";
 
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = ({ navigation }) => (
   <Stack.Navigator
-    initialRouteName = 'Home1'
+    initialRouteName='Home1'
     screenOptions={{
       headerShown: false
     }} >
@@ -33,6 +36,9 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" component={Login} />
+    <Stack.Screen name="Playing" component={Playing} />
+    <Stack.Screen name="PlayingMore" component={PlayingMore} />
+    <Stack.Screen name="PlayingFullLyric" component={PlayingFullLyric} />
     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     <Stack.Screen name="VerifyAccount" component={VerifyAccount} />
     <Stack.Screen name="NewPassword" component={NewPassword} />
