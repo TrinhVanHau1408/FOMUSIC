@@ -6,7 +6,8 @@ import { icons } from "../constants";
 import { 
   Test, 
   Home, 
-  Library } from "../views";
+  Library, 
+  Artist} from "../views";
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,7 +71,8 @@ const MainTabNavigator = () => (
     screenOptions={options}
   >
     <Tab.Screen name="home1" component={Home} />
-    <Tab.Screen name="Library" component={Library} />
+    {/* <Tab.Screen name="Library" component={Library} /> */}
+    <Tab.Screen name="Library" component={Artist} />
     <Tab.Screen name="search" component={Test} />
     <Tab.Screen name="menu" component={Test} />
   </Tab.Navigator>

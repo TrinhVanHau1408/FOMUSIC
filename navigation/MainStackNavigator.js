@@ -8,7 +8,8 @@ import {
   VerifyAccount, 
   NewPassword, 
   Home, 
-  Library } from "../views";
+  Library, 
+  Artist} from "../views";
 import { MainTabNavigator } from "./MainTabNavigator";
 
 const Stack = createNativeStackNavigator();
@@ -31,6 +32,7 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="VerifyAccount" component={VerifyAccount} />
     <Stack.Screen name="NewPassword" component={NewPassword} />
     <Stack.Screen name="Library" component={Library} />
+    <Stack.Screen name="Artist" component={Artist} />
   </Stack.Navigator>
 );
 
