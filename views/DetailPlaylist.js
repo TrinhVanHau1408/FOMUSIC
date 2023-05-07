@@ -69,7 +69,7 @@ export default function DetailPlaylist() {
       <View style={styles.line}></View>
       {/* <View style={{ marginTop: 28 }}> */}
         <FlatList
-        style={{marginTop: 28}}
+        style={{marginTop: 28, marginBottom: 150}}
           data={dataLike}
           renderItem={({ item, index }) =>
             <MyLike
@@ -85,8 +85,9 @@ export default function DetailPlaylist() {
           keyExtractor={(item, index) => index}
           showsVerticalScrollIndicator={false}
         />
-      {/* </View> */}
+     
         {isVisible&&<ControlMusic song={dataLike.find(({id}) => id === idSong)}/>}
+        
     </View>
   )
 }
