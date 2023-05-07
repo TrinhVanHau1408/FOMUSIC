@@ -14,6 +14,8 @@ import {
   Like,
   DetailPlaylist
 } from "../views";
+import Playing from "../views/Playing";
+import PlayingMore from "../views/PlayingMore";
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
