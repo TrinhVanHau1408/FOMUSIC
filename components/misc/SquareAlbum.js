@@ -3,9 +3,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, images } from '../../constants';
 export default function SquareAlbum(props) {
 
-    const { id, name, img, handleButton } = props
+    const { id, name, img, handleButton, isAlbum } = props
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,isAlbum&&styles.marginx2]}>
             <TouchableOpacity onPress={handleButton}>
                 <Image source={img ? img : images.demo} style={styles.img} />
                 <Text style={styles.textName}>{name}</Text>
@@ -20,6 +20,10 @@ const styles = StyleSheet.create({
         marginRight: 16,
     },
 
+    marginx2: {
+        marginHorizontal: 16,
+        marginVertical: 16,
+    },
     img: {
         width: 120,
         height: 120,
