@@ -12,27 +12,27 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 const dataAlbum = [
   {
     id: 0,
-    name: 'Album 1',
+    name: 'Name 1',
     img: images.demo
   },
   {
     id: 1,
-    name: 'Album 2',
+    name: 'Name 2',
     img: images.demo
   },
   {
     id: 2,
-    name: 'Album 3',
+    name: 'Name 3',
     img: images.demo
   },
   {
     id: 3,
-    name: 'Album 4',
+    name: 'Name 4',
     img: images.demo
   },
   {
     id: 4,
-    name: 'Album 5',
+    name: 'Name 5',
     img: images.demo
   }
 ]
