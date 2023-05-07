@@ -7,6 +7,7 @@ import MyInput from '../components/misc/MyInput';
 import MyButton from '../components/misc/MyButton';
 import OrLine from '../components/misc/OrLine';
 import MyNavigation from '../components/misc/MyNavigation';
+
 const Register = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
