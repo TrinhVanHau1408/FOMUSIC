@@ -15,7 +15,8 @@ import {
   Following,
   Like,
   DetailPlaylist,
-  DetailAlbum} from "../views";
+  DetailAlbum,
+  Search} from "../views";
 
 
 import { MainTabNavigator } from "./MainTabNavigator";
@@ -53,6 +54,7 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Following" component={Following} />
     <Stack.Screen name="Like" component={Like} />
     <Stack.Screen name="DetailAlbum" component={DetailAlbum} />
+    <Stack.Screen name="Search" component={Search} />
   </Stack.Navigator>
 );
 
