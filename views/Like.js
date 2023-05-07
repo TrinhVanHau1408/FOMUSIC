@@ -1,5 +1,5 @@
-import { View, Text, FlatList } from 'react-native';
-import React from 'react';
+import { View, Text, FlatList, Alert } from 'react-native';
+import React, { useState } from 'react';
 import HeaderApp from '../components/header/HeaderApp';
 import { icons, images } from '../constants';
 import MyLike from '../components/like/MyLike';
@@ -29,13 +29,20 @@ const dataLike = [
   },
   {
     id: 4,
-    songName: 'Song name 3',
+    songName: 'Song name 4',
     songImg: images.defaultAvt,
-    artistName: 'Artis 3',
+    artistName: 'Artis 4',
     isLiked: true
   }
 ]
 export default function Like() {
+  const [isVisible, setIsVisible ] = useState(false);
+  const[idSong, setIdSong] = useState(1);
+  const handleLayout = (id) => {
+    setIsVisible(true);
+    setIdSong(id);
+   
+  }
   return (
     <View style={{flex: 1}}>
       <HeaderApp title='Likes' iconLeft={icons.arrowBack} />
@@ -49,16 +56,14 @@ export default function Like() {
               songImg={item.songImg}
               artistName={item.artistName}
               isLike={item.isLiked}
-              index={index} />}
+              index={index} 
+              handleLayout={handleLayout} 
+            />}
           keyExtractor={(item, index) => index}
           showsVerticalScrollIndicator={false}
         />
       </View>
-      
-   
-        <ControlMusic />
-      
-     
+        {isVisible&&<ControlMusic song={dataLike.find(({id}) => id === idSong)}/>}
     </View>
   )
 }
