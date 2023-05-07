@@ -37,7 +37,7 @@ const dataLike = [
 ]
 export default function Like() {
   const [isVisible, setIsVisible ] = useState(false);
-  const[idSong, setIdSong] = useState(1);
+  const[idSong, setIdSong] = useState(0);
   const handleLayout = (id) => {
     setIsVisible(true);
     setIdSong(id);
@@ -52,6 +52,7 @@ export default function Like() {
           renderItem={({ item, index }) =>
             <MyLike
               id={item.id}
+              idSongSelected={idSong}
               songName={item.songName}
               songImg={item.songImg}
               artistName={item.artistName}
