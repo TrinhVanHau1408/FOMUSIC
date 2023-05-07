@@ -19,6 +19,7 @@ import { MainTabNavigator } from "./MainTabNavigator";
 import Playing from "../views/Playing";
 import PlayingMore from "../views/PlayingMore";
 import PlayingFullLyric from "../views/PlayingFullLyric";
+import Notification from "../views/Notification";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +34,9 @@ const MainStackNavigator = ({ navigation }) => (
       component={MainTabNavigator}
       options={{ headerShown: false }}
     />
+
     <Stack.Screen name="Home" component={Home} />
+    
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Playing" component={Playing} />
@@ -44,10 +47,15 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="NewPassword" component={NewPassword} />
     <Stack.Screen name="Library" component={Library} />
     <Stack.Screen name="Artist" component={Artist} />
-    <Stack.Screen name="Playlist" component={Playlist} />
+    <Stack.Screen name="Playlist" component={Playlist} /> 
+
     <Stack.Screen name="Album" component={Album} />
+
     <Stack.Screen name="Following" component={Following} />
+
     <Stack.Screen name="Like" component={Like} />
+
+    <Stack.Screen name="Notification" component={Notification} />
   </Stack.Navigator>
 );
 

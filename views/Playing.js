@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, SliderComponent, Slider, SliderBase } from 'react-native';
-// import Slider from '@react-native-community/slider';
 import { colors, icons, images } from '../constants';
-import HeaderSign from '../components/header/HeaderSign';
-import FooterSign from '../components/footer/FooterSign';
-import MyButton from '../components/misc/MyButton';
-import MyNavigation from '../components/misc/MyNavigation';
+
 
 const Playing = ({ navigation }) => {
     return (
