@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, FlatList, SafeAreaView } from 'react-native';
+import { Image, Text, View, FlatList, SafeAreaView, Alert } from 'react-native';
 import HeaderApp from '../components/header/HeaderApp';
 import { colors, icons, images } from '../constants';
 import SquareAlbum from '../components/misc/SquareAlbum';
@@ -44,7 +44,9 @@ const getItem = (_data, index) => ({
 
 const getItemCount = _data => 50;
 export default function Library() {
-
+  const handleButton = () => {
+    Alert.alert('Test', 'Library button');
+  }
   return (
     <SafeAreaView style={{ flex: 1, }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -59,7 +61,7 @@ export default function Library() {
           <FlatList
             data={dataAlbum}
             renderItem={({ item }) =>
-              <SquareAlbum id={item.id} name={item.name} img={item.img} />}
+              <SquareAlbum id={item.id} name={item.name} img={item.img} handleButton={handleButton}/>}
             keyExtractor={(item, index) => index}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -70,18 +72,17 @@ export default function Library() {
           <TitleAlbum name={'Artists'} />
           <FlatList
             data={dataAlbum}
-            renderItem={({ item }) => <CircleAlbum id={item.id} name={item.name} img={item.img} />}
+            renderItem={({ item }) => <CircleAlbum id={item.id} name={item.name} img={item.img} handleButton={handleButton}/>}
             keyExtractor={(item, index) => index}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
         </View>
-
         <View>
           <TitleAlbum name={'Playlist'} />
           <FlatList
             data={dataAlbum}
-            renderItem={({ item }) => <RectangleAlbum id={item.id} name={item.name} img={item.img} />}
+            renderItem={({ item }) => <RectangleAlbum id={item.id} name={item.name} img={item.img} handleButton={handleButton}/>}
             keyExtractor={(item, index) => index}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -93,7 +94,7 @@ export default function Library() {
           <FlatList
             data={dataAlbum}
             renderItem={({ item }) =>
-              <SquareAlbum id={item.id} name={item.name} img={item.img} />}
+              <SquareAlbum id={item.id} name={item.name} img={item.img} handleButton={handleButton}/>}
             keyExtractor={(item, index) => index}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -103,7 +104,7 @@ export default function Library() {
           <TitleAlbum name={'Following'} />
           <FlatList
             data={dataAlbum}
-            renderItem={({ item }) => <CircleAlbum id={item.id} name={item.name} img={item.img} />}
+            renderItem={({ item }) => <CircleAlbum id={item.id} name={item.name} img={item.img} handleButton={handleButton}/>}
             keyExtractor={(item, index) => index}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -115,7 +116,7 @@ export default function Library() {
           <FlatList
             data={dataAlbum}
             renderItem={({ item }) =>
-              <SquareAlbum id={item.id} name={item.name} img={item.img} />}
+              <SquareAlbum id={item.id} name={item.name} img={item.img} handleButton={handleButton}/>}
             keyExtractor={(item, index) => index}
             horizontal
             showsHorizontalScrollIndicator={false}
