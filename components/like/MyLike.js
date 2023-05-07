@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
-export default function MyLike({ id, songName, songImg, artistName, isLike, index, handleLayout,setIdSong  }) {
+export default function MyLike({ id,idSongSelected, songName, songImg, artistName, isLike, index, handleLayout,setIdSong  }) {
     const [isLiked, setIsIsLiked] = useState(isLike);
     // const handlePlayMusic = () => {
     //     Alert.alert('Play music');
@@ -18,7 +18,8 @@ export default function MyLike({ id, songName, songImg, artistName, isLike, inde
                 style={styles.info}
             >
                 <View style={styles.stt}>
-                    <Text>{id}</Text>
+                    {idSongSelected===id?<Image source={icons.playing}/>:
+                    <Text>{id}</Text>}
                 </View>
                 <View >
                     <Image source={songImg} style={styles.img} />
