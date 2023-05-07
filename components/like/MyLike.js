@@ -1,19 +1,24 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
-export default function MyLike({ id, songName, songImg, artistName, isLike, index }) {
+export default function MyLike({ id, songName, songImg, artistName, isLike, index, handleLayout,setIdSong  }) {
     const [isLiked, setIsIsLiked] = useState(isLike);
-    const handlePlayMusic = () => {
-        Alert.alert('Play music');
-    }
+    // const handlePlayMusic = () => {
+    //     Alert.alert('Play music');
+        
+    // }
+    // useEffect(() => {
+    //     setIdSong(id);
+    //     // Alert.alert('id',id)
+    // },[id]);
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={handlePlayMusic}
+                onPress={() =>handleLayout(id)}
                 style={styles.info}
             >
                 <View style={styles.stt}>
-                    <Text>{index + 1}</Text>
+                    <Text>{id}</Text>
                 </View>
                 <View >
                     <Image source={songImg} style={styles.img} />
