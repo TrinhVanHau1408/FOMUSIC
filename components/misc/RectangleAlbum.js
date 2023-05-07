@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
         height: 133,
         borderRadius: 20,
         borderWidth: 2,
-        borderColor: colors.primary
+        borderColor: colors.primary,
+        resizeMode: 'stretch'
     },
     textName: {
         fontFamily: 'Montserrat',
