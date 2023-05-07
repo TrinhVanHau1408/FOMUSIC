@@ -1,6 +1,14 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Test, Register, Login, ForgotPassword, VerifyAccount, NewPassword, Home } from "../views";
+import { 
+  Test, 
+  Register, 
+  Login, 
+  ForgotPassword, 
+  VerifyAccount, 
+  NewPassword, 
+  Home, 
+  Library } from "../views";
 import { MainTabNavigator } from "./MainTabNavigator";
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +30,7 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     <Stack.Screen name="VerifyAccount" component={VerifyAccount} />
     <Stack.Screen name="NewPassword" component={NewPassword} />
+    <Stack.Screen name="Library" component={Library} />
   </Stack.Navigator>
 );
 

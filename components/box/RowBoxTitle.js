@@ -39,7 +39,7 @@ export default function RowBoxTitle(
           {
             data.map((value, index) =>
             {
-              return <View style={styles.BoxTitle}>
+              return <View key={index} style={styles.BoxTitle}>
                   <BoxTitle title={value.title} width={"100%"} srcImage={value.srcImage}/>
               </View>
             })

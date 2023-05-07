@@ -3,7 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Image } from 'react-native'
 import { icons } from "../constants";
-import { Test, Home } from "../views";
+import { 
+  Test, 
+  Home, 
+  Library } from "../views";
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,7 +33,7 @@ const options = ({ route }) => ({
     // }
 
     let icon = screenName == 'home1' ? icons.home : (
-      screenName == 'library' ? icons.library : (
+      screenName == 'Library' ? icons.library : (
         screenName == 'search' ? icons.search : icons.menu));
 
     return <Image
@@ -63,10 +66,11 @@ const options = ({ route }) => ({
 const MainTabNavigator = () => (
 
   <Tab.Navigator
+  initialRouteName="Library"
     screenOptions={options}
   >
     <Tab.Screen name="home1" component={Home} />
-    <Tab.Screen name="library" component={Test} />
+    <Tab.Screen name="Library" component={Library} />
     <Tab.Screen name="search" component={Test} />
     <Tab.Screen name="menu" component={Test} />
   </Tab.Navigator>

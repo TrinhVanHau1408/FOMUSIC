@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         position: 'absolute',
-        top: heigtScreen - 200,
+        top: heigtScreen - 125,
         marginHorizontal: 2,
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
