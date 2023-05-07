@@ -1,7 +1,6 @@
 import React from 'react'
-import { Text, StyleSheet, View } from 'react-native'
+import {StyleSheet, View } from 'react-native'
 import HeaderApp from '../components/header/HeaderApp'
-import { icons, colors } from '../constants'
 import RowBoxTranfer from '../components/box/RowBoxTranfer'
 import RowBoxTitle from '../components/box/RowBoxTitle'
 
@@ -9,7 +8,7 @@ import RowBoxTitle from '../components/box/RowBoxTitle'
 export default function Home () {
     return (
      <View style={styles.container}>
-        <HeaderApp style={styles.header}/>
+        <HeaderApp style={styles.header} title={'Home'}/>
         <View style={styles.content}>
             <RowBoxTranfer style={styles.tranfer}/>
             <View style={styles.rowcontent}>

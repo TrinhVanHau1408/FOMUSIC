@@ -5,7 +5,7 @@ import ForgotPassword from "./ForgotPassword";
 import VerifyAccount from "./VerifyAccount";
 import NewPassword from "./NewPassword";
 import Home from "./Home";
-
+import Library from "./Library";
 export {
     Test,
     Register,
@@ -14,4 +14,5 @@ export {
     VerifyAccount,
     NewPassword,
     Home,
+    Library,
 }
