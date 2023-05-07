@@ -9,7 +9,8 @@ import {
   NewPassword, 
   Home, 
   Library, 
-  Artist} from "../views";
+  Artist,
+  Playlist} from "../views";
 import { MainTabNavigator } from "./MainTabNavigator";
 
 const Stack = createNativeStackNavigator();
@@ -33,6 +34,7 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="NewPassword" component={NewPassword} />
     <Stack.Screen name="Library" component={Library} />
     <Stack.Screen name="Artist" component={Artist} />
+    <Stack.Screen name="Playlist" component={Playlist} />
   </Stack.Navigator>
 );
 
