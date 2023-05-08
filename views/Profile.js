@@ -94,6 +94,10 @@ export default function Profile({navigation}) {
     const goBack = () => {
         navigation.goBack()
     }
+
+    const handleNavigatorEditProfile = () => {
+        navigation.navigate('Upload')
+    }
     return (
         <View style={{ flex: 1 }}>
             <HeaderApp 
@@ -101,6 +105,7 @@ export default function Profile({navigation}) {
                 iconLeft={icons.arrowBack} 
                 iconRight={icons.editProfile}
                 goBack={goBack}
+                handleNavigator={handleNavigatorEditProfile}
                 />
             <View style={styles.container}>
                 <View style={styles.containerImg}>
