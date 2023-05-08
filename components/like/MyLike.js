@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
-export default function MyLike({ id,idSongSelected, songName, songImg, artistName, isLike, index, handleLayout,setIdSong, type = "circle"  }) {
+export default function MyLike({ id,idSongSelected, songName, songImg, artistName, isLike, index, handleLayout,setIdSong  }) {
     const [isLiked, setIsIsLiked] = useState(isLike);
     // const handlePlayMusic = () => {
     //     Alert.alert('Play music');
@@ -22,7 +22,7 @@ export default function MyLike({ id,idSongSelected, songName, songImg, artistNam
                     <Text>{id}</Text>}
                 </View>
                 <View >
-                    <Image source={songImg} style={type = "circle"?styles.img0:styles.img} />
+                    <Image source={songImg} style={styles.img} />
                 </View>
                 <View style={styles.content}>
                     <Text style={styles.songName}>{songName}</Text>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    img0: {
+    img: {
         height: 70,
         width: 70,
         borderRadius: 100,

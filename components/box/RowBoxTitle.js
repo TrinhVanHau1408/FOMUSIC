@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React from 'react'
 
 import { icons, colors } from '../../constants'
@@ -35,7 +35,7 @@ export default function RowBoxTitle(
   return (
       <View style={styles.container}>
         <Title title={title}/>
-        {/* <View horizontal={true} style={styles.box}>
+        <View horizontal={true} style={styles.box}>
           {
             data.map((value, index) =>
             {
@@ -44,18 +44,7 @@ export default function RowBoxTitle(
               </View>
             })
           }
-        </View> */}
-         <FlatList
-            data={data}
-            renderItem={({ item }) => 
-            {
-              return  <BoxTitle title={item.title} width={100} srcImage={item.srcImage}/>
-            }
-            }
-            keyExtractor={(item, index) => index}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          />
+        </View>
       </View>
   )
 }

@@ -22,8 +22,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    marginTop:20,
-    marginLeft:20
   },
   title: {
     textAlign: 'center'
