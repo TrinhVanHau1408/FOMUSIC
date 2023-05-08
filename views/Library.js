@@ -66,6 +66,7 @@ export default function Library({ navigation }) {
   const handleNavigatorLikes = () => {
     navigation.navigate('Like');
   }
+  
   return (
     <SafeAreaView style={{ flex: 1, }}>
       <ScrollView showsVerticalScrollIndicator={false}>

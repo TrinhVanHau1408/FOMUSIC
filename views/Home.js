@@ -39,7 +39,7 @@ const dataLike = [
     }
 ]
 
-export default function Home() {
+export default function Home({ navigation }) {
     const [isVisible, setIsVisible] = useState(false);
     const [idSong, setIdSong] = useState(0);
     const handleLayout = (id) => {
@@ -47,9 +47,13 @@ export default function Home() {
         setIdSong(id);
 
     }
+    const handleNavigatorPlaying = () => {
+        navigation.navigate('Playing');
+    }
     return (
-            <View style={styles.container}>
-            <HeaderApp title={'Home'} />
+        <View style={styles.container}>
+         <ScrollView>
+         <HeaderApp title={'Home'} />
             <View>
                 <Image source={icons.musicNote1} style={{ position: 'absolute', left: 0, top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
                 <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0, top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
@@ -67,10 +71,10 @@ export default function Home() {
                         data={dataLike}
                         renderItem={({ item }) =>
                             <SquareAlbum
-                            id={item.id}
-                            name={item.songName}
-                            img={item.songImg}
-                            handleLayout={handleLayout} />}
+                                id={item.id}
+                                name={item.songName}
+                                img={item.songImg}
+                                handleLayout={handleLayout} />}
                         keyExtractor={(item, index) => index}
                         horizontal
                         showsHorizontalScrollIndicator={false}
@@ -93,9 +97,10 @@ export default function Home() {
                     />
                 </View>
             </View>
-            {isVisible && <ControlMusic song={dataLike.find(({ id }) => id === idSong)} />}
+         </ScrollView>
+            {isVisible && <ControlMusic song={dataLike.find(({ id }) => id === idSong)} handleNavigator={handleNavigatorPlaying} />}
         </View>
-        
+
     )
 }
 
