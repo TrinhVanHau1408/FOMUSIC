@@ -11,6 +11,8 @@ import Playlist from "./Playlist";
 import Album from "./Album";
 import Following from "./Following";
 import Like from "./Like";
+import UpLoad from "./UpLoad";
+import Notification from "./Notification";
 export {
     Test,
     Register,
@@ -24,5 +26,7 @@ export {
     Playlist,
     Album,
     Following,
-    Like
+    Like,
+    Notification,
+    UpLoad
 }
