@@ -66,10 +66,14 @@ const styles = StyleSheet.create({
     }
 })
 
-export default function UpLoad() {
+export default function UpLoad({navigation}) {
     const [isChecked, setIsChecked] = useState(false);
     const handleIsChecked = () => {
         setIsChecked(!isChecked);
+    }
+
+    const goBack = () => {
+        navigation.goBack();
     }
     return (
         <View style={styles.container}>
@@ -77,7 +81,8 @@ export default function UpLoad() {
                 <HeaderApp
                     title='Upload'
                     iconLeft={icons.arrowBack}
-                    iconRight={icons.save} />
+                    iconRight={icons.save}
+                    goBack={goBack} />
                 <View>
                     <Image source={images.defaultAvt} style={styles.img} />
                     <TouchableOpacity>

@@ -63,7 +63,7 @@ export default function Playlis({navigation}) {
                             name={item.name}
                             img={item.img}
                             handleButton={handleButton}
-                            isPlaylistPahe={true} 
+                            isPlaylist={true} 
                             handleNavigator={handleNavigatorDetailPlaylist}/>}
                     keyExtractor={(item, index) => index}
                     showsVerticalScrollIndicator={false}
