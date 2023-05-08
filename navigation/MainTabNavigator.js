@@ -18,6 +18,8 @@ import {
 } from "../views";
 import Playing from "../views/Playing";
 import PlayingMore from "../views/PlayingMore";
+import Notification from "../views/Notification";
+import UpLoad from "../views/UpLoad";
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -84,7 +86,7 @@ const MainTabNavigator = () => (
     <Tab.Screen name="home1" component={Home} />
     {/* <Tab.Screen name="Library" component={Library} /> */}
     <Tab.Screen name="Library" component={Library} />
-    <Tab.Screen name="search" component={Search} />
+    <Tab.Screen name="search" component={UpLoad} />
     <Tab.Screen name="menu" component={Test} />
   </Tab.Navigator>
 );

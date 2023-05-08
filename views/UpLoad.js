@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import HeaderApp from "../components/header/HeaderApp";
-import { Images, colors, icons } from "../constants";
+import { Images, colors, icons, images } from "../constants";
 import MyInputNotIcon from "../components/misc/MyInputNotIcon";
-// import CheckBox from '@react-native-community/checkbox';
-import DropShadow from "react-native-drop-shadow";
-import Test from "./Test";
+import CheckBox from '@react-native-community/checkbox';
+
 
 // const initialState = {
 //     public: false,
@@ -68,6 +67,10 @@ const styles = StyleSheet.create({
 })
 
 export default function UpLoad() {
+    const [isChecked, setIsChecked] = useState(false);
+    const handleIsChecked = () => {
+        setIsChecked(!isChecked);
+    }
     return (
         <View style={styles.container}>
             <View style={[styles.headerContenContainer, styles.elevation]}>
@@ -76,7 +79,7 @@ export default function UpLoad() {
                     iconLeft={icons.arrowBack}
                     iconRight={icons.save} />
                 <View>
-                    <Image source={icons.greyAvt} style={styles.img} />
+                    <Image source={images.defaultAvt} style={styles.img} />
                     <TouchableOpacity>
                         <Text style={styles.textEditPic}>
                             Edit Picture
@@ -93,9 +96,11 @@ export default function UpLoad() {
                     <Text style={styles.text}>
                         Make this track public
                     </Text>
-                    {/* <CheckBox>
-                        
-                    </CheckBox> */}
+                    <CheckBox  
+                        tintColors={{true:colors.primary, false:colors.primary}} 
+                        value = {isChecked}
+                        onChange={handleIsChecked}
+                    />
                     
                 </TouchableOpacity>
 
