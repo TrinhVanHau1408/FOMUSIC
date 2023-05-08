@@ -46,11 +46,14 @@ const dataUser = [
     following: 50,
   },
 ]
-export default function Following() {
+export default function Following({navigation}) {
  
+  const goBack = () => {
+    navigation.goBack();
+  }
   return (
     <View>
-      <HeaderApp title='Following' iconLeft={icons.arrowBack} />
+      <HeaderApp title='Following' iconLeft={icons.arrowBack} goBack={goBack} />
       <View style={{marginTop: 31}}>
         <FlatList
           data={dataUser}

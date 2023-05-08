@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, images } from '../../constants';
 export default function RectangleAlbum(props) {
-    const { id, name, img, handleButton, isPlaylistPahe } = props
+    const { id, name, img, handleNavigator, isPlaylist, isDetailPlaylist } = props
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={handleButton}>
-                <Image source={img ? img : images.demo} style={[styles.img, isPlaylistPahe ? styles.sizeImg2 : styles.sizeImg1]} />
-                <Text style={[styles.textName, isPlaylistPahe && styles.textBold]}>{name}</Text>
+            <TouchableOpacity onPress={handleNavigator}>
+                <Image source={img ? img : images.demo} style={[styles.img, isPlaylist ? styles.sizeImg2 : styles.sizeImg1]} />
+                <Text style={[styles.textName, isPlaylist && styles.textBold, isDetailPlaylist&& styles.marginTop]}>{name}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -44,5 +44,8 @@ const styles = StyleSheet.create({
     },
     textBold: {
         fontWeight: 'bold'
+    },
+    marginTop: {
+        marginTop: 18
     }
 })

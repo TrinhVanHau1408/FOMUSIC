@@ -11,6 +11,9 @@ import Playlist from "./Playlist";
 import Album from "./Album";
 import Following from "./Following";
 import Like from "./Like";
+import DetailPlaylist from "./DetailPlaylist";
+import DetailAlbum from "./DetailAlbum";
+import Search from "./Search";
 export {
     Test,
     Register,
@@ -24,5 +27,8 @@ export {
     Playlist,
     Album,
     Following,
-    Like
+    Like,
+    DetailPlaylist,
+    DetailAlbum,
+    Search
 }

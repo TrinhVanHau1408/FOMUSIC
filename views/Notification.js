@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { colors, icons, images } from '../constants';
+import { colors, icons, images, FlatList } from '../constants';
 import HeaderApp from '../components/header/HeaderApp';
-import { FlatList } from 'react-native-gesture-handler';
+
 import ItemNoti from '../components/notification/ItemNoti';
 import defaultAvt from '../assets/images/defaultAvt.jpg';
 

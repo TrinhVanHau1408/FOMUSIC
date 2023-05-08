@@ -3,12 +3,12 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, images } from '../../constants';
 export default function CircleAlbum(props) {
 
-    const { id, name, img, handleButton } = props
+    const { id, name, img, handleNavigator } = props
     return (
         <View style={styles.container}>
             <TouchableOpacity 
             style={styles.buttonƯ}
-            onPress={handleButton}
+            onPress={handleNavigator}
             >
                 <Image source={img ? img : images.demo} style={styles.img} />
                 <Text style={styles.textName}>{name}</Text>

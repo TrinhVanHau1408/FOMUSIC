@@ -4,10 +4,10 @@ import { icons, colors } from '../../constants'
 
 const HeaderApp = (props) => {
 
-  const { title, iconLeft, iconRight } = props;
+  const { title, iconLeft, iconRight, goBack } = props;
   return (
     <View style={(iconLeft && iconRight) ? styles.container2 : (iconLeft ? styles.container3 : styles.container1)}>
-      {iconLeft && <TouchableOpacity>
+      {iconLeft && <TouchableOpacity onPress={goBack}>
         <Image source={iconLeft} style={{ tintColor: colors.primary }} />
       </TouchableOpacity>}
       <Text style={[styles.title, (iconLeft || iconRight) ? styles.color2 : styles.color1]}>{title}</Text>
