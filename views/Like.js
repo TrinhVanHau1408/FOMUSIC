@@ -35,7 +35,7 @@ const dataLike = [
     isLiked: true
   }
 ]
-export default function Like() {
+export default function Like({navigation}) {
   const [isVisible, setIsVisible ] = useState(false);
   const[idSong, setIdSong] = useState(0);
   const handleLayout = (id) => {
@@ -43,9 +43,12 @@ export default function Like() {
     setIdSong(id);
    
   }
+  const goBack = () => {
+    navigation.goBack();
+  } 
   return (
     <View style={{flex: 1}}>
-      <HeaderApp title='Likes' iconLeft={icons.arrowBack} />
+      <HeaderApp title='Likes' iconLeft={icons.arrowBack} goBack={goBack}/>
       <View style={{ marginTop: 28 }}>
         <FlatList
           data={dataLike}
