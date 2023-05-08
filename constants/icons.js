@@ -39,7 +39,6 @@ export default {
     library: require('../assets/images/library.png'),
     option: require('../assets/images/option.png'),
     follow: require('../assets/images/follow.png'),
-
     schedule: require('../assets/images/Schedule.png'),
     arrowBackBlack: require('../assets/images/arrow-back-black.png'),
     iconGoToPlaylist: require('../assets/images/Icon.png'),
@@ -49,6 +48,10 @@ export default {
     listAdd: require('../assets/images/list-add.png'),
     removeCircle: require('../assets/images/remove-circle.png'),
     playlistAdd: require('../assets/images/add-to-list.png'),
+    save: require('../assets/images/icon_save.png'),
+    save2: require('../assets/images/icon_save2.jpg'),
+    greyAvt: require('../assets/images/grey_avt.png')
+
     edit:  require('../assets/images/edit-03.png'),
 
 }

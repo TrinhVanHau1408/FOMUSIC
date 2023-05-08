@@ -12,7 +12,7 @@ const HeaderApp = (props) => {
       </TouchableOpacity>}
       <Text style={[styles.title, (iconLeft || iconRight) ? styles.color2 : styles.color1]} >{title}</Text>
       {iconRight && <TouchableOpacity>
-        <Image source={iconRight} style={{ tintColor: colors.primary }} />
+        <Image source={iconRight} style={{ /* tintColor: colors.primary */ }} />
       </TouchableOpacity>}
     </View>
   )
