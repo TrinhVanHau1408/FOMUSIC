@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { colors, icons, images } from '../constants';
+import HeaderApp from '../components/header/HeaderApp';
 
 
 const Playing = ({ navigation }) => {
+    const goBack = () => {
+        navigation.goBack();
+    }
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View style={styles.headerContainer}>
+            {/* <View style={styles.headerContainer}>
                 <TouchableOpacity>
                     <Image
                         style={{
@@ -35,7 +39,12 @@ const Playing = ({ navigation }) => {
                         source={icons.more}
                     />
                 </TouchableOpacity>
-            </View>
+            </View> */}
+            <HeaderApp
+                title={'Playing'}
+                iconLeft={icons.arrowBack}
+                iconRight={icons.option}
+                goBack={goBack} />
 
             {/* ImageSong */}
             <View style={styles.contentContainer}>
@@ -52,12 +61,12 @@ const Playing = ({ navigation }) => {
 
             {/* PlayingMusic */}
             <View style={styles.audioPlayerContainer}>
-                <Slider 
-                style={{ alignSelf: 'stretch', height: 10}}
-                minimumTrackTintColor = {colors.primary}
-                maximumTrackTintColor={colors.primary}
-                thumbTintColor={colors.primary}
-               
+                <Slider
+                    style={{ alignSelf: 'stretch', height: 10 }}
+                    minimumTrackTintColor={colors.primary}
+                    maximumTrackTintColor={colors.primary}
+                    thumbTintColor={colors.primary}
+
                 />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', paddingHorizontal: 10 }}>
                     <Text style={styles.TextTimeSong} >
@@ -215,7 +224,6 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         borderWidth: 4,
         borderColor: '#8950F8',
-        borderStyle: 'solid',
         shadowColor: '#D9D9D9',
         shadowOpacity: 0.25,
         shadowOffset: { height: 4 }
@@ -265,8 +273,7 @@ const styles = StyleSheet.create({
         color: colors.black,
     }
 });
-const setFullLyrics = async (e) => 
-{
+const setFullLyrics = async (e) => {
 
 }
 export default Playing;
