@@ -20,6 +20,7 @@ import {
 import Playing from "../views/Playing";
 import PlayingMore from "../views/PlayingMore";
 import UpLoad from "../views/UpLoad";
+import Profile from "../views/Profile";
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -45,7 +46,7 @@ const options = ({ route }) => ({
     //   }
     // }
 
-    let icon = screenName == 'Home1' ? icons.home : (
+    let icon = screenName == 'home1' ? icons.home : (
       screenName == 'Library' ? icons.library : (
         screenName == 'Search' ? icons.search : icons.menu));
 
@@ -87,7 +88,7 @@ const MainTabNavigator = () => (
     {/* <Tab.Screen name="Library" component={Library} /> */}
     <Tab.Screen name="Library" component={Library} />
     <Tab.Screen name="Search" component={Search} />
-    <Tab.Screen name="Menu" component={Test} />
+    <Tab.Screen name="Menu" component={Profile} />
   </Tab.Navigator>
 );
 
