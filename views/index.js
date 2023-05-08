@@ -14,9 +14,7 @@ import Like from "./Like";
 import DetailPlaylist from "./DetailPlaylist";
 import DetailAlbum from "./DetailAlbum";
 import Search from "./Search";
-import Profile from "./Profile";
-import EditProfile from "./EditProfile";
-
+import Notification from "./Notification";
 export {
     Test,
     Register,
@@ -34,6 +32,6 @@ export {
     DetailPlaylist,
     DetailAlbum,
     Search,
-    Profile,
-    EditProfile
+    Notification,
+    
 }

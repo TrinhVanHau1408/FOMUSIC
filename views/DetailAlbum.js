@@ -49,7 +49,7 @@ const dataLike = [
         isLiked: true
     }
 ]
-export default function DetailAlbum() {
+export default function DetailAlbum({navigation}) {
     const [isVisible, setIsVisible] = useState(false);
 
     const [idSong, setIdSong] = useState(0);
@@ -58,9 +58,13 @@ export default function DetailAlbum() {
         setIdSong(id);
 
     }
+
+    const goBack = () => {
+        navigation.goBack();
+    }
     return (
         <View style={{ flex: 1 }}>
-            <HeaderApp title={'Album'} iconLeft={icons.arrowBack} iconRight={icons.option} />
+            <HeaderApp title={'Album'} iconLeft={icons.arrowBack} iconRight={icons.option} goBack={goBack} />
             <View style={styles.container}>
                 <View style={styles.containerImg}>
                     <View style={{ marginRight: 11 }}>

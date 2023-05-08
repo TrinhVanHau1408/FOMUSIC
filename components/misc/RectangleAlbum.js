@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, images } from '../../constants';
 export default function RectangleAlbum(props) {
-    const { id, name, img, handleButton, isPlaylist, isDetailPlaylist } = props
+    const { id, name, img, handleNavigator, isPlaylist, isDetailPlaylist } = props
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={handleButton}>
+            <TouchableOpacity onPress={handleNavigator}>
                 <Image source={img ? img : images.demo} style={[styles.img, isPlaylist ? styles.sizeImg2 : styles.sizeImg1]} />
                 <Text style={[styles.textName, isPlaylist && styles.textBold, isDetailPlaylist&& styles.marginTop]}>{name}</Text>
             </TouchableOpacity>

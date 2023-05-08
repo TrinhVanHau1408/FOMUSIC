@@ -31,13 +31,17 @@ const dataAlbum = [
     img: images.demo
   }
 ]
-export default function Artist() {
+export default function Artist({navigation}) {
   const handleButton = () => {
     Alert.alert('Test', 'Library button');
   }
+
+  const goBack = () => {
+    navigation.goBack();
+  }
   return (
     <View>
-      <HeaderApp title={'Artist'} iconLeft={icons.arrowBack} iconRight={icons.follow} />
+      <HeaderApp title={'Artist'} iconLeft={icons.arrowBack} iconRight={icons.follow} goBack={goBack} />
       <View style={styles.infoArtist}>
         <Image source={images.defaultAvt} style={{ height: 150, width: 150, borderRadius: 100 }} />
         <Text style={styles.pageName}>Big Bang</Text>

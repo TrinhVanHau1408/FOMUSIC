@@ -8,7 +8,7 @@ import RowBoxTitle from '../components/box/RowBoxTitle'
 export default function Home () {
     return (
      <View style={styles.container}>
-        <HeaderApp title={'Home'}/>
+        <HeaderApp style={styles.header} title={'Home'}/>
         <View style={styles.content}>
             <RowBoxTranfer style={styles.tranfer}/>
             <View style={styles.rowcontent}>

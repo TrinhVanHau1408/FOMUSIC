@@ -50,7 +50,7 @@ const dataLike = [
     isLiked: true
   }
 ]
-export default function DetailPlaylist() {
+export default function DetailPlaylist({navigation}) {
   const [isVisible, setIsVisible ] = useState(false);
   
   const[idSong, setIdSong] = useState(0);
@@ -59,9 +59,13 @@ export default function DetailPlaylist() {
     setIdSong(id);
    
   }
+
+  const goBack = () => {
+    navigation.goBack();
+}
   return (
     <View style={{flex:1}}>
-      <HeaderApp title={'Playlist'} iconLeft={icons.arrowBack} iconRight={icons.option} />
+      <HeaderApp title={'Playlist'} iconLeft={icons.arrowBack} iconRight={icons.option} goBack={goBack} />
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 25 }}>
         <RectangleAlbum id={1} name={'Playlist 1'} img={null} isPlaylist={true} isDetailPlaylist={true} />
       </View>

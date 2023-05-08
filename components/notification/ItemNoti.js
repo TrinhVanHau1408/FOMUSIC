@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
-import { colors, icons, images } from '../../constants'
+import { images } from '../../constants'
 
 const styles = StyleSheet.create({
     container:
@@ -44,8 +44,6 @@ export default function ItemNoti({ id, notiImage, title, owner, time }) {
         <View style={styles.container}>
             <TouchableOpacity style={styles.container}>
                 <View style={styles.imgNoti}>
-
-                    {/* Ko load được file ảnh từ đối số truyền vào nên xài cứng từ '../constant/images' */}
                     <Image source={images.defaultAvt} style={styles.imgNoti}/>
                 </View>
                 <View style={styles.textContent}>

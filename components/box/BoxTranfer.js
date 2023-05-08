@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from 'react-native'
+=======
+import { StyleSheet, Text, View } from 'react-native'
+>>>>>>> b7de28c7eb69ec2a8e10087f7557bce46861c8a0
 import Swiper from 'react-native-swiper';
 import React, { useRef, useState } from 'react'
 
