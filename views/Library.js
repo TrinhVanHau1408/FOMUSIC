@@ -74,7 +74,7 @@ export default function Library({ navigation }) {
           <Image source={icons.musicNote1} style={{ position: 'absolute', left: 0, bottom: '15%', height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
           <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0, bottom: '15%', height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
         </View>
-        <View style={{ marginHorizontal: 24 }}>
+        <View style={{ marginLeft: 24 }}>
           <View >
             <TitleAlbum name={'Listening history'} />
             <FlatList
@@ -106,13 +106,13 @@ export default function Library({ navigation }) {
             <TitleAlbum name={'Playlist'} />
             <FlatList
               data={dataAlbum}
-              renderItem={({ item }) => 
-              <RectangleAlbum 
-              id={item.id} 
-              name={item.name} 
-              img={item.img} 
-              isPlaylist={true} 
-              handleNavigator={handleNavigatorPlaylist} />}
+              renderItem={({ item }) =>
+                <RectangleAlbum
+                  id={item.id}
+                  name={item.name}
+                  img={item.img}
+                  isPlaylist={true}
+                  handleNavigator={handleNavigatorPlaylist} />}
               keyExtractor={(item, index) => index}
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -123,10 +123,10 @@ export default function Library({ navigation }) {
             <FlatList
               data={dataAlbum}
               renderItem={({ item }) =>
-                <SquareAlbum 
-                  id={item.id} 
-                  name={item.name} 
-                  img={item.img} 
+                <SquareAlbum
+                  id={item.id}
+                  name={item.name}
+                  img={item.img}
                   handleNavigator={handleNavigatorAlbum} />}
               keyExtractor={(item, index) => index}
               horizontal
@@ -137,12 +137,12 @@ export default function Library({ navigation }) {
             <TitleAlbum name={'Following'} />
             <FlatList
               data={dataAlbum}
-              renderItem={({ item }) => 
-              <CircleAlbum 
-              id={item.id} 
-              name={item.name} 
-              img={item.img} 
-              handleNavigator={handleNavigatorFollowing} />}
+              renderItem={({ item }) =>
+                <CircleAlbum
+                  id={item.id}
+                  name={item.name}
+                  img={item.img}
+                  handleNavigator={handleNavigatorFollowing} />}
               keyExtractor={(item, index) => index}
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -152,13 +152,14 @@ export default function Library({ navigation }) {
           <View>
             <TitleAlbum name={'Likes'} />
             <FlatList
+              style={{ marginBottom: 100 }}
               data={dataAlbum}
               renderItem={({ item }) =>
-                <SquareAlbum 
-                id={item.id} 
-                name={item.name} 
-                img={item.img} 
-                handleNavigator={handleNavigatorLikes} />}
+                <SquareAlbum
+                  id={item.id}
+                  name={item.name}
+                  img={item.img}
+                  handleNavigator={handleNavigatorLikes} />}
               keyExtractor={(item, index) => index}
               horizontal
               showsHorizontalScrollIndicator={false}
