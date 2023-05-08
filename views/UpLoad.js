@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import HeaderApp from "../components/header/HeaderApp";
 import { Images, colors, icons } from "../constants";
 import MyInputNotIcon from "../components/misc/MyInputNotIcon";
-import CheckBox from '@react-native-community/checkbox';
+// import CheckBox from '@react-native-community/checkbox';
 import DropShadow from "react-native-drop-shadow";
 import Test from "./Test";
 
@@ -48,14 +48,14 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         alignSelf: 'center',
 
-        color: '000000'
+        color: colors.black
     },
     textEditPic:
     {
         fontFamily: 'Montserrat',
         fontSize: 17,
         fontWeight: '700',
-        color: '000000',
+        color: colors.black,
         alignSelf: 'center'
     },
     inputContainer:
@@ -93,9 +93,9 @@ export default function UpLoad() {
                     <Text style={styles.text}>
                         Make this track public
                     </Text>
-                    <CheckBox>
+                    {/* <CheckBox>
                         
-                    </CheckBox>
+                    </CheckBox> */}
                     
                 </TouchableOpacity>
 
