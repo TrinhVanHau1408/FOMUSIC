@@ -18,7 +18,6 @@ export default {
     skipNextControl: require('../assets/images/skip-next-control.png'),
     skipPre: require('../assets/images/skip-previous.png'),
     skipPreControl: require('../assets/images/skip-previous-control.png'),
-
     mail: require('../assets/images/mail.png'),
     more: require('../assets/images/more-vertical.png'),
     musicNote1: require('../assets/images/music-note-1.png'),
@@ -39,7 +38,6 @@ export default {
     library: require('../assets/images/library.png'),
     option: require('../assets/images/option.png'),
     follow: require('../assets/images/follow.png'),
-
     arrowBackBlack: require('../assets/images/arrow-back-black.png'),
     iconGoToPlaylist: require('../assets/images/Icon.png'),
     loopBlack: require('../assets/images/loop_black.png'),
@@ -48,13 +46,8 @@ export default {
     listAdd: require('../assets/images/list-add.png'),
     removeCircle: require('../assets/images/remove-circle.png'),
     playlistAdd: require('../assets/images/add-to-list.png'),
-<<<<<<< HEAD
     save: require('../assets/images/icon_save.png'),
     save2: require('../assets/images/icon_save2.jpg'),
     greyAvt: require('../assets/images/grey_avt.png'),
-
-    edit:  require('../assets/images/edit-03.png'),
-=======
->>>>>>> b7de28c7eb69ec2a8e10087f7557bce46861c8a0
 
 }
