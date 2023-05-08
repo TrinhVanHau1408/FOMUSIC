@@ -41,7 +41,12 @@ const MainStackNavigator = ({ navigation }) => (
     />
 
     <Stack.Screen name="Home" component={Home} />
+<<<<<<< HEAD
+    
+    {/* <Stack.Screen name="Register" component={Register} />
+=======
     <Stack.Screen name="Register" component={Register} />
+>>>>>>> b7de28c7eb69ec2a8e10087f7557bce46861c8a0
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Playing" component={Playing} />
     <Stack.Screen name="PlayingMore" component={PlayingMore} />
@@ -56,8 +61,13 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Album" component={Album} />
     <Stack.Screen name="Following" component={Following} />
     <Stack.Screen name="Like" component={Like} />
+<<<<<<< HEAD
+    <Stack.Screen name="Notification" component={Notification} /> */}
+    {/* <Stack.Screen name="Upload" component={Upload} /> */}
+=======
     <Stack.Screen name="Notification" component={Notification} />
     <Stack.Screen name="Upload" component={Upload} />
+>>>>>>> b7de28c7eb69ec2a8e10087f7557bce46861c8a0
     <Stack.Screen name="DetailAlbum" component={DetailAlbum} />
     <Stack.Screen name="Search" component={Search} />
   </Stack.Navigator>
