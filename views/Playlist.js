@@ -43,6 +43,10 @@ export default function Playlis({navigation}) {
     const goBack = () => {
         navigation.goBack();
     }
+
+    const handleNavigatorDetailPlaylist = () => {
+        navigation.navigate('DetailPlaylist');
+    }
     return (
         <View>
             <HeaderApp
@@ -59,7 +63,8 @@ export default function Playlis({navigation}) {
                             name={item.name}
                             img={item.img}
                             handleButton={handleButton}
-                            isPlaylistPahe={true} />}
+                            isPlaylistPahe={true} 
+                            handleNavigator={handleNavigatorDetailPlaylist}/>}
                     keyExtractor={(item, index) => index}
                     showsVerticalScrollIndicator={false}
                 />

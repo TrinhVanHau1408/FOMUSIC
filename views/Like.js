@@ -35,20 +35,20 @@ const dataLike = [
     isLiked: true
   }
 ]
-export default function Like({navigation}) {
-  const [isVisible, setIsVisible ] = useState(false);
-  const[idSong, setIdSong] = useState(0);
+export default function Like({ navigation }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [idSong, setIdSong] = useState(0);
   const handleLayout = (id) => {
     setIsVisible(true);
     setIdSong(id);
-   
+
   }
   const goBack = () => {
     navigation.goBack();
-  } 
+  }
   return (
-    <View style={{flex: 1}}>
-      <HeaderApp title='Likes' iconLeft={icons.arrowBack} goBack={goBack}/>
+    <View style={{ flex: 1 }}>
+      <HeaderApp title='Likes' iconLeft={icons.arrowBack} goBack={goBack} />
       <View style={{ marginTop: 28 }}>
         <FlatList
           data={dataLike}
@@ -60,14 +60,14 @@ export default function Like({navigation}) {
               songImg={item.songImg}
               artistName={item.artistName}
               isLike={item.isLiked}
-              index={index} 
-              handleLayout={handleLayout} 
+              index={index}
+              handleLayout={handleLayout}
             />}
           keyExtractor={(item, index) => index}
           showsVerticalScrollIndicator={false}
         />
       </View>
-        {isVisible&&<ControlMusic song={dataLike.find(({id}) => id === idSong)}/>}
+      {isVisible && <ControlMusic song={dataLike.find(({ id }) => id === idSong)} />}
     </View>
   )
 }

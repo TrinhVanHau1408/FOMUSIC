@@ -86,6 +86,10 @@ export default function Album({navigation}) {
     Alert.alert('Test', 'Library button');
   }
 
+  const handleNavigatorDetailAlbum = () => {
+    navigation.navigate('DetailAlbum');
+  }
+
   const goBack = () => {
     navigation.goBack();
   }
@@ -94,13 +98,14 @@ export default function Album({navigation}) {
       <HeaderApp title='Albums' iconLeft={icons.arrowBack} goBack={goBack} />
       <View style={styles.container}>
         <FlatList
+          style={{marginBottom: 100}}
           data={dataAlbum}
           renderItem={({ item }) =>
             <SquareAlbum 
             id={item.id} 
             name={item.name} 
             img={item.img} 
-            handleButton={handleButton} 
+            handleNavigator={handleNavigatorDetailAlbum} 
             isAlbum={true}/>}
           keyExtractor={(item, index) => index}
           numColumns={2}
