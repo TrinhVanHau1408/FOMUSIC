@@ -36,13 +36,13 @@ const MainStackNavigator = ({ navigation }) => (
     screenOptions={{
       headerShown: false
     }} >
-    {/* <Stack.Screen
+    <Stack.Screen
       name="Home1"
       component={MainTabNavigator}
       options={{ headerShown: false }}
-    /> */}
+    />
 
-    {/* <Stack.Screen name="Home" component={Home} /> */}
+    <Stack.Screen name="Home" component={Home} />
     
     {/* <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" component={Login} />
@@ -60,7 +60,7 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Following" component={Following} />
     <Stack.Screen name="Like" component={Like} />
     <Stack.Screen name="Notification" component={Notification} /> */}
-    <Stack.Screen name="Upload" component={Upload} />
+    {/* <Stack.Screen name="Upload" component={Upload} /> */}
     <Stack.Screen name="DetailAlbum" component={DetailAlbum} />
     <Stack.Screen name="Search" component={Search} />
     <Stack.Screen name="Profile" component={Profile} />

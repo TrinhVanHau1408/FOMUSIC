@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from 'react-native'
-// import Swiper from 'react-native-swiper';
+import Swiper from 'react-native-swiper';
 import React, { useRef, useState } from 'react'
 
 import { colors, icons } from '../../constants';
@@ -14,15 +14,15 @@ export default function BoxTranfer() {
       <Swiper
         autoplay={true}
       >
-        <View style={styles.slide}>
-          <Box width={"85%"} height={"85%"} />
-        </View>
-        <View style={styles.slide}>
-          <Box width={"85%"} height={"85%"} />
-        </View>
-        <View style={styles.slide}>
-          <Box width={"85%"} height={"85%"} />
-        </View>
+          <View style={styles.slide}>
+            <Box width={"85%"} height={"85%"} />
+          </View>
+          <View style={styles.slide}>
+            <Box width={"85%"} height={"85%"} />
+          </View>
+          <View style={styles.slide}>
+            <Box width={"85%"} height={"85%"} />
+          </View>
       </Swiper>
       <Text style={styles.controlLeft} > &lt;</Text>
       <Text style={styles.controlRight} >&gt;</Text>

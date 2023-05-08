@@ -15,7 +15,7 @@ export default function RectangleAlbum(props) {
 
 const styles = StyleSheet.create({
     container: {
-        // marginRight: 20,
+        marginRight: 20,
         marginBottom: 34,
     },
 
