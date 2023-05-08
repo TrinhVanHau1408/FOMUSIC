@@ -26,6 +26,7 @@ import PlayingMore from "../views/PlayingMore";
 import PlayingFullLyric from "../views/PlayingFullLyric";
 import Notification from "../views/Notification";
 import Upload from "../views/UpLoad";
+import Profile from "../views/Profile";
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +61,8 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Upload" component={Upload} />
     <Stack.Screen name="DetailAlbum" component={DetailAlbum} />
     <Stack.Screen name="Search" component={Search} />
+    <Stack.Screen name="Profile" component={Profile} />
+
   </Stack.Navigator>
 );
 

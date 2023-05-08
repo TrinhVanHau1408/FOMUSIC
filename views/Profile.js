@@ -81,7 +81,7 @@ const dataAlbum = [
 const username = "User Name"
 const follower = "100"
 const following = "124"
-export default function Profile() {
+export default function Profile({navigation}) {
     const [isVisible, setIsVisible] = useState(false);
 
     const [idSong, setIdSong] = useState(0);
@@ -90,9 +90,18 @@ export default function Profile() {
         setIdSong(id);
 
     }
+
+    const goBack = () => {
+        navigation.goBack()
+    }
     return (
         <View style={{ flex: 1 }}>
-            <HeaderApp title={'Profile'} iconLeft={icons.arrowBack} iconRight={icons.edit}/>
+            <HeaderApp 
+                title={'Profile'} 
+                iconLeft={icons.arrowBack} 
+                iconRight={icons.editProfile}
+                goBack={goBack}
+                />
             <View style={styles.container}>
                 <View style={styles.containerImg}>
                     <View style={{ marginLeft: -100 , marginRight: 15 }}>

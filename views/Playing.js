@@ -110,11 +110,15 @@ const Playing = ({ navigation }) => {
 
             {/* Lyrics */}
             <View style={styles.lyricContainer}>
-                <TouchableOpacity >
-                    <Text style={styles.TextLyrics}>
-                        Lyrics
-                    </Text>
-                </TouchableOpacity>
+
+                <View style={{display: 'flex', justifyContent: 'center'}}>
+                    <TouchableOpacity >
+                        <View style={{ height: 3, width: 40, backgroundColor: "#FFFFFF" }}></View>
+                        <Text style={styles.TextLyrics}>
+                            Lyrics
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )
@@ -159,6 +163,7 @@ const styles = StyleSheet.create({
     lyricContainer:
     {
         flex: 10,
+      
         position: 'absolute',
         top: '90%',
         height: '70%',
