@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
 import Swiper from 'react-native-swiper';
 import React, { useRef, useState } from 'react'
 
@@ -9,9 +9,10 @@ export default function BoxTranfer() {
   const [index, setIndex] = useState(0)
 
   return (
-    <View >
-      <View style={{ display: 'flex', alignItems: 'center'}}>
-        <Swiper style={{height: 265}}
+   
+      <ScrollView>
+        <View style={{height:290, display: 'flex', alignItems: 'center'}}>
+        <Swiper
           autoplay={true}
         >
           <View style={styles.slide}>
@@ -25,7 +26,8 @@ export default function BoxTranfer() {
           </View>
         </Swiper>
       </View>
-    </View>
+      </ScrollView>
+    
   );
 }
 
