@@ -14,11 +14,11 @@ import {
   Like,
   DetailPlaylist,
   DetailAlbum,
-  Search
+  Search,
+  Notification
 } from "../views";
 import Playing from "../views/Playing";
 import PlayingMore from "../views/PlayingMore";
-import Notification from "../views/Notification";
 import UpLoad from "../views/UpLoad";
 
 // const Tab = createMaterialBottomTabNavigator();
@@ -86,7 +86,7 @@ const MainTabNavigator = () => (
     <Tab.Screen name="home1" component={Home} />
     {/* <Tab.Screen name="Library" component={Library} /> */}
     <Tab.Screen name="Library" component={Library} />
-    <Tab.Screen name="search" component={UpLoad} />
+    <Tab.Screen name="search" component={Notification} />
     <Tab.Screen name="menu" component={Test} />
   </Tab.Navigator>
 );
