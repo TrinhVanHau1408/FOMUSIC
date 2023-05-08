@@ -4,12 +4,10 @@ import React from 'react'
 import BoxTranfer from './BoxTranfer'
 import Title from './Title'
 
-export default function RowBoxTranfer({
-  title = "TREADING & HOT"
-}) {
+export default function RowBoxTranfer({}) {
   return (
     <View style={styles.container}>
-      <Title title={title}/>
+
       <BoxTranfer styles={styles.boxTranfer}/>
     </View>
   )
