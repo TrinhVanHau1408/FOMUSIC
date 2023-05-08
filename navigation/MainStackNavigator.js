@@ -68,5 +68,4 @@ const MainStackNavigator = ({ navigation }) => (
   </Stack.Navigator>
 );
 
-
 export { MainStackNavigator };
