@@ -1,51 +1,86 @@
 import React from 'react'
-import {StyleSheet, View } from 'react-native'
+import { StyleSheet, View, SafeAreaView, ScrollView, FlatList, Image } from 'react-native'
 import HeaderApp from '../components/header/HeaderApp'
 import RowBoxTranfer from '../components/box/RowBoxTranfer'
-import RowBoxTitle from '../components/box/RowBoxTitle'
+import RowBoxTitle from '../components/box/RowBoxTitle';
+import TitleAlbum from '../components/misc/TitleAlbum';
+import SquareAlbum from '../components/misc/SquareAlbum';
+import { images, icons, colors } from '../constants';
+const dataAlbum = [
+    {
+        id: 0,
+        name: 'Name 1',
+        img: images.demo
+    },
+    {
+        id: 1,
+        name: 'Name 2',
+        img: images.demo
+    },
+    {
+        id: 2,
+        name: 'Name 3',
+        img: images.demo
+    },
+    {
+        id: 3,
+        name: 'Name 4',
+        img: images.demo
+    },
+    {
+        id: 4,
+        name: 'Name 5',
+        img: images.demo
+    }
+]
 
-
-export default function Home () {
+export default function Home() {
     return (
-     <View style={styles.container}>
-        <HeaderApp style={styles.header} title={'Home'}/>
-        <View style={styles.content}>
-            <RowBoxTranfer style={styles.tranfer}/>
-            <View style={styles.rowcontent}>
-                <View style={styles.row}>
-                    <RowBoxTitle/>            
+        <ScrollView style={styles.container}>
+            <HeaderApp title={'Home'} />
+            <View>
+                <Image source={icons.musicNote1} style={{ position: 'absolute', left: 0,top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
+                <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0,top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
+            </View>
+            <View style={styles.content}>
+                <TitleAlbum name={'TOP CHARTS'} />
+                <RowBoxTranfer style={styles.tranfer} />
+            </View>
+
+            <View style={{ marginTop: 10, marginLeft: 20 }}>
+                <View >
+                    <TitleAlbum name={'TOP CHARTS'} />
+                    <FlatList
+                        data={dataAlbum}
+                        renderItem={({ item }) =>
+                            <SquareAlbum id={item.id} name={item.name} img={item.img} />}
+                        keyExtractor={(item, index) => index}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
                 </View>
-                <View style={styles.row}>
-                    <RowBoxTitle title="RECENTLY PLAYED"/>            
+
+                <View >
+                    <TitleAlbum name={'TOP CHARTS'} />
+                    <FlatList
+                        data={dataAlbum}
+                        renderItem={({ item }) =>
+                            <SquareAlbum id={item.id} name={item.name} img={item.img} />}
+                        keyExtractor={(item, index) => index}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
                 </View>
             </View>
-        </View>
-     </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
-    header: {
-       flex: 1, 
-    },
-    content:
-    {
-        flex:8,
-        flexDirection: 'column',
-    },
-    rowcontent: {
-       height:"60%",
-       flexDirection: 'column',
-    },
-    tranfer:
-    {
-        height:"40%",
-    },
-    row:
-    {
-        height:"45%",
+    content: {
+        marginHorizontal: 20,
     }
 })

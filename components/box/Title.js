@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
       paddingLeft:"7%",
       fontWeight:"bold",
       color:colors.second,
-      fontSize:20,
+      fontSize:17,
+      lineHeight: 20,
     },
 })
