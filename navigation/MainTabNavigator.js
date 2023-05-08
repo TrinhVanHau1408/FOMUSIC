@@ -14,9 +14,7 @@ import {
   Like,
   DetailPlaylist,
   DetailAlbum,
-  Search,
-  Profile,
-  EditProfile
+  Search
 } from "../views";
 import Playing from "../views/Playing";
 import PlayingMore from "../views/PlayingMore";
@@ -80,14 +78,14 @@ const options = ({ route }) => ({
 const MainTabNavigator = () => (
 
   <Tab.Navigator
-    initialRouteName="menu"
+    initialRouteName="search"
     screenOptions={options}
   >
     <Tab.Screen name="home1" component={Home} />
     {/* <Tab.Screen name="Library" component={Library} /> */}
     <Tab.Screen name="Library" component={Library} />
     <Tab.Screen name="search" component={Search} />
-    <Tab.Screen name="menu" component={Profile} />
+    <Tab.Screen name="menu" component={Test} />
   </Tab.Navigator>
 );
 
