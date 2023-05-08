@@ -71,10 +71,13 @@ const dataSearch = [
   },
 
 ]
-export default function Search() {
+export default function Search({navigation}) {
+  const goBack = () => {
+    navigation.goBack();
+  }
   return (
     <View>
-      <HeaderApp title={'Search'} iconLeft={icons.arrowBack} />
+      <HeaderApp title={'Search'} iconLeft={icons.arrowBack} goBack={goBack} />
       <View style={styles.InputTextContainer}>
         <Image source={icons.search} style={styles.Icon} />
         <TextInput placeholder={'Demo'} style={styles.InputText} />
