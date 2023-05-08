@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, SliderComponent, Slider, SliderBase } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import Slider from '@react-native-community/slider';
 import { colors, icons, images } from '../constants';
 
 
@@ -51,7 +52,13 @@ const Playing = ({ navigation }) => {
 
             {/* PlayingMusic */}
             <View style={styles.audioPlayerContainer}>
-                <Slider style={{ alignSelf: 'stretch', height: 50, color: colors.primary }} />
+                <Slider 
+                style={{ alignSelf: 'stretch', height: 10}}
+                minimumTrackTintColor = {colors.primary}
+                maximumTrackTintColor={colors.primary}
+                thumbTintColor={colors.primary}
+               
+                />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', paddingHorizontal: 10 }}>
                     <Text style={styles.TextTimeSong} >
                         2:30
