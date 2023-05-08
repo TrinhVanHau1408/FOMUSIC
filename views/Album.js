@@ -81,13 +81,17 @@ const dataAlbum = [
   }
 ]
 
-export default function Album() {
+export default function Album({navigation}) {
   const handleButton = () => {
     Alert.alert('Test', 'Library button');
   }
+
+  const goBack = () => {
+    navigation.goBack();
+  }
   return (
     <View>
-      <HeaderApp title='Albums' iconLeft={icons.arrowBack} />
+      <HeaderApp title='Albums' iconLeft={icons.arrowBack} goBack={goBack} />
       <View style={styles.container}>
         <FlatList
           data={dataAlbum}

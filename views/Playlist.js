@@ -36,13 +36,20 @@ const dataPlaylist = [
         img: images.demo
     }
 ]
-export default function Playlist() {
+export default function Playlis({navigation}) {
     const handleButton = () => {
         Alert.alert('Test', 'Library playlist');
     }
+    const goBack = () => {
+        navigation.goBack();
+    }
     return (
         <View>
-            <HeaderApp title={'Playlist'} iconLeft={icons.arrowBack} iconRight={icons.option} />
+            <HeaderApp
+                title={'Playlist'}
+                iconLeft={icons.arrowBack}
+                iconRight={icons.option}
+                goBack={goBack} />
             <View style={styles.container}>
                 <FlatList
                     data={dataPlaylist}
