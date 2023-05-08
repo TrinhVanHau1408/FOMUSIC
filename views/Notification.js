@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Slider,  } from 'react-native';
+import { View } from 'react-native';
 import { colors, icons, images } from '../constants';
 import HeaderApp from '../components/header/HeaderApp';
-import { FlatList, enableExperimentalWebImplementation } from 'react-native-gesture-handler';
+import { FlatList } from 'react-native-gesture-handler';
 import ItemNoti from '../components/notification/ItemNoti';
 import defaultAvt from '../assets/images/defaultAvt.jpg';
-import MyNavigation from '../components/misc/MyNavigation';
-
 
 const dataNoti = [
     {

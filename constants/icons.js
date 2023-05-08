@@ -48,5 +48,7 @@ export default {
     listAdd: require('../assets/images/list-add.png'),
     removeCircle: require('../assets/images/remove-circle.png'),
     playlistAdd: require('../assets/images/add-to-list.png'),
-
+    save: require('../assets/images/icon_save.png'),
+    save2: require('../assets/images/icon_save2.jpg'),
+    greyAvt: require('../assets/images/grey_avt.png')
 }
