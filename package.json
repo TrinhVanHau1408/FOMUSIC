@@ -17,6 +17,7 @@
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "babel-plugin-twin": "^1.1.0",
+    "firebase": "^9.22.0",
     "install": "^0.13.0",
     "npm": "^9.6.6",
     "or": "^0.2.0",
