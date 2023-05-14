@@ -27,12 +27,16 @@ import PlayingFullLyric from "../views/PlayingFullLyric";
 import Notification from "../views/Notification";
 import Upload from "../views/UpLoad";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Profile from "../views/Profile";
 import Setting from "../views/Setting";
 import BasicSettings from "../views/BasicSettings";
 import InterfaceStyle from "../views/InterfaceStyle";
 import Notifications from "../views/Notifications";
 =======
+=======
+import Profile from "../views/Profile";
+>>>>>>> 03ff1fce792b5c7e39c7971d1e71213c0370bd24
 
 >>>>>>> parent of 134e1d4 (view Setting, Basic Setting, Notifications,Interface Style)
 const Stack = createNativeStackNavigator();
@@ -49,9 +53,12 @@ const MainStackNavigator = ({ navigation }) => (
       options={{ headerShown: false }}
     />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> parent of 134e1d4 (view Setting, Basic Setting, Notifications,Interface Style)
+=======
+>>>>>>> 03ff1fce792b5c7e39c7971d1e71213c0370bd24
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" component={Login} />
@@ -69,10 +76,14 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Following" component={Following} />
     <Stack.Screen name="Like" component={Like} />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Stack.Screen name="Notification" component={Notification} /> 
 =======
     <Stack.Screen name="Notification" component={Notification} />
 >>>>>>> parent of 134e1d4 (view Setting, Basic Setting, Notifications,Interface Style)
+=======
+    <Stack.Screen name="Notification" component={Notification} /> 
+>>>>>>> 03ff1fce792b5c7e39c7971d1e71213c0370bd24
     <Stack.Screen name="Upload" component={Upload} />
     <Stack.Screen name="DetailAlbum" component={DetailAlbum} />
 <<<<<<< HEAD
@@ -89,7 +100,12 @@ const MainStackNavigator = ({ navigation }) => (
 
 =======
     <Stack.Screen name="Search" component={Search} />
+<<<<<<< HEAD
 >>>>>>> parent of 134e1d4 (view Setting, Basic Setting, Notifications,Interface Style)
+=======
+    <Stack.Screen name="Profile" component={Profile} />
+
+>>>>>>> 03ff1fce792b5c7e39c7971d1e71213c0370bd24
   </Stack.Navigator>
 );
 
