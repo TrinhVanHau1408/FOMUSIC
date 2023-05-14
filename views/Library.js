@@ -66,13 +66,14 @@ export default function Library({ navigation }) {
   const handleNavigatorLikes = () => {
     navigation.navigate('Like');
   }
+  
   return (
     <SafeAreaView style={{ flex: 1, }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderApp title={'Library'} />
         <View>
-          <Image source={icons.musicNote1} style={{ position: 'absolute', left: 0, bottom: '15%', height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
-          <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0, bottom: '15%', height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
+          <Image source={icons.musicNote1} style={{ position: 'absolute', left: 0, top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
+          <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0, top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
         </View>
         <View style={{ marginLeft: 24 }}>
           <View >

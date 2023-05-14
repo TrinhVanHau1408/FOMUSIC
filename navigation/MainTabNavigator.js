@@ -20,6 +20,7 @@ import {
 import Playing from "../views/Playing";
 import PlayingMore from "../views/PlayingMore";
 import UpLoad from "../views/UpLoad";
+import Profile from "../views/Profile";
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,7 +48,7 @@ const options = ({ route }) => ({
 
     let icon = screenName == 'home1' ? icons.home : (
       screenName == 'Library' ? icons.library : (
-        screenName == 'search' ? icons.search : icons.menu));
+        screenName == 'Search' ? icons.search : icons.menu));
 
     return <Image
       source={icon}
@@ -80,14 +81,14 @@ const options = ({ route }) => ({
 const MainTabNavigator = () => (
 
   <Tab.Navigator
-    initialRouteName="search"
+    initialRouteName="home1"
     screenOptions={options}
   >
     <Tab.Screen name="home1" component={Home} />
     {/* <Tab.Screen name="Library" component={Library} /> */}
     <Tab.Screen name="Library" component={Library} />
-    <Tab.Screen name="search" component={Notification} />
-    <Tab.Screen name="menu" component={Test} />
+    <Tab.Screen name="Search" component={Search} />
+    <Tab.Screen name="Menu" component={Profile} />
   </Tab.Navigator>
 );
 

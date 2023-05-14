@@ -16,7 +16,8 @@ import {
   Like,
   DetailPlaylist,
   DetailAlbum,
-  Search} from "../views";
+  Search
+} from "../views";
 
 
 import { MainTabNavigator } from "./MainTabNavigator";
@@ -25,7 +26,15 @@ import PlayingMore from "../views/PlayingMore";
 import PlayingFullLyric from "../views/PlayingFullLyric";
 import Notification from "../views/Notification";
 import Upload from "../views/UpLoad";
+<<<<<<< HEAD
+import Profile from "../views/Profile";
+import Setting from "../views/Setting";
+import BasicSettings from "../views/BasicSettings";
+import InterfaceStyle from "../views/InterfaceStyle";
+import Notifications from "../views/Notifications";
+=======
 
+>>>>>>> parent of 134e1d4 (view Setting, Basic Setting, Notifications,Interface Style)
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = ({ navigation }) => (
@@ -39,7 +48,10 @@ const MainStackNavigator = ({ navigation }) => (
       component={MainTabNavigator}
       options={{ headerShown: false }}
     />
+<<<<<<< HEAD
+=======
 
+>>>>>>> parent of 134e1d4 (view Setting, Basic Setting, Notifications,Interface Style)
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" component={Login} />
@@ -56,10 +68,28 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Album" component={Album} />
     <Stack.Screen name="Following" component={Following} />
     <Stack.Screen name="Like" component={Like} />
+<<<<<<< HEAD
+    <Stack.Screen name="Notification" component={Notification} /> 
+=======
     <Stack.Screen name="Notification" component={Notification} />
+>>>>>>> parent of 134e1d4 (view Setting, Basic Setting, Notifications,Interface Style)
     <Stack.Screen name="Upload" component={Upload} />
     <Stack.Screen name="DetailAlbum" component={DetailAlbum} />
+<<<<<<< HEAD
+    <Stack.Screen name="Search" component={Search} /> 
+    <Stack.Screen name="Profile" component={Profile} />
+
+
+    <Stack.Screen name="Setting" component={Setting} />
+    <Stack.Screen name="BasicSettings" component={BasicSettings} />
+
+    <Stack.Screen name="InterfaceStyle" component={InterfaceStyle} />
+    <Stack.Screen name="Notifications" component={Notifications} />
+
+
+=======
     <Stack.Screen name="Search" component={Search} />
+>>>>>>> parent of 134e1d4 (view Setting, Basic Setting, Notifications,Interface Style)
   </Stack.Navigator>
 );
 
