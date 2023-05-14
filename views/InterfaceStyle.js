@@ -21,7 +21,7 @@ export default function InterfaceStyle() {
         <View style={styles.container}>
             <HeaderApp iconLeft={icons.arrowBack} title='Interface Style'/>
             <View style={styles.contentContainer}>
-                <MyWhiteButton title='Light' style={{bac}}/>                                                            
+                <MyWhiteButton title='Light'/>                                                            
                 <MyWhiteButton title='Dark'/>
             </View>
         </View>

@@ -64,14 +64,14 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Upload" component={Upload} />
     <Stack.Screen name="DetailAlbum" component={DetailAlbum} />
     <Stack.Screen name="Search" component={Search} /> 
-    <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen name="Profile" component={Profile} /> */}
 
 
     <Stack.Screen name="Setting" component={Setting} />
-    <Stack.Screen name="BasicSettings" component={BasicSettings} />
+    {/* <Stack.Screen name="BasicSettings" component={BasicSettings} /> */}
 
-    <Stack.Screen name="InterfaceStyle" component={InterfaceStyle} /> */}
-    <Stack.Screen name="Notifications" component={Notifications} />
+    {/* <Stack.Screen name="InterfaceStyle" component={InterfaceStyle} /> */}
+    {/* <Stack.Screen name="Notifications" component={Notifications} /> */}
 
 
   </Stack.Navigator>
