@@ -21,7 +21,7 @@ const Playing = ({ navigation }) => {
                     style={{
                         fontFamily: 'Montserrat',
                         fontStyle: 'normal',
-                        fontWeight: 700,
+                        fontWeight: '700',
                         fontSize: 17,
                         lineHeight: 21,
                         color: colors.black,
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 13,
         lineHeight: 16,
         // textAlign: 'center',
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 24,
         lineHeight: 29,
         textAlign: 'center',
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 500,
+        fontWeight: '500',
         fontSize: 14,
         lineHeight: 17,
         /* identical to box height */
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 12,
         lineHeight: 15,
         textAlign: 'left',
