@@ -15,6 +15,7 @@ import DetailPlaylist from "./DetailPlaylist";
 import DetailAlbum from "./DetailAlbum";
 import Search from "./Search";
 import Notification from "./Notification";
+import Systems from "./Systems";
 export {
     Test,
     Register,
@@ -33,5 +34,6 @@ export {
     DetailAlbum,
     Search,
     Notification,
+    Systems
     
 }

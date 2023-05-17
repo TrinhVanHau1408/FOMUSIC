@@ -16,7 +16,8 @@ import {
   Like,
   DetailPlaylist,
   DetailAlbum,
-  Search
+  Search,
+  Systems
 } from "../views";
 
 
@@ -62,6 +63,7 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="DetailAlbum" component={DetailAlbum} />
     <Stack.Screen name="Search" component={Search} />
     <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen name="Systems" component={Systems} />
 
   </Stack.Navigator>
 );

@@ -15,7 +15,8 @@ import {
   DetailPlaylist,
   DetailAlbum,
   Search,
-  Notification
+  Notification,
+  Systems
 } from "../views";
 import Playing from "../views/Playing";
 import PlayingMore from "../views/PlayingMore";
@@ -88,7 +89,7 @@ const MainTabNavigator = () => (
     {/* <Tab.Screen name="Library" component={Library} /> */}
     <Tab.Screen name="Library" component={Library} />
     <Tab.Screen name="Search" component={Search} />
-    <Tab.Screen name="Menu" component={Profile} />
+    <Tab.Screen name="Menu" component={Systems} />
   </Tab.Navigator>
 );
 
