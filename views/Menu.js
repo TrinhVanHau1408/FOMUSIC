@@ -3,7 +3,8 @@ import React from 'react'
 import { icons } from '../constants'
 import HeaderApp from '../components/header/HeaderApp'
 import ItemMenu from '../components/menu/ItemMenu'
-
+import {signOut, auth} from '../firebase/connectDB'
+import { removeDataAsyncStorage } from '../untiles/AsyncStorage'
 export default function Menu({navigation}) {
     const handleNavigatorSetting = () => {
         navigation.navigate('Setting');
@@ -21,7 +22,17 @@ export default function Menu({navigation}) {
         navigation.navigate('Upload');
     }
     const handleNavigatorLogout = () => {
-        navigation.navigate('Logout');
+        signOut(auth).then(() => {
+           
+           let isLogout = removeDataAsyncStorage('user');
+           if (isLogout) {
+            navigation.navigate('Login');
+           } else {
+            console.log('Error remove user - logout');
+           }
+          }).catch((error) => {
+            console.log('Logout error: ', error.code);
+          });
     }
     return (
         <View style={{

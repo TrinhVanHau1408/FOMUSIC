@@ -10,7 +10,8 @@ import {
   signInWithEmailAndPassword,
   signInWithRedirect,
   GoogleAuthProvider,
-  sendEmailVerification 
+  sendEmailVerification,
+  signOut
  } from 'firebase/auth';
 import { 
   getDatabase, 
@@ -57,6 +58,7 @@ export {
   serverTimestamp,
   provider,
   signInWithRedirect,
-  sendEmailVerification
+  sendEmailVerification,
+  signOut
   
 }
