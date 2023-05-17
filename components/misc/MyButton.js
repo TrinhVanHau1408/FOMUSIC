@@ -3,8 +3,6 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'reac
 import { colors, icons } from '../constants'
 export default function MyButton(props) {
   const {title, handleNavigator, handleButton} = props;
-  
-  console.log('Error saving data:', handleButton);
   return (
     <View style={styles.container}>
       <TouchableOpacity 

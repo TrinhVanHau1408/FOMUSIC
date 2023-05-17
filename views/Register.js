@@ -102,7 +102,7 @@ const Register = ({ navigation }) => {
             console.log('Error sending email verification:', error);
           });
         firebaseDatabaseSet(
-          firebaseDatabaseRef(firebaseDatabase, `fomusic/users/${userId}`), {
+          firebaseDatabaseRef(firebaseDatabase, `users/${userId}`), {
           displayName: userName,
           email: user.email,
           emailVerified: user.emailVerified,
