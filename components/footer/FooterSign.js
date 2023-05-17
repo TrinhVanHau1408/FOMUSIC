@@ -5,7 +5,7 @@ const FooterSign = () => {
     return (
 
         <View style={styles.rowIcon}>
-            <TouchableOpacity onPress={handleLoginWithGoogle}>
+            <TouchableOpacity>
                 <Image source={icons.google} style={styles.icon}/>
             </TouchableOpacity>
             <TouchableOpacity>
