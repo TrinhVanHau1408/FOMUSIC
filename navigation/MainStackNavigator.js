@@ -34,19 +34,17 @@ import InterfaceStyle from "../views/InterfaceStyle";
 import Notifications from "../views/Notifications";
 
 const Stack = createNativeStackNavigator();
-
-const MainStackNavigator = ({ navigation }) => (
+const MainStackNavigator = () => (
   <Stack.Navigator
     initialRouteName='Home1'
     screenOptions={{
       headerShown: false
     }} >
-    {/* <Stack.Screen
+    <Stack.Screen
       name="Home1"
       component={MainTabNavigator}
       options={{ headerShown: false }}
     />
-
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" component={Login} />
@@ -63,21 +61,13 @@ const MainStackNavigator = ({ navigation }) => (
     <Stack.Screen name="Album" component={Album} />
     <Stack.Screen name="Following" component={Following} />
     <Stack.Screen name="Like" component={Like} />
-
     <Stack.Screen name="Notification" component={Notification} /> 
     <Stack.Screen name="Upload" component={Upload} />
     <Stack.Screen name="DetailAlbum" component={DetailAlbum} />
     <Stack.Screen name="Search" component={Search} />
     <Stack.Screen name="Profile" component={Profile} />
 
-    <Stack.Screen name="Setting" component={Setting} />
-    <Stack.Screen name="BasicSettings" component={BasicSettings} />
-
-    <Stack.Screen name="InterfaceStyle" component={InterfaceStyle} /> */}
-    <Stack.Screen name="Notifications" component={Notifications} />
-
-
   </Stack.Navigator>
 );
 
-export { MainStackNavigator };
+export { MainStackNavigator }

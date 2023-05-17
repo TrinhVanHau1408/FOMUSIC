@@ -3,11 +3,15 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'reac
 import { colors } from '../../constants';
 export default function MyInput(props) {
 
-  const { icon, placeholder } = props;
+  const { icon, placeholder, setState, valueState } = props;
   return (
     <View style={styles.InputTextContainer}>
       <Image source={icon} style={styles.Icon} />
-      <TextInput placeholder={placeholder} style={styles.InputText} />
+      <TextInput 
+      placeholder={placeholder} 
+      style={styles.InputText}
+      value={valueState}
+      onChangeText={text => setState(text)}/>
     </View>
   )
 }

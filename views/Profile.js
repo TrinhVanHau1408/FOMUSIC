@@ -1,12 +1,12 @@
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderApp from '../components/header/HeaderApp'
 import { icons, images, colors } from '../constants'
 import MyLike from '../components/like/MyLike';
 import ControlMusic from '../components/misc/ControlMusic';
 import RectangleAlbum from '../components/misc/RectangleAlbum';
 import TitleAlbum from '../components/misc/TitleAlbum'
-
+import { getDataAsyncStorage } from '../untiles/AsyncStorage';
 const dataLike = [
     {
         id: 1,
@@ -83,8 +83,18 @@ const follower = "100"
 const following = "124"
 export default function Profile({navigation}) {
     const [isVisible, setIsVisible] = useState(false);
-
+    
+  
+    const[user, setUser] = useState();
     const [idSong, setIdSong] = useState(0);
+
+    useEffect(() => {
+        getDataAsyncStorage('user')
+        .then((userCurr) => {
+            setUser(userCurr);
+        })
+        
+    }, [])
     const handleLayout = (id) => {
         setIsVisible(true);
         setIdSong(id);
@@ -110,10 +120,10 @@ export default function Profile({navigation}) {
             <View style={styles.container}>
                 <View style={styles.containerImg}>
                     <View style={{ marginLeft: -100 , marginRight: 15 }}>
-                        <Image source={images.demo} style={styles.img} />   
+                        <Image source={(user&&user.imgUrl)?user.imgUrl:images.demo} style={styles.img} />   
                     </View>
                     <View>
-                        <Text style={{ fontSize: 24, fontWeight: 'bold', color: colors.black }}>{username}</Text>
+                        <Text style={{ fontSize: 24, fontWeight: 'bold', color: colors.black }}>{user&&user.displayName}</Text>
                         <Text style={{ }}>Follower {follower}</Text>
                         <Text>Following {following}</Text>
                     </View>

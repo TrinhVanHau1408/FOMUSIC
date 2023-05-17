@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontFamily: 'Montserrat',
         fontSize: 16,
-        fontWeight: 700,
+        fontWeight: '700',
         lineHeight: 19.5,
         marginBottom: 2,
     },

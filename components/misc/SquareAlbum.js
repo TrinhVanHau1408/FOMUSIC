@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     textName: {
         fontFamily: 'Montserrat',
         fontSize: 14,
-        fontWeight: 500,
+        fontWeight: '500',
         textAlign: 'center',
         color: '#000000'
     }

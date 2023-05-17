@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Lexend',
         fontSize: 17,
-        fontWeight: 400,
+        fontWeight: '400',
         paddingLeft: '5%'
     }
 })

@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
     text:
     {
         color: colors.primary,
-        fontWeight: 700,
         fontSize: 24,
         fontStyle: 'normal',
         lineHeight: 30,
