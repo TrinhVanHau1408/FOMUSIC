@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 13,
         lineHeight: 16,
         // textAlign: 'center',
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 24,
         lineHeight: 29,
         textAlign: 'center',
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 12,
         lineHeight: 15,
         textAlign: 'left',
