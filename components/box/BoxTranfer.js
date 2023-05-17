@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from 'react-native'
-// import Swiper from 'react-native-swiper';
+import Swiper from 'react-native-swiper';
 import React, { useRef, useState } from 'react'
 
 import { colors, icons } from '../../constants';

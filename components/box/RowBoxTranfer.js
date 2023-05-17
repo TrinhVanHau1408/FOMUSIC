@@ -5,7 +5,7 @@ import BoxTranfer from './BoxTranfer'
 import Title from './Title'
 
 export default function RowBoxTranfer({
-  title = "TREADING & HOT"
+  title = "TRENDING & HOT"
 }) {
   return (
     <View style={styles.container}>

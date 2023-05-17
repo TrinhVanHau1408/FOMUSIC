@@ -22,6 +22,9 @@ export default HeaderApp
 
 const styles = StyleSheet.create({
   container1: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 15,
   },
   container2: {
@@ -65,6 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     flex: 1,
+    alignSelf: 'center',
   },
 
   color1: {
