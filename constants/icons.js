@@ -1,7 +1,9 @@
 export default {
     logoFomusic: require('../assets/images/logo-fomusic.png'),
+    fomusic: require('../assets/images/fomusic.png'),
     arrowBack: require('../assets/images/arrow-back-simple.png'),
     checkedCircle: require('../assets/images/check-circle-2.png'),
+    unCheckedCircle: require('../assets/images/unChecked.png'),
     eyeHidden: require('../assets/images/eye-hidden.png'),
     eyeOpen: require('../assets/images/eye-open.png'),
     facebook: require('../assets/images/facebook.png'),
