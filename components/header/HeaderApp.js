@@ -22,6 +22,9 @@ export default HeaderApp
 
 const styles = StyleSheet.create({
   container1: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 15,
   },
   container2: {
