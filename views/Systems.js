@@ -82,6 +82,7 @@ export default function Systems({navigation}) {
                         {
                             dataLike.map((item, index) => {
                                 return <MyLike
+                                    key={item.id}
                                     id={item.id}
                                     idSongSelected={idSong}
                                     songName={item.songName}
