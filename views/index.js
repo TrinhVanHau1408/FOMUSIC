@@ -17,6 +17,10 @@ import Search from "./Search";
 import Notification from "./Notification";
 import Wellcome from "./Wellcome";
 import Menu from "./Menu";
+import BasicSettings from "./BasicSettings";
+import Setting from "./Setting";
+import Notifications from "./Notifications";
+import InterfaceStyle from "./InterfaceStyle";
 export {
     Test,
     Register,
@@ -36,6 +40,10 @@ export {
     Search,
     Notification,
     Wellcome,
-    Menu
+    Menu,
+    BasicSettings,
+    Setting,
+    Notifications,
+    InterfaceStyle
     
 }
