@@ -5,6 +5,7 @@ import { MainStackNavigator } from './navigation/StackNavigator';
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { ForgotPassword, Login, NewPassword, Register, VerifyAccount, Wellcome } from './views';
 import { MainTabNavigator } from './navigation/MainTabNavigator';
+import Playing from './views/Playing';
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -13,12 +14,13 @@ function App() {
     // <AuthProvider>
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='App'
+        initialRouteName='Login'
         screenOptions={{
           headerShown: false
         }}
       >
         <Stack.Screen name='Init' component={Wellcome} />
+        <Stack.Screen name='Playing' component={Playing} />
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Register' component={Register} />
         <Stack.Screen name='VerifyAccount' component={VerifyAccount} />

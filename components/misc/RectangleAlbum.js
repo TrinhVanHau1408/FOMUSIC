@@ -6,7 +6,7 @@ export default function RectangleAlbum(props) {
     return (
         <View style={[styles.container, isPlaylist && styles.container1]}>
             <TouchableOpacity onPress={() => handleNavigator(id)}>
-                <Image source={img ? img : images.demo} style={[styles.img, isPlaylist ? styles.sizeImg2 : styles.sizeImg1]} />
+                <Image source={img ? img : images.demo} style={[styles.img, isPlaylist ? styles.sizeImg2 : styles.sizeImg1, styles.resizeMode]} />
                 <Text style={[styles.textName, isPlaylist && styles.textBold, isDetailPlaylist && styles.marginTop]}>{name}</Text>
             </TouchableOpacity>
         </View>
@@ -50,5 +50,8 @@ const styles = StyleSheet.create({
     },
     marginTop: {
         marginTop: 18
+    },
+    resizeMode: {
+        resizeMode: 'center'
     }
 })
