@@ -10,7 +10,7 @@ export default function Menu({navigation}) {
         navigation.navigate('Setting');
     }
     const handleNavigatorSystem = () => {
-        navigation.navigate('System');
+        navigation.navigate('Systems');
     }
     const handleNavigatorNotification = () => {
         navigation.navigate('Notifications');

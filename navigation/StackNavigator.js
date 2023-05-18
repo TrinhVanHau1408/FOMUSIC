@@ -19,6 +19,7 @@ import {
   Menu,
   Login,
   ForgotPassword,
+  Systems,
   Setting,
   InterfaceStyle,
   BasicSettings,
@@ -105,11 +106,13 @@ const MenuStack = ({ navigation }) => (
     <Stack.Screen name='Profile' component={Profile} />
     <Stack.Screen name='BasicSettings ' component={edit} />
     <Stack.Screen name='Notification' component={Notification} />
+    <Stack.Screen name='Systems' component={Systems} />
     <Stack.Screen name='Notifications' component={Notifications} />
     <Stack.Screen name='Setting' component={Setting}/>
     <Stack.Screen name='InterfaceStyle' component={InterfaceStyle} />
     <Stack.Screen name='BasicSettings' component={BasicSettings} />
   </Stack.Navigator> 
+
 )
 
 
