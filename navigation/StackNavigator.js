@@ -21,7 +21,8 @@ import {
   ForgotPassword,
   Setting,
   InterfaceStyle,
-  BasicSettings
+  BasicSettings,
+  Home3
 } from "../views";
 
 
@@ -60,7 +61,7 @@ const HomeStack = ({ navigation }) => (
       headerShown: false
     }}>
     <Stack.Screen name='HomeStack' component={Home} />
-    <Stack.Screen name='BXH' component={Test} />
+    <Stack.Screen name='BXH' component={Home3} />
   </Stack.Navigator>
 )
 

@@ -5,7 +5,7 @@ export default function RectangleAlbum(props) {
     const { id, name, img, handleNavigator, isPlaylist, isDetailPlaylist } = props
     return (
         <View style={[styles.container, isPlaylist && styles.container1]}>
-            <TouchableOpacity onPress={handleNavigator}>
+            <TouchableOpacity onPress={() => handleNavigator(id)}>
                 <Image source={img ? img : images.demo} style={[styles.img, isPlaylist ? styles.sizeImg2 : styles.sizeImg1]} />
                 <Text style={[styles.textName, isPlaylist && styles.textBold, isDetailPlaylist && styles.marginTop]}>{name}</Text>
             </TouchableOpacity>

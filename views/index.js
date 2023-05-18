@@ -21,6 +21,7 @@ import BasicSettings from "./BasicSettings";
 import Setting from "./Setting";
 import Notifications from "./Notifications";
 import InterfaceStyle from "./InterfaceStyle";
+import Home3 from "./Home3";
 export {
     Test,
     Register,
@@ -44,6 +45,8 @@ export {
     BasicSettings,
     Setting,
     Notifications,
-    InterfaceStyle
+    InterfaceStyle,
+    Home3
+    
     
 }
