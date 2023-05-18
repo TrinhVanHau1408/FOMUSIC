@@ -48,9 +48,9 @@ const MainStackNavigator = ({ navigation }) => (
 
     {/* <Stack.Screen name="Home" component={Home} /> */}
     
-    <Stack.Screen name="Register" component={Register} />
+    {/* <Stack.Screen name="Register" component={Register} /> */}
 
-    <Stack.Screen name="Login" component={Login} />
+    {/* <Stack.Screen name="Login" component={Login} /> */}
 
     {/* <Stack.Screen name="Playing" component={Playing} />
     <Stack.Screen name="PlayingMore" component={PlayingMore} />
@@ -82,7 +82,7 @@ const MainStackNavigator = ({ navigation }) => (
     {/* <Stack.Screen name="InterfaceStyle" component={InterfaceStyle} /> */}
     {/* <Stack.Screen name="Notifications" component={Notifications} /> */}
 
-    {/* <Stack.Screen name="Home3" component={Home3} /> */}
+    <Stack.Screen name="Home3" component={Home3} />
 
 
   </Stack.Navigator>
