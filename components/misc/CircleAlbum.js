@@ -8,7 +8,7 @@ export default function CircleAlbum(props) {
         <View style={styles.container}>
             <TouchableOpacity 
             style={styles.buttonƯ}
-            onPress={handleNavigator}
+            onPress={() =>handleNavigator(id)}
             >
                 <Image source={img ? img : images.demo} style={styles.img} />
                 <Text style={styles.textName}>{name}</Text>
