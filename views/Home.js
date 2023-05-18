@@ -86,7 +86,7 @@ export default function Home({ navigation }) {
         <View style={styles.container}>
             <ScrollView>
                 <TouchableOpacity
-                    onPress={() => { navigation, navigate('BXH') }}
+                    onPress={() => { navigation.navigate('BXH') }}
                 >
                     <HeaderApp title={'Home'} />
                 </TouchableOpacity>
@@ -95,7 +95,12 @@ export default function Home({ navigation }) {
                     <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0, top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
                 </View>
                 <View style={styles.content}>
+                <TouchableOpacity
+                    onPress={() => { navigation.navigate('BXH') }}
+                >
                     <TitleAlbum name={'TRENDING & HOT'} />
+                </TouchableOpacity>
+                   
                     {/* <RowBoxTranfer style={styles.tranfer} /> */}
                     <BoxTranfer />
                 </View>

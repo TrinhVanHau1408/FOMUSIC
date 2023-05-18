@@ -16,14 +16,26 @@ const styles=StyleSheet.create({
         marginTop: '5%',
     },
 })
-export default function Setting() {
+export default function Setting({navigation}) {
+    const handleNavigatorBasicSetting = () => {
+        navigation.navigate('BasicSettings')
+    }
+    const handleNavigatorInterfaceStyle = () => {
+        navigation.navigate('InterfaceStyle')
+    }
+    const handleNavigatorNotifications = () => {
+        navigation.navigate('Notification')
+    }
+    const goBack= () => {
+        navigation.goBack()
+    }
     return(
         <View style={styles.container}>
-            <HeaderApp iconLeft={icons.arrowBack} title='Setting'/>
+            <HeaderApp iconLeft={icons.arrowBack} title='Setting' goBack={goBack}/>
             <View style={styles.contentContainer}>
-                <MyWhiteButton title='Basic settings'/>
-                <MyWhiteButton title='Interface style'/>
-                <MyWhiteButton title='Notifications'/>
+                <MyWhiteButton title='Basic settings' handleNavigator={handleNavigatorBasicSetting}/>
+                <MyWhiteButton title='Interface style' handleNavigator={handleNavigatorInterfaceStyle}/>
+                <MyWhiteButton title='Notifications' handleNavigator={handleNavigatorNotifications}/>
             </View>
         </View>
     )

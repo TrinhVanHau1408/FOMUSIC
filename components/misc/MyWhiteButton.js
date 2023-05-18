@@ -8,7 +8,9 @@ export default function MyButtonWithCheckBox(props) {
 
   return (
     <View >
-      <TouchableOpacity style={(styles.container)}>
+      <TouchableOpacity
+        onPress={handleNavigator}
+        style={(styles.container)}>
         <Text style={styles.title}>{title}</Text>
       </TouchableOpacity>
     </View>
