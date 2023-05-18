@@ -8,36 +8,68 @@ import SquareAlbum from '../components/misc/SquareAlbum';
 import ControlMusic from '../components/misc/ControlMusic';
 import BoxTranfer from '../components/box/BoxTranfer';
 import { images, icons, colors } from '../constants';
-const dataLike = [
+ 
+ const music = [
     {
-        id: 1,
-        songName: 'Song name 1',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 1',
-        isLiked: true
-    },
-    {
-        id: 2,
-        songName: 'Song name 2',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 2',
-        isLiked: false
-    },
-    {
-        id: 3,
-        songName: 'Song name 3',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 3',
-        isLiked: false
-    },
-    {
-        id: 4,
-        songName: 'Song name 4',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 4',
-        isLiked: true
-    }
+    title: 'Lovely',
+    artist: 'Billie Eilish',
+    songImg: images.imgLovely,
+    // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
+    duration: 2 * 60 + 53,
+    id: '1',
+  },
+  {
+    title: 'Understand',
+    artist: 'Keshi',
+    songImg: images.imgUnderstand,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '2',
+    track_number: '2'
+  },{
+    title: 'Snooze',
+    artist: 'SZA',
+    songImg: images.imgSZATout,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '3',
+    track_number: '3'
+  },{
+    title: 'If you',
+    artist: 'BigBang',
+    songImg: images.imgIfYou,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '4',
+    track_number: '4'
+  },{
+    title: 'Shoong',
+    artist: 'Teayang',
+    songImg: images.imgSZATout,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '5',
+    track_number: '5'
+  },{
+    title: 'Die For You',
+    artist: 'The Weeknd',
+    songImg: images.imgDieForYou,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '6',
+    track_number: '6'
+ },
+ {
+    title: 'double take',
+    artist: 'dhruv',
+    songImg: images.imgDoubleTakeL,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '7',
+    track_number: '7'
+  }
 ]
+ 
 
 export default function Home({ navigation }) {
     const [isVisible, setIsVisible] = useState(false);
@@ -59,7 +91,7 @@ export default function Home({ navigation }) {
                 <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0, top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
             </View>
             <View style={styles.content}>
-                <TitleAlbum name={'TOP CHARTS'} />
+                <TitleAlbum name={'TRENDING & HOT'} />
                 {/* <RowBoxTranfer style={styles.tranfer} /> */}
                 <BoxTranfer />
             </View>
@@ -68,11 +100,11 @@ export default function Home({ navigation }) {
                 <View >
                     <TitleAlbum name={'TOP CHARTS'} />
                     <FlatList
-                        data={dataLike}
+                        data={music}
                         renderItem={({ item }) =>
                             <SquareAlbum
                                 id={item.id}
-                                name={item.songName}
+                                name={item.title}
                                 img={item.songImg}
                                 handleLayout={handleLayout} />}
                         keyExtractor={(item, index) => index}
@@ -82,13 +114,13 @@ export default function Home({ navigation }) {
                 </View>
 
                 <View >
-                    <TitleAlbum name={'TOP CHARTS'} />
+                    <TitleAlbum name={'RECENTLY PLAYED'} />
                     <FlatList
-                        data={dataLike}
+                        data={music}
                         renderItem={({ item }) =>
                             <SquareAlbum
                                 id={item.id}
-                                name={item.songName}
+                                name={item.title}
                                 img={item.songImg}
                                 handleLayout={handleLayout} />}
                         keyExtractor={(item, index) => index}

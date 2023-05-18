@@ -13,7 +13,7 @@ function App() {
     // <AuthProvider>
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='Login'
+        initialRouteName='App'
         screenOptions={{
           headerShown: false
         }}
