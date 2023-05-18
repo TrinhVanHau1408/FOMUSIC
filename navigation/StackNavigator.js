@@ -18,7 +18,10 @@ import {
   Wellcome,
   Menu,
   Login,
-  ForgotPassword
+  ForgotPassword,
+  Setting,
+  InterfaceStyle,
+  BasicSettings
 } from "../views";
 
 
@@ -99,7 +102,10 @@ const MenuStack = ({ navigation }) => (
     <Stack.Screen name='MenuStack' component={Menu} />
     <Stack.Screen name='Profile' component={Profile} />
     <Stack.Screen name='Notification' component={Notification} />
-  </Stack.Navigator>
+    <Stack.Screen name='Setting' component={Setting}/>
+    <Stack.Screen name='InterfaceStyle' component={InterfaceStyle} />
+    <Stack.Screen name='BasicSettings ' component={BasicSettings} />
+  </Stack.Navigator> 
 )
 
 
