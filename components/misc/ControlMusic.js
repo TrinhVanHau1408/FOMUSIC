@@ -5,7 +5,7 @@ const heigtScreen = Dimensions.get('window').height;
 
 export default function ControlMusic({ song, handleNavigator }) {
 
-    const { songName, songImg, artistName } = song;
+    const { title, songImg, artist } = song;
     
     // Alert.alert('Control',songName + ' '+ songImg + ' ' + artistName)
     const handleSkipPrevious = () => Alert.alert('Test button', 'Skip previous');
@@ -21,10 +21,10 @@ export default function ControlMusic({ song, handleNavigator }) {
                 </View>
                </TouchableOpacity>
                 <View style={styles.info}>
-                    <Text style={styles.infoNameMusic}>{songName}</Text>
+                    <Text style={styles.infoNameMusic}>{title}</Text>
                     <Text
                         style={styles.infoNameArtist}
-                    >{artistName}</Text>
+                    >{artist}</Text>
                 </View>
                 
 
