@@ -130,7 +130,7 @@ export default function Home({ navigation }) {
                 </View>
             </View>
          </ScrollView>
-            {isVisible && <ControlMusic song={dataLike.find(({ id }) => id === idSong)} handleNavigator={handleNavigatorPlaying} />}
+            {isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} handleNavigator={handleNavigatorPlaying} />}
         </View>
 
     )
