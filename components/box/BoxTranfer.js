@@ -16,13 +16,13 @@ export default function BoxTranfer() {
           autoplay={true}
         >
           <View style={styles.slide}>
-            <Image source={images.defaultAvt} style={styles.img} />
+            <Image source={images.imgBanner1} style={styles.img} />
           </View>
           <View style={styles.slide}>
-            <Image source={images.defaultAvt} style={styles.img} />
+            <Image source={images.imgBanner2} style={styles.img} />
           </View>
           <View style={styles.slide}>
-            <Image source={images.demo} style={styles.img} />
+            <Image source={images.imgBanner3} style={styles.img} />
           </View>
         </Swiper>
       </View>
