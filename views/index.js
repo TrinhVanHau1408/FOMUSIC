@@ -18,6 +18,12 @@ import Notification from "./Notification";
 import Wellcome from "./Wellcome";
 import Menu from "./Menu";
 import Systems from "./Systems";
+import BasicSettings from "./BasicSettings";
+import Setting from "./Setting";
+import Notifications from "./Notifications";
+import InterfaceStyle from "./InterfaceStyle";
+import Home3 from "./Home3";
+
 export {
     Test,
     Register,
@@ -39,5 +45,9 @@ export {
     Wellcome,
     Menu,
     Systems
-    
+    BasicSettings,
+    Setting,
+    Notifications,
+    InterfaceStyle,
+    Home3
 }

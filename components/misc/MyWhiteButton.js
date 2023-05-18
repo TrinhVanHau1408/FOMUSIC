@@ -5,13 +5,16 @@ import { colors, images } from '../../constants';
 
 export default function MyButtonWithCheckBox(props) {
   const { title, handleNavigator } = props;
-  
+
   return (
-    <View style={(styles.container)}>
-      <View>
+    <View >
+      <TouchableOpacity
+        onPress={handleNavigator}
+        style={(styles.container)}>
         <Text style={styles.title}>{title}</Text>
-      </View>
+      </TouchableOpacity>
     </View>
+
   )
 }
 
@@ -20,7 +23,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginBottom: '6%',
     marginHorizontal: 32,
-    
+
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -29,6 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
 
     backgroundColor: '#FFFFFF',
+    // backgroundColor: colors.black,
 
     shadowColor: '#000000',
     elevation: 10,
@@ -51,6 +55,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: '#000000',
     lineHeight: 21,
+    alignSelf: 'center'
 
   },
 });

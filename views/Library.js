@@ -79,16 +79,16 @@ export default function Library({ navigation }) {
   const handleButton = () => {
     Alert.alert('Test', 'Library button');
   }
-  const handleNavigatorArtist = () => {
-    navigation.navigate('Artist');
+  const handleNavigatorArtist = (id) => {
+    navigation.navigate('Artist', {id: id});
   }
 
-  const handleNavigatorPlaylist = () => {
-    navigation.navigate('Playlist');
+  const handleNavigatorPlaylist = (id) => {
+    navigation.navigate('Playlist', {id: id});
   }
 
-  const handleNavigatorAlbum = () => {
-    navigation.navigate('Album');
+  const handleNavigatorAlbum = (id) => {
+    navigation.navigate('Album', {id: id});
   }
 
   const handleNavigatorFollowing = () => {

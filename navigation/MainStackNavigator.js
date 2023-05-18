@@ -33,20 +33,21 @@ import Setting from "../views/Setting";
 import BasicSettings from "../views/BasicSettings";
 import InterfaceStyle from "../views/InterfaceStyle";
 import Notifications from "../views/Notifications";
+import Home3 from "../views/Home3";
 
 const Stack = createNativeStackNavigator();
 const MainStackNavigator = () => (
   <Stack.Navigator
-    initialRouteName='Home1'
+    initialRouteName='Home3'
     screenOptions={{
       headerShown: false
     }} >
-    <Stack.Screen
+    {/* <Stack.Screen
       name="Home1"
       component={MainTabNavigator}
       options={{ headerShown: false }}
-    />
-    <Stack.Screen name="Home" component={Home} />
+    /> */}
+    {/* <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Playing" component={Playing} />
@@ -68,7 +69,9 @@ const MainStackNavigator = () => (
     <Stack.Screen name="Search" component={Search} />
     <Stack.Screen name="Profile" component={Profile} />
     <Stack.Screen name="Systems" component={Systems} />
-    
+    <Stack.Screen name="Profile" component={Profile} /> */}
+    <Stack.Screen name="Home3" component={Home3} />
+
   </Stack.Navigator>
 );
 

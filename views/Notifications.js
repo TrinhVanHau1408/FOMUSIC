@@ -22,11 +22,23 @@ const styles = StyleSheet.create({
     },
 })
 
-export default function Notifications() {
+export default function Notifications({ navigation }) {
+
+    const goBack = () => {
+        console.log('oke')
+        navigation.goBack();
+    }
     return (
         <View style={{ flex: 1 }}>
-            <HeaderApp title='Notification' iconLeft={icons.arrowBack} iconRight={icons.listAdd} />
-            <View style={{marginTop: '5%'}}>
+            {/* <HeaderApp
+                iconLeft={icons.arrowBack}
+                title='Notification'
+                goBack={goBack} /> */}
+                 <HeaderApp 
+            iconLeft={icons.arrowBack} 
+            title='Interface Style'
+            goBack={goBack}/>
+            <View style={{ marginTop: '5%' }}>
                 <MyButtonWithCheckBox title={'Enable all'} />
                 <MyButtonWithCheckBox title={'New follower'} />
                 <MyButtonWithCheckBox title={'Repost of your post'} />
@@ -36,7 +48,7 @@ export default function Notifications() {
                 <MyButtonWithCheckBox title={'Surveys and feedback'} />
                 <MyButtonWithCheckBox title={'FOMusic offers'} />
 
-            </View>            
+            </View>
         </View>
     )
 }

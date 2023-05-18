@@ -19,7 +19,12 @@ import {
   Menu,
   Login,
   ForgotPassword,
-  Systems
+  Systems,
+  Setting,
+  InterfaceStyle,
+  BasicSettings,
+  Home3,
+  Notifications
 } from "../views";
 
 
@@ -58,7 +63,7 @@ const HomeStack = ({ navigation }) => (
       headerShown: false
     }}>
     <Stack.Screen name='HomeStack' component={Home} />
-    <Stack.Screen name='BXH' component={Test} />
+    <Stack.Screen name='BXH' component={Home3} />
   </Stack.Navigator>
 )
 
@@ -99,10 +104,15 @@ const MenuStack = ({ navigation }) => (
     }}>
     <Stack.Screen name='MenuStack' component={Menu} />
     <Stack.Screen name='Profile' component={Profile} />
+    <Stack.Screen name='BasicSettings ' component={edit} />
     <Stack.Screen name='Notification' component={Notification} />
     <Stack.Screen name='Systems' component={Systems} />
-    
-  </Stack.Navigator>
+    <Stack.Screen name='Notifications' component={Notifications} />
+    <Stack.Screen name='Setting' component={Setting}/>
+    <Stack.Screen name='InterfaceStyle' component={InterfaceStyle} />
+    <Stack.Screen name='BasicSettings' component={BasicSettings} />
+  </Stack.Navigator> 
+
 )
 
 
