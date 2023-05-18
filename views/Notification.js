@@ -72,10 +72,14 @@ const dataNoti = [
     }
 ]
 
-export default function Notification() {
+export default function Notification({ navigation}) {
+    const goBack = () => {
+       
+        navigation.goBack();
+    }
     return (
         <View style={{ flex: 1 }}>
-            <HeaderApp title='Notification' iconLeft={icons.arrowBack} />
+            <HeaderApp title='Notification' iconLeft={icons.arrowBack} goBack={goBack} />
             <View style={{ marginTop: 20 }}>
                 <FlatList
                     data={dataNoti}
