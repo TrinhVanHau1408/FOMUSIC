@@ -6,6 +6,7 @@ import { icons, colors, images } from '../../constants'
 // import { Svg, Path } from 'react-native-svg';
 import { LineChart } from "react-native-chart-kit";
 // import DateTimePicker from '@react-native-community/datetimepicker';
+// import MyMonthPicker from "../DateTimePicker/MyMonthPicker";
 
 
 export default function BoxGraph({
@@ -60,6 +61,7 @@ export default function BoxGraph({
                     <View onPress={showMode}  style={{ width: 180, height: 40, backgroundColor: "#979797", marginTop: 10, marginLeft: 20, borderRadius: 10, display: 'flex', flexDirection: 'row', padding: 7, justifyContent: 'center' }} >
                         <Text>Tháng 4, 2023</Text>
                         <Image style={{ marginLeft: 5 }} source={icons.frame902} />
+                        {/* <MyMonthPicker/> */}
                     </View>
                     {/* {show&&
                     (<DateTimePicker

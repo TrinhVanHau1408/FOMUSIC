@@ -7,6 +7,7 @@ import BoxGraph from '../components/box/BoxGraph.js';
 import MyLike from '../components/like/MyLike';
 
 
+
 const dataLike = [
     {
         id: 1,
@@ -73,6 +74,7 @@ export default function Systems({navigation}) {
                     goBack={goBack} />
                 <View style={styles.container}>
                     <BoxGraph />
+                    
                 </View>
                 <View style={styles.mucsicaddComponent}>
                     <Text style={styles.title}>Thống kê bài hát đã thêm</Text>

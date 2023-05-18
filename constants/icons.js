@@ -52,4 +52,5 @@ export default {
     save2: require('../assets/images/icon_save2.jpg'),
     greyAvt: require('../assets/images/grey_avt.png'),
     editProfile: require('../assets/images/editProfile.png'),
+    frame902: require('../assets/images/frame-902.png'),
 }
