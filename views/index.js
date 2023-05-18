@@ -44,7 +44,7 @@ export {
     Notification,
     Wellcome,
     Menu,
-    Systems
+    Systems,
     BasicSettings,
     Setting,
     Notifications,
