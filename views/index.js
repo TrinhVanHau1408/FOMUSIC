@@ -17,6 +17,7 @@ import Search from "./Search";
 import Notification from "./Notification";
 import Wellcome from "./Wellcome";
 import Menu from "./Menu";
+import Systems from "./Systems";
 export {
     Test,
     Register,
@@ -36,6 +37,7 @@ export {
     Search,
     Notification,
     Wellcome,
-    Menu
+    Menu,
+    Systems
     
 }
