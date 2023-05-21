@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-export default function TitleAlbum({name}) {
+export default function TitleAlbum({name, type}) {
   return (
-    <View style={name==='TRENDING & HOT' ? styles.trending : (name==='TOP CHARTS' ? styles.topChart : styles.recenttlyPlayed)}>
+    <View style={type===1 ? styles.trending : (type===2 ? styles.topChart : styles.recenttlyPlayed)}>
         <Text style={styles.textName}>{name}</Text>
     </View>
   )};
