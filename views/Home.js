@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     },
     row:
     {
-        height:"45%",
+        height:"70%",
     }
 })
