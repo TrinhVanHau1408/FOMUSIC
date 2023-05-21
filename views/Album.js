@@ -81,7 +81,7 @@ export default function Album({navigation, route}) {
       <HeaderApp title='Albums' iconLeft={icons.arrowBack} goBack={goBack} />
       <View style={styles.container}>
         <FlatList
-          style={{marginBottom: 100}}
+          style={{marginTop: 25, marginBottom: 100}}
           data={music}
           renderItem={({ item }) =>
             <SquareAlbum 
