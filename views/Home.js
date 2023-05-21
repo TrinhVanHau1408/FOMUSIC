@@ -92,8 +92,8 @@ export default function Home({ navigation }) {
                     <HeaderApp title={'Home'} />
                 </TouchableOpacity>
                 <View>
-                    <Image source={icons.musicNote1} style={{ position: 'absolute', left: 0, top: -55, left: -15,  resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
-                    <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0, top: -55, right: -7, resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
+                    <Image source={icons.musicNote1} style={{ position: 'absolute', top: -55, left: -15,  resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
+                    <Image source={icons.musicNote2} style={{ position: 'absolute', top: -55, right: -7, resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
                 </View>
                 <View>
                     <TouchableOpacity
@@ -101,6 +101,7 @@ export default function Home({ navigation }) {
                         onPress={() => { navigation.navigate('BXH') }}
                     >
                         <TitleAlbum
+                            type={1}
                             name={'TRENDING & HOT'} />
                     </TouchableOpacity>
 
@@ -110,7 +111,9 @@ export default function Home({ navigation }) {
 
                 <View style={{ marginLeft: 20 }}>
                     <View >
-                        <TitleAlbum name={'TOP CHARTS'} />
+                        <TitleAlbum 
+                            type={2}
+                            name={'TOP CHARTS'} />
                         <FlatList
                             data={music}
                             renderItem={({ item }) =>
@@ -126,7 +129,9 @@ export default function Home({ navigation }) {
                     </View>
 
                     <View >
-                        <TitleAlbum name={'RECENTLY PLAYED'} />
+                        <TitleAlbum 
+                            type={3}
+                            name={'RECENTLY PLAYED'} />
                         <FlatList
                             data={music}
                             renderItem={({ item }) =>
