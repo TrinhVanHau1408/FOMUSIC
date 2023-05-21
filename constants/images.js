@@ -15,4 +15,8 @@ export default {
     playlistBuon: require('../assets/images/playlistBuon.jpg'),
     playlistLofi: require('../assets/images/playlistLofi.jpg'),
     playlistBolero: require('../assets/images/playlistBolero.jpg'),
+    playlistSVT: require('../assets/images/playlist-svt.jpg'),
+    playlistsvt2: require('../assets/images/playlist-svt2.png'),
+    playlistTwice: require('../assets/images/playlist-twice.jpg'),
+    playlistFlower: require('../assets/images/playlist-flower.jpg')
 }
