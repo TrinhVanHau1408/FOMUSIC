@@ -3,25 +3,26 @@
 // import * as firebase from "firebase";
 
 import { initializeApp } from 'firebase/app';
-import { 
-  getAuth, 
-  onAuthStateChanged, 
+import {
+  getAuth,
+  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithRedirect,
   GoogleAuthProvider,
   sendEmailVerification,
   signOut
- } from 'firebase/auth';
-import { 
-  getDatabase, 
-  set as firebaseDatabaseSet, 
+} from 'firebase/auth';
+import {
+  getDatabase,
+  set as firebaseDatabaseSet,
   ref as firebaseDatabaseRef,
-  get ,
+  get,
   child,
   onValue,
+  remove,
 
-  serverTimestamp 
+  serverTimestamp
 } from 'firebase/database'
 // import "firebase/database";
 
@@ -44,6 +45,50 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const firebaseDatabase = getDatabase();
 const provider = new GoogleAuthProvider();
+
+const readDataFirebase = async (firebaseDatabase, path) => {
+  try {
+    const dbRef = firebaseDatabaseRef(firebaseDatabase);
+    const snapshot = await get(child(dbRef, path))
+
+    console.log("read data firebase successfully")
+    // console.log(snapshot)
+
+    return snapshot
+  }
+  catch (error) {
+    console.log("ERROR", error)
+    return null
+  }
+}
+
+const writeDataFirebase = async (firebaseDatabase, path, id, data) => {
+  try {
+    await firebaseDatabaseSet(firebaseDatabaseRef(firebaseDatabase, `${path}/${id}`), data);
+    console.log("save data firebase successfully")
+    return true;
+  }
+  catch (err) {
+    console.log("save data firebase failed", err);
+    return false;
+  }
+
+}
+
+const deleteDataFirebase = async (firebaseDatabase, path) => {
+  try {
+    const dbRef = firebaseDatabaseRef(firebaseDatabase, path)
+    await remove(dbRef)
+    console.log('delete data firebase successfully')
+    return true
+  }
+  catch(err)
+  {
+    console.log('delete data firebase failed', err)
+    return false
+  }
+}
+
 export {
   auth,
   firebaseDatabase,
@@ -59,6 +104,9 @@ export {
   provider,
   signInWithRedirect,
   sendEmailVerification,
-  signOut
-  
+  signOut,
+  readDataFirebase,
+  writeDataFirebase,
+  deleteDataFirebase
+
 }
