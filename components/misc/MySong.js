@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
         paddingLeft: '2%',
         marginRight: 0,
-        marginVertical: '1%',
+        marginVertical: 3,
 
         width: 'auto',
         height: 80,
@@ -82,6 +82,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
 
         borderRadius: 100,
+        borderColor: colors.primary,
+        borderWidth: 1.2
 
     },
     textSong:

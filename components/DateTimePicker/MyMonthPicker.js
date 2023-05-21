@@ -38,7 +38,6 @@ export default function MyMonthPicker ()
     return(
         <View style={styles.container}>
             <DropDownPicker 
-
                 items={dataMonth}
                 open={isOpen}
                 setOpen={() => setIsOpen(!isOpen)}
