@@ -10,8 +10,8 @@ export default function TitleAlbum({name}) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 14,
-        marginBottom: 7
+        marginTop: 25,
+        marginBottom: 10
     },
 
     textName: {

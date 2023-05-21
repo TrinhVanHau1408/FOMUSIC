@@ -11,7 +11,7 @@ export default function BoxTranfer() {
   return (
    
       <ScrollView>
-        <View style={{height:290, display: 'flex', alignItems: 'center'}}>
+        <View style={{height:260, display: 'flex', alignItems: 'center'}}>
         <Swiper
           autoplay={true}
         >
@@ -34,7 +34,9 @@ export default function BoxTranfer() {
 const styles = StyleSheet.create({
   slide: {
     alignItems: 'center',
-    marginVertical: 20,
+    marginTop: 10,
+    marginBottom: 0
+    
   },
   button: {
     color: '#fff',
