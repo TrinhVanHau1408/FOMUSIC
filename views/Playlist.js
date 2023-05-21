@@ -1,8 +1,9 @@
-import { View, Text, FlatList, Alert, StyleSheet } from 'react-native'
+import { View, Text, FlatList, Alert, StyleSheet} from 'react-native'
 import React from 'react'
 import HeaderApp from '../components/header/HeaderApp'
 import RectangleAlbum from '../components/misc/RectangleAlbum'
 import { icons, images } from '../constants'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const music = [
     {
@@ -64,6 +65,43 @@ const music = [
     track_number: '7'
   }
   ]
+  const playlist = [
+    {
+      title: 'SVT Playlist 2023',
+      artist: 'FOMUSIC ',
+      songImg: images.playlistSVT,
+      // url: require(''),
+      duration: 2 * 60 + 53,
+      id: '1',
+    },
+    {
+      title: 'Playlist For Relax',
+      artist: 'FOMISUC',
+      songImg: images.playlistFlower,
+      // url: require(''),
+      duration: 2 * 60,
+      id: '2',
+      track_number: '2'
+    },
+    {
+      title: 'Nhac Buon Ngay Mua',
+      artist: 'FOMUSIC',
+      songImg: images.playlistBuon,
+      // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+      duration: 2 * 60,
+      id: '3',
+      track_number: '3'
+    },
+    {
+      title: 'Twice Are Once',
+      artist: 'FOMUSIC',
+      songImg: images.playlistTwice,
+      // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+      duration: 2 * 60,
+      id: '4',
+      track_number: '4'
+    },
+  ]
 export default function Playlis({navigation, route}) {
     const { id } = route.params;
     const handleButton = () => {
@@ -77,7 +115,7 @@ export default function Playlis({navigation, route}) {
         navigation.navigate('DetailPlaylist', {id: id});
     }
     return (
-        <View>
+        <ScrollView>
             <HeaderApp
                 title={'Playlist'}
                 iconLeft={icons.arrowBack}
@@ -85,12 +123,13 @@ export default function Playlis({navigation, route}) {
                 goBack={goBack} />
             <View style={styles.container}>
                 <FlatList
-                    data={music}
+                    data={playlist}
                     renderItem={({ item }) =>
                         <RectangleAlbum
                             id={item.id}
                             name={item.title}
                             img={item.songImg}
+                            type={2}
                             handleButton={handleButton}
                             isPlaylist={true} 
                             handleNavigator={handleNavigatorDetailPlaylist}/>}
@@ -99,13 +138,14 @@ export default function Playlis({navigation, route}) {
                 />
             </View>
             <View style={{ flex: 1, height: 100 }}></View>
-        </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         marginLeft: 20,
+        marginTop: 25,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
