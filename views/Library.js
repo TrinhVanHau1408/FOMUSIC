@@ -11,63 +11,103 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const music = [
   {
-  title: 'Lovely',
-  artist: 'Billie Eilish',
-  songImg: images.imgLovely,
-  // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
-  duration: 2 * 60 + 53,
-  id: '1',
-},
-{
-  title: 'Understand',
-  artist: 'Keshi',
-  songImg: images.imgUnderstand,
-  // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-  duration: 2 * 60,
-  id: '2',
-  track_number: '2'
-},{
-  title: 'Snooze',
-  artist: 'SZA',
-  songImg: images.imgSZATout,
-  // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-  duration: 2 * 60,
-  id: '3',
-  track_number: '3'
-},{
-  title: 'If you',
-  artist: 'BigBang',
-  songImg: images.imgIfYou,
-  // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-  duration: 2 * 60,
-  id: '4',
-  track_number: '4'
-},{
-  title: 'Shoong',
-  artist: 'Teayang',
-  songImg: images.imgSZATout,
-  // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-  duration: 2 * 60,
-  id: '5',
-  track_number: '5'
-},{
-  title: 'Die For You',
-  artist: 'The Weeknd',
-  songImg: images.imgDieForYou,
-  // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-  duration: 2 * 60,
-  id: '6',
-  track_number: '6'
-},
-{
-  title: 'double take',
-  artist: 'dhruv',
-  songImg: images.imgDoubleTakeL,
-  // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-  duration: 2 * 60,
-  id: '7',
-  track_number: '7'
-}
+    title: 'Lovely',
+    artist: 'Billie Eilish',
+    songImg: images.imgLovely,
+    // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
+    duration: 2 * 60 + 53,
+    id: '1',
+  },
+  {
+    title: 'Understand',
+    artist: 'Keshi',
+    songImg: images.imgUnderstand,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '2',
+    track_number: '2'
+  },
+  {
+    title: 'Snooze',
+    artist: 'SZA',
+    songImg: images.imgSZATout,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '3',
+    track_number: '3'
+  },
+  {
+    title: 'If you',
+    artist: 'BigBang',
+    songImg: images.imgIfYou,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '4',
+    track_number: '4'
+  },
+  {
+    title: 'Shoong',
+    artist: 'Teayang',
+    songImg: images.imgSZATout,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '5',
+    track_number: '5'
+  }, {
+    title: 'Die For You',
+    artist: 'The Weeknd',
+    songImg: images.imgDieForYou,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '6',
+    track_number: '6'
+  },
+  {
+    title: 'double take',
+    artist: 'dhruv',
+    songImg: images.imgDoubleTakeL,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '7',
+    track_number: '7'
+  }
+]
+const playlist = [
+  {
+    title: 'SVT Playlist 2023',
+    artist: 'FOMUSIC ',
+    songImg: images.playlistSVT,
+    // url: require(''),
+    duration: 2 * 60 + 53,
+    id: '1',
+  },
+  {
+    title: 'Playlist For Relax',
+    artist: 'FOMISUC',
+    songImg: images.playlistFlower,
+    // url: require(''),
+    duration: 2 * 60,
+    id: '2',
+    track_number: '2'
+  },
+  {
+    title: 'Nhac Buon Ngay Mua',
+    artist: 'FOMUSIC',
+    songImg: images.playlistBuon,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '3',
+    track_number: '3'
+  },
+  {
+    title: 'Twice Are Once',
+    artist: 'FOMUSIC',
+    songImg: images.playlistTwice,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '4',
+    track_number: '4'
+  },
 ]
 const getItem = (_data, index) => ({
   id: Math.random().toString(12).substring(0),
@@ -80,15 +120,15 @@ export default function Library({ navigation }) {
     Alert.alert('Test', 'Library button');
   }
   const handleNavigatorArtist = (id) => {
-    navigation.navigate('Artist', {id: id});
+    navigation.navigate('Artist', { id: id });
   }
 
   const handleNavigatorPlaylist = (id) => {
-    navigation.navigate('Playlist', {id: id});
+    navigation.navigate('Playlist', { id: id });
   }
 
   const handleNavigatorAlbum = (id) => {
-    navigation.navigate('Album', {id: id});
+    navigation.navigate('Album', { id: id });
   }
 
   const handleNavigatorFollowing = () => {
@@ -98,18 +138,20 @@ export default function Library({ navigation }) {
   const handleNavigatorLikes = () => {
     navigation.navigate('Like');
   }
-  
+
   return (
     <SafeAreaView style={{ flex: 1, }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderApp title={'Library'} />
         <View>
-          <Image source={icons.musicNote1} style={{ position: 'absolute', left: 0, top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
-          <Image source={icons.musicNote2} style={{ position: 'absolute', right: 0, top: -55, height: 82, width: 51, resizeMode: 'stretch', tintColor: colors.primary }} />
+          <Image source={icons.musicNote1} style={{ position: 'absolute', top: -55, left: -15, resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
+          <Image source={icons.musicNote2} style={{ position: 'absolute', top: -55, right: -7, resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
         </View>
         <View style={{ marginLeft: 24 }}>
           <View >
-            <TitleAlbum name={'Listening history'} />
+            <TitleAlbum
+              type={1}
+              name={'Listening history'} />
             <FlatList
               data={music}
               renderItem={({ item }) =>
@@ -121,7 +163,9 @@ export default function Library({ navigation }) {
           </View>
 
           <View>
-            <TitleAlbum name={'Artists'} />
+            <TitleAlbum
+              type={4}
+              name={'Artists'} />
             <FlatList
               data={music}
               renderItem={({ item }) =>
@@ -136,9 +180,11 @@ export default function Library({ navigation }) {
             />
           </View>
           <View>
-            <TitleAlbum name={'Playlist'} />
+            <TitleAlbum
+              type={4}
+              name={'Playlist'} />
             <FlatList
-              data={music}
+              data={playlist}
               renderItem={({ item }) =>
                 <RectangleAlbum
                   id={item.id}
@@ -152,7 +198,9 @@ export default function Library({ navigation }) {
             />
           </View>
           <View>
-            <TitleAlbum name={'Album'} />
+            <TitleAlbum
+              type={4}
+              name={'Album'} />
             <FlatList
               data={music}
               renderItem={({ item }) =>
@@ -167,7 +215,9 @@ export default function Library({ navigation }) {
             />
           </View>
           <View>
-            <TitleAlbum name={'Following'} />
+            <TitleAlbum
+              type={4}
+              name={'Following'} />
             <FlatList
               data={music}
               renderItem={({ item }) =>
