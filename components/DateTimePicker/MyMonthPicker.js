@@ -44,7 +44,7 @@ export default function MyMonthPicker ()
                 setOpen={() => setIsOpen(!isOpen)}
                 value={currentValue}
                 setValue={val => setCurentValue(val)}
-                maxHeight={100}
+                maxHeight={70}
                 autoScroll
                 disableBorderRadius={true}
 

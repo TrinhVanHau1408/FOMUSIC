@@ -4,12 +4,9 @@ import React from 'react'
 import BoxTranfer from './BoxTranfer'
 import Title from './Title'
 
-export default function RowBoxTranfer({
-  title = "TRENDING & HOT"
-}) {
+export default function RowBoxTranfer({}) {
   return (
     <View style={styles.container}>
-      <Title title={title}/>
       <BoxTranfer styles={styles.boxTranfer}/>
     </View>
   )
@@ -17,11 +14,9 @@ export default function RowBoxTranfer({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+   height: 400,
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  boxTranfer: {
-    height:"95%"
-  }
+ 
 })

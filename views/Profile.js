@@ -1,81 +1,97 @@
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderApp from '../components/header/HeaderApp'
 import { icons, images, colors } from '../constants'
 import MyLike from '../components/like/MyLike';
 import ControlMusic from '../components/misc/ControlMusic';
 import RectangleAlbum from '../components/misc/RectangleAlbum';
 import TitleAlbum from '../components/misc/TitleAlbum'
-
-const dataLike = [
+import { getDataAsyncStorage } from '../untiles/AsyncStorage';
+const music = [
     {
-        id: 1,
-        songName: 'Song name 1',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 1',
-        isLiked: true
-    },
-    {
-        id: 2,
-        songName: 'Song name 2',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 2',
-        isLiked: false
-    },
-    {
-        id: 3,
-        songName: 'Song name 3',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 3',
-        isLiked: false
-    },
-    {
-        id: 4,
-        songName: 'Song name 4',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 4',
-        isLiked: true
-    },
-    {
-        id: 5,
-        songName: 'Song name 5',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 5',
-        isLiked: true
-    },
-    {
-        id: 6,
-        songName: 'Song name 5',
-        songImg: images.defaultAvt,
-        artistName: 'Artis 5',
-        isLiked: true
-    }
-]
+    title: 'Lovely',
+    artist: 'Billie Eilish',
+    songImg: images.imgLovely,
+    // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
+    duration: 2 * 60 + 53,
+    id: '1',
+  },
+  {
+    title: 'Understand',
+    artist: 'Keshi',
+    songImg: images.imgUnderstand,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '2',
+    track_number: '2'
+  },{
+    title: 'Snooze',
+    artist: 'SZA',
+    songImg: images.imgSZATout,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '3',
+    track_number: '3'
+  },{
+    title: 'If you',
+    artist: 'BigBang',
+    songImg: images.imgIfYou,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '4',
+    track_number: '4'
+  },{
+    title: 'Shoong',
+    artist: 'Teayang',
+    songImg: images.imgSZATout,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '5',
+    track_number: '5'
+  },{
+    title: 'Die For You',
+    artist: 'The Weeknd',
+    songImg: images.imgDieForYou,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '6',
+    track_number: '6'
+  },
+  {
+    title: 'double take',
+    artist: 'dhruv',
+    songImg: images.imgDoubleTakeL,
+    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+    duration: 2 * 60,
+    id: '7',
+    track_number: '7'
+  }
+  ]
 const dataAlbum = [
     {
       id: 0,
-      name: 'Name 1',
-      img: images.demo
+      name: 'Tình yêu',
+      img:images.playlistTinhYeu
     },
     {
       id: 1,
-      name: 'Name 2',
-      img: images.demo
+      name: 'Buồn',
+      img: images.playlistBuon
     },
     {
       id: 2,
-      name: 'Name 3',
-      img: images.demo
+      name: 'Lofi',
+      img: images.playlistLofi
     },
     {
       id: 3,
-      name: 'Name 4',
-      img: images.demo
+      name: 'Top trend',
+      img: images.playlistTinhYeu
     },
     {
       id: 4,
-      name: 'Name 5',
-      img: images.demo
+      name: 'Bolero',
+      img: images.playlistBolero
     }
   ]
 const username = "User Name"
@@ -83,8 +99,18 @@ const follower = "100"
 const following = "124"
 export default function Profile({navigation}) {
     const [isVisible, setIsVisible] = useState(false);
-
+    
+  
+    const[user, setUser] = useState();
     const [idSong, setIdSong] = useState(0);
+
+    useEffect(() => {
+        getDataAsyncStorage('user')
+        .then((userCurr) => {
+            setUser(userCurr);
+        })
+        
+    }, [])
     const handleLayout = (id) => {
         setIsVisible(true);
         setIdSong(id);
@@ -110,10 +136,10 @@ export default function Profile({navigation}) {
             <View style={styles.container}>
                 <View style={styles.containerImg}>
                     <View style={{ marginLeft: -100 , marginRight: 15 }}>
-                        <Image source={images.demo} style={styles.img} />   
+                        <Image source={(user&&user.imgUrl)?user.imgUrl:images.demo} style={styles.img} />   
                     </View>
                     <View>
-                        <Text style={{ fontSize: 24, fontWeight: 'bold', color: colors.black }}>{username}</Text>
+                        <Text style={{ fontSize: 24, fontWeight: 'bold', color: colors.black }}>{user&&user.displayName}</Text>
                         <Text style={{ }}>Follower {follower}</Text>
                         <Text>Following {following}</Text>
                     </View>
@@ -141,15 +167,15 @@ export default function Profile({navigation}) {
                 </View>
                 <FlatList
                     style={{ marginTop: 10, marginBottom: 50 }}
-                    data={dataLike}
+                    data={music}
                     renderItem={({ item, index }) =>
                         <MyLike
                             id={item.id}
                             idSongSelected={idSong}
-                            songName={item.songName}
+                            songName={item.title}
                             songImg={item.songImg}
-                            artistName={item.artistName}
-                            isLike={item.isLiked}
+                            artistName={item.artist}
+                            isLike={true}
                             index={index}
                             handleLayout={handleLayout}
                         />}

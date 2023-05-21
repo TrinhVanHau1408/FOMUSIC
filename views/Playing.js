@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, SliderComponent, Slider, SliderBase } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import Slider from '@react-native-community/slider';
 import { colors, icons, images } from '../constants';
+import HeaderApp from '../components/header/HeaderApp';
 
 
 const Playing = ({ navigation }) => {
+    const goBack = () => {
+        navigation.goBack();
+    }
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View style={styles.headerContainer}>
+            {/* <View style={styles.headerContainer}>
                 <TouchableOpacity>
                     <Image
                         style={{
@@ -34,7 +39,12 @@ const Playing = ({ navigation }) => {
                         source={icons.more}
                     />
                 </TouchableOpacity>
-            </View>
+            </View> */}
+            <HeaderApp
+                title={'Playing'}
+                iconLeft={icons.arrowBack}
+                iconRight={icons.option}
+                goBack={goBack} />
 
             {/* ImageSong */}
             <View style={styles.contentContainer}>
@@ -51,7 +61,13 @@ const Playing = ({ navigation }) => {
 
             {/* PlayingMusic */}
             <View style={styles.audioPlayerContainer}>
-                <Slider style={{ alignSelf: 'stretch', height: 50, color: colors.primary }} />
+                <Slider
+                    style={{ alignSelf: 'stretch', height: 10 }}
+                    minimumTrackTintColor={colors.primary}
+                    maximumTrackTintColor={colors.primary}
+                    thumbTintColor={colors.primary}
+
+                />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', paddingHorizontal: 10 }}>
                     <Text style={styles.TextTimeSong} >
                         2:30
@@ -94,11 +110,15 @@ const Playing = ({ navigation }) => {
 
             {/* Lyrics */}
             <View style={styles.lyricContainer}>
-                <TouchableOpacity >
-                    <Text style={styles.TextLyrics}>
-                        Lyrics
-                    </Text>
-                </TouchableOpacity>
+
+                <View style={{display: 'flex', justifyContent: 'center'}}>
+                    <TouchableOpacity >
+                        <View style={{ height: 3, width: 40, backgroundColor: "#FFFFFF" }}></View>
+                        <Text style={styles.TextLyrics}>
+                            Lyrics
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )
@@ -143,6 +163,7 @@ const styles = StyleSheet.create({
     lyricContainer:
     {
         flex: 10,
+      
         position: 'absolute',
         top: '90%',
         height: '70%',
@@ -208,7 +229,6 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         borderWidth: 4,
         borderColor: '#8950F8',
-        borderStyle: 'solid',
         shadowColor: '#D9D9D9',
         shadowOpacity: 0.25,
         shadowOffset: { height: 4 }
@@ -217,7 +237,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 13,
         lineHeight: 16,
         // textAlign: 'center',
@@ -227,7 +247,7 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 24,
         lineHeight: 29,
         textAlign: 'center',
@@ -251,15 +271,14 @@ const styles = StyleSheet.create({
     {
         fontFamily: 'Montserrat',
         // fontStyle: normal,
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 12,
         lineHeight: 15,
         textAlign: 'left',
         color: colors.black,
     }
 });
-const setFullLyrics = async (e) => 
-{
+const setFullLyrics = async (e) => {
 
 }
 export default Playing;

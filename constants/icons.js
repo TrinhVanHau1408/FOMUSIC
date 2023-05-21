@@ -1,7 +1,9 @@
 export default {
     logoFomusic: require('../assets/images/logo-fomusic.png'),
+    fomusic: require('../assets/images/fomusic.png'),
     arrowBack: require('../assets/images/arrow-back-simple.png'),
     checkedCircle: require('../assets/images/check-circle-2.png'),
+    unCheckedCircle: require('../assets/images/unChecked.png'),
     eyeHidden: require('../assets/images/eye-hidden.png'),
     eyeOpen: require('../assets/images/eye-open.png'),
     facebook: require('../assets/images/facebook.png'),
@@ -18,7 +20,6 @@ export default {
     skipNextControl: require('../assets/images/skip-next-control.png'),
     skipPre: require('../assets/images/skip-previous.png'),
     skipPreControl: require('../assets/images/skip-previous-control.png'),
-
     mail: require('../assets/images/mail.png'),
     more: require('../assets/images/more-vertical.png'),
     musicNote1: require('../assets/images/music-note-1.png'),
@@ -39,7 +40,6 @@ export default {
     library: require('../assets/images/library.png'),
     option: require('../assets/images/option.png'),
     follow: require('../assets/images/follow.png'),
-
     arrowBackBlack: require('../assets/images/arrow-back-black.png'),
     iconGoToPlaylist: require('../assets/images/Icon.png'),
     loopBlack: require('../assets/images/loop_black.png'),
@@ -51,5 +51,6 @@ export default {
     save: require('../assets/images/icon_save.png'),
     save2: require('../assets/images/icon_save2.jpg'),
     greyAvt: require('../assets/images/grey_avt.png'),
-    cameraAddPhoto : require('../assets/images/camera-add-photo.png')
+    editProfile: require('../assets/images/editProfile.png'),
+    frame902: require('../assets/images/frame-902.png'),
 }

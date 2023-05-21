@@ -16,10 +16,17 @@ const styles=StyleSheet.create({
         marginTop: '5%',
     },
 })
-export default function InterfaceStyle() {
+export default function InterfaceStyle({navigation}) {
+
+    const goBack = () => {
+        navigation.goBack();
+    }
     return(
         <View style={styles.container}>
-            <HeaderApp iconLeft={icons.arrowBack} title='Interface Style'/>
+            <HeaderApp 
+            iconLeft={icons.arrowBack} 
+            title='Interface Style'
+            goBack={goBack}/>
             <View style={styles.contentContainer}>
                 <MyWhiteButton title='Light'/>                                                            
                 <MyWhiteButton title='Dark'/>

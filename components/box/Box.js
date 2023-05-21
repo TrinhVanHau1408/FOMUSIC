@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { colors } from '../../constants'
+import { colors, icons, images } from '../../constants'
 
 const Box = (
     {
         width = 120,
         height = 120,
-        srcImage = null,
+        srcImage = images.demo,
         borderRadius = 10,
         borderWidth = 2,
     }
@@ -30,7 +30,9 @@ const Box = (
     })
   return (
     <View style={srcImage?styles.box:styles.boxnoimage}>
-      
+        {srcImage&&
+        <Image source={srcImage} style={{resizeMode:'cover', width:'100%', height:'100%'}}/>
+        }
     </View>
   )
 }

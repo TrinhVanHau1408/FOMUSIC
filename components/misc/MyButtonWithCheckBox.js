@@ -15,7 +15,6 @@ export default function MyButtonWithCheckBox(props) {
             </View>
             <CheckBox
                 tintColors={{ true: colors.primary, false: colors.primary }}
-                style={{marginRight: '3%'}}
                 value={isChecked}
                 onChange={() => setIsChecked(!isChecked)}
             />

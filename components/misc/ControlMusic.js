@@ -3,48 +3,53 @@ import { View, TouchableOpacity, Text, StyleSheet, Image, Alert, Dimensions } fr
 import { icons, images } from '../../constants'
 const heigtScreen = Dimensions.get('window').height;
 
-export default function ControlMusic({ song }) {
+export default function ControlMusic({ song, handleNavigator }) {
 
-    const {songName, songImg, artistName} = song;
+    const { title, songImg, artist } = song;
+    
     // Alert.alert('Control',songName + ' '+ songImg + ' ' + artistName)
     const handleSkipPrevious = () => Alert.alert('Test button', 'Skip previous');
     const handlePause = () => Alert.alert('Test button', 'Pause');
     const handleSkipNext = () => Alert.alert('Test button', 'Skip next');
     return (
         // <View>
-            <View style={styles.container}>
-                <View style={styles.controlMusic}>
-                    <View style={{ overflow: 'hidden' }}>
-                        <Image style={styles.imgMusic} source={songImg} />
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.infoNameMusic}>{songName}</Text>
-                        <Text
-                            style={styles.infoNameArtist}
-                        >{artistName}</Text>
-                    </View>
-                    <View style={styles.control} >
-                        <TouchableOpacity
-                            style={styles.controlIcon}
-                            onPress={handleSkipPrevious}
-                        >
-                            <Image source={icons.skipPreControl} style={{ height: 20, width: 30, tintColor: '#FFFFFF' }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.controlIcon}
-                            onPress={handlePause}
-                        >
-                            <Image source={icons.pause} style={{ height: 60, width: 60, tintColor: '#FFFFFF' }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={handleSkipNext}
-                        >
-                            <Image source={icons.skipNextControl} style={{ height: 20, width: 30, tintColor: '#FFFFFF' }} />
-                        </TouchableOpacity>
-                    </View>
+        <View style={styles.container}>
+            <View style={styles.controlMusic}>
+               <TouchableOpacity onPress={handleNavigator}>
+               <View style={{ overflow: 'hidden' }}>
+                    <Image style={styles.imgMusic} source={songImg} />
                 </View>
-                <View style={{ flex: 1 }}></View>
+               </TouchableOpacity>
+                <View style={styles.info}>
+                    <Text style={styles.infoNameMusic}>{title}</Text>
+                    <Text
+                        style={styles.infoNameArtist}
+                    >{artist}</Text>
+                </View>
+                
+
+                <View style={styles.control} >
+                    <TouchableOpacity
+                        style={styles.controlIcon}
+                        onPress={handleSkipPrevious}
+                    >
+                        <Image source={icons.skipPreControl} style={{ height: 20, width: 30, tintColor: '#FFFFFF' }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.controlIcon}
+                        onPress={handlePause}
+                    >
+                        <Image source={icons.pause} style={{ height: 60, width: 60, tintColor: '#FFFFFF' }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={handleSkipNext}
+                    >
+                        <Image source={icons.skipNextControl} style={{ height: 20, width: 30, tintColor: '#FFFFFF' }} />
+                    </TouchableOpacity>
+                </View>
             </View>
+            <View style={{ flex: 1 }}></View>
+        </View>
         // </View>
     );
 };
@@ -90,7 +95,7 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontFamily: 'Montserrat',
         fontSize: 16,
-        fontWeight: 700,
+        fontWeight: '700',
         lineHeight: 19.5,
         marginBottom: 2,
     },

@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, images } from '../../constants';
 export default function RectangleAlbum(props) {
-    const { id, name, img, handleButton, isPlaylistPahe } = props
+    const { id, name, img, handleNavigator, isPlaylist, isDetailPlaylist } = props
     return (
-        <View style={styles.container}>
-            <TouchableOpacity onPress={handleButton}>
-                <Image source={img ? img : images.demo} style={[styles.img, isPlaylistPahe ? styles.sizeImg2 : styles.sizeImg1]} />
-                <Text style={[styles.textName, isPlaylistPahe && styles.textBold]}>{name}</Text>
+        <View style={[styles.container, isPlaylist && styles.container1]}>
+            <TouchableOpacity onPress={() => handleNavigator(id)}>
+                <Image source={img ? img : images.demo} style={[styles.img, isPlaylist ? styles.sizeImg2 : styles.sizeImg1]} />
+                <Text style={[styles.textName, isPlaylist && styles.textBold, isDetailPlaylist && styles.marginTop]}>{name}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -16,9 +16,12 @@ export default function RectangleAlbum(props) {
 const styles = StyleSheet.create({
     container: {
         marginRight: 20,
-        marginBottom: 34,
+
     },
 
+    container1: {
+        marginBottom: 24,
+    },
     img: {
 
         borderRadius: 20,
@@ -38,11 +41,14 @@ const styles = StyleSheet.create({
     textName: {
         fontFamily: 'Montserrat',
         fontSize: 14,
-        fontWeight: 500,
+        fontWeight: '500',
         textAlign: 'center',
         color: '#000000'
     },
     textBold: {
         fontWeight: 'bold'
+    },
+    marginTop: {
+        marginTop: 18
     }
 })

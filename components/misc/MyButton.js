@@ -2,12 +2,12 @@ import React from 'react'
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { colors, icons } from '../constants'
 export default function MyButton(props) {
-  const {title, handleNavigator} = props;
+  const {title, handleNavigator, handleButton} = props;
   return (
     <View style={styles.container}>
       <TouchableOpacity 
       style={styles.button}
-      onPress={handleNavigator}
+      onPress={handleNavigator?handleNavigator:handleButton}
       >
         <Text style={styles.title}>{title}</Text>
       </TouchableOpacity>
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#FFFFFF',
-    fontWeight: 700,
     fontSize: 17,
     lineHeight: 21,
 

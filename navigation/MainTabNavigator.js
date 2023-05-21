@@ -1,18 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Image } from 'react-native'
 import { icons } from "../constants";
-import {
-  Test,
-  Home,
-  Library,
-  Artist,
-  Playlist,
-  Album,
-  Following,
-  Like
-} from "../views";
+import { HomeStack, LibraryStack, MenuStack, SearchStack } from "./StackNavigator";
+
+
 
 // const Tab = createMaterialBottomTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,9 +30,9 @@ const options = ({ route }) => ({
     //   }
     // }
 
-    let icon = screenName == 'home1' ? icons.home : (
+    let icon = screenName == 'Home' ? icons.home : (
       screenName == 'Library' ? icons.library : (
-        screenName == 'search' ? icons.search : icons.menu));
+        screenName == 'Search' ? icons.search : icons.menu));
 
     return <Image
       source={icon}
@@ -70,17 +62,27 @@ const options = ({ route }) => ({
 
 })
 
-const MainTabNavigator = () => (
+ // <Tab.Navigator
+  //   initialRouteName="home1"
+  //   screenOptions={options}
+  // >
+  //   <Tab.Screen name="home1" component={Home} />
+  //   {/* <Tab.Screen name="Library" component={Library} /> */}
+  //   <Tab.Screen name="Library" component={Library} />
+  //   <Tab.Screen name="Search" component={Search} />
+  //   <Tab.Screen name="Menu" component={Profile} />
+  //   {/* <Tab.Screen name="Stack" component={MainStackNavigator} /> */}
+  // </Tab.Navigator>
 
+const MainTabNavigator = () => (
   <Tab.Navigator
-    initialRouteName="Library"
+    initialRouteName="Wellcome"
     screenOptions={options}
   >
-    <Tab.Screen name="home1" component={Home} />
-    {/* <Tab.Screen name="Library" component={Library} /> */}
-    <Tab.Screen name="Library" component={Like} />
-    <Tab.Screen name="search" component={Test} />
-    <Tab.Screen name="menu" component={Test} />
+    <Tab.Screen name="Home" component={HomeStack} />
+    <Tab.Screen name="Library" component={LibraryStack} />
+    <Tab.Screen name="Search" component={SearchStack} />
+    <Tab.Screen name="Menu" component={MenuStack} />
   </Tab.Navigator>
 );
 

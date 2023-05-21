@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "65137084903",
+    "project_id": "fomusicapp-12403",
+    "storage_bucket": "fomusicapp-12403.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65137084903:android:f4be90f05ec799b0e11542",
+        "android_client_info": {
+          "package_name": "com.fomusicapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65137084903-a3h3gumj0gs513kqakj8v71rbbilam3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACLFEd6H8r6fwnFMLVLy5Dl1rzcPPn5WI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65137084903-a3h3gumj0gs513kqakj8v71rbbilam3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
