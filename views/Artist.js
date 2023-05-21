@@ -78,7 +78,7 @@ export default function Artist({ navigation, route }) {
     <View>
       <HeaderApp title={'Artist'} iconLeft={icons.arrowBack} iconRight={icons.follow} goBack={goBack} />
       <View>
-        <Image source={icons.musicNote1} style={{ position: 'absolute', top: 95, left: -15, resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
+        <Image source={icons.musicNote1} style={{ position: 'absolute', top: 95, left: -10, resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
         <Image source={icons.musicNote2} style={{ position: 'absolute', top: 105, right: -7, resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
       </View>
       <View style={styles.infoArtist}>
