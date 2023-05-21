@@ -3,21 +3,33 @@ import { View, Text, StyleSheet } from 'react-native'
 
 export default function TitleAlbum({name}) {
   return (
-    <View style={styles.container}>
+    <View style={name==='TRENDING & HOT' ? styles.trending : (name==='TOP CHARTS' ? styles.topChart : styles.recenttlyPlayed)}>
         <Text style={styles.textName}>{name}</Text>
     </View>
   )};
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: 25,
-        marginBottom: 10
+    trending:
+    {
+      marginTop: 45,
+      marginBottom: 10
+    },
+    topChart:
+    {
+      marginTop: 0,
+      marginBottom: 10
+    },
+    recenttlyPlayed:
+    {
+      marginTop: 35,
+      marginBottom: 10
     },
 
     textName: {
         fontFamily: 'Montserrat',
-        fontWeight: 'bold',
-        fontSize: 20,
+        fontWeight: '700',
+        fontSize: 21,
+        lineHeight: 21,
         color: '#000000'
     }
 })

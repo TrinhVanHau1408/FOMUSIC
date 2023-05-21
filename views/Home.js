@@ -110,7 +110,7 @@ export default function Home({ navigation }) {
 
                 <View style={{ marginLeft: 20 }}>
                     <View >
-                        <TitleAlbum style={styles.titleTopChart} name={'TOP CHARTS'} />
+                        <TitleAlbum name={'TOP CHARTS'} />
                         <FlatList
                             data={music}
                             renderItem={({ item }) =>
@@ -156,14 +156,4 @@ const styles = StyleSheet.create({
 
         marginHorizontal: 20,
     },
-    titleTrending:
-    {
-        marginTop: 32,
-        // marginBottom: 10
-    },
-    titleTopChart:
-    {
-        marginTop: 12,
-        // marginBottom: 10
-    }
 })

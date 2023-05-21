@@ -16,8 +16,9 @@ export default function SquareAlbum(props) {
 
 const styles = StyleSheet.create({
     container: {
-        width: 120,
+        width: 143,
         marginRight: 16,
+        // backgroundColor: colors.primary
     },
 
     marginx2: {
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
         marginVertical: 16,
     },
     img: {
-        width: 120,
-        height: 120,
+        width: '100%',
+        height: 143,
         borderRadius: 20,
         borderWidth: 2,
         borderColor: colors.primary,

@@ -3,6 +3,7 @@ import Swiper from 'react-native-swiper';
 import React, { useRef, useState } from 'react'
 
 import { colors, images } from '../../constants';
+import DropShadow from 'react-native-drop-shadow';
 
 export default function BoxTranfer() {
   const swiperRef = React.useRef(null);
@@ -11,7 +12,7 @@ export default function BoxTranfer() {
   return (
    
       <ScrollView>
-        <View style={{height:260, display: 'flex', alignItems: 'center'}}>
+        <View style={{height:285, display: 'flex', alignItems: 'center'}}>
         <Swiper
           autoplay={true}
         >
@@ -34,8 +35,8 @@ export default function BoxTranfer() {
 const styles = StyleSheet.create({
   slide: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 0
+    marginTop: 0,
+    marginBottom: 0,
     
   },
   button: {
@@ -46,6 +47,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   img: {
-    width: '90%', height: 202, borderRadius: 20
+    width: '90%', height: 238, borderRadius: 20
   }
 });
