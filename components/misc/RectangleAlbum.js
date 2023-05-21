@@ -7,7 +7,7 @@ export default function RectangleAlbum(props) {
         <View style={[styles.container, isPlaylist && styles.container1]}>
             <TouchableOpacity onPress={() => handleNavigator(id)}>
                 <Image source={img ? img : images.demo} style={[styles.img, isPlaylist ? styles.sizeImg2 : styles.sizeImg1]} />
-                <Text style={[styles.textName, isPlaylist && styles.textBold, isDetailPlaylist && styles.marginTop]}>{name}</Text>
+                <Text style={[styles.textName, isPlaylist && styles.textNormal, isDetailPlaylist && styles.marginTop]}>{name}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -16,11 +16,13 @@ export default function RectangleAlbum(props) {
 const styles = StyleSheet.create({
     container: {
         marginRight: 20,
-
+        // width: '77%',
+        // backgroundColor: colors.primary
     },
 
     container1: {
-        marginBottom: 24,
+        // marginBottom: 24,
+        // backgroundColor: colors.black
     },
     img: {
 
@@ -32,11 +34,11 @@ const styles = StyleSheet.create({
 
     sizeImg1: {
         width: 227,
-        height: 133,
+        height: 177,
     },
     sizeImg2: {
-        width: 266,
-        height: 126,
+        width: 315,
+        height: 177,
     },
     textName: {
         fontFamily: 'Montserrat',
@@ -45,8 +47,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#000000'
     },
-    textBold: {
-        fontWeight: 'bold'
+    textNormal: {
+        fontWeight: 'normal'
     },
     marginTop: {
         marginTop: 18
