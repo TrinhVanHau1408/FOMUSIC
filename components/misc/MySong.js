@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         lineHeight: 29,
 
-        color: colors.black
+        // color: colors.black
 
         // backgroundColor: '#ffffff'
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         lineHeight: 24,
-        color: colors.black
+        // color: colors.black
     }
 
 })
