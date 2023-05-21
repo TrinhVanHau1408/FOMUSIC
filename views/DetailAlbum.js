@@ -90,7 +90,7 @@ export default function DetailAlbum({navigation, route}) {
                     </View>
                     <View>
                         <Text>Album</Text>
-                        <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{dataAlbum.title}</Text>
+                        <Text style={{ fontSize: 26, fontWeight: 'bold', color: colors.black }}>{dataAlbum.title}</Text>
                         <Text style={{ marginBottom: 11 }}>{dataAlbum.artist}</Text>
                         <Text>{music.length} songs</Text>
                     </View>
@@ -127,23 +127,27 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex', 
         justifyContent: 'center', 
-        alignItems: 'center', 
-        marginTop: 25, 
-        fontFamily: 'Montserrat', 
-        marginBottom: 27 
+        alignItems: 'flex-start', 
+        marginTop: 25,  
+        marginBottom: 27, 
+        marginLeft: 25,
+        // backgroundColor: colors.black
     },
     containerImg: {
         display: 'flex', 
         flexDirection: 'row', 
         alignItems: 'center',
+        fontFamily: 'Montserrat',
+        // backgroundColor: colors.primary
+
      
     },
     img: {
-        height: 140, 
-        width: 140,
-        borderRadius: 20,
-        borderWidth: 2,
-        borderColor: colors.primary,
+        height: 175, 
+        width: 175,
+        // borderRadius: 20,
+        // borderWidth: 2,
+        // borderColor: colors.primary,
         resizeMode: 'cover',
 
     },
