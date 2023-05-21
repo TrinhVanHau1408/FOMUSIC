@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 
 export default function TitleAlbum({name, type}) {
   return (
-    <View style={type===1 ? styles.trending : (type===2 ? styles.topChart : styles.recenttlyPlayed)}>
+    <View style={type===1 ? styles.trending : (type===2 ? styles.topChart : (type===3? styles.recenttlyPlayed : styles.titleInViewLibrary))}>
         <Text style={styles.textName}>{name}</Text>
     </View>
   )};
@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
     recenttlyPlayed:
     {
       marginTop: 35,
+      marginBottom: 10
+    },
+    titleInViewLibrary:
+    {
+      marginTop: 22,
       marginBottom: 10
     },
 
