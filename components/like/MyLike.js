@@ -21,7 +21,7 @@ export default function MyLike({ id,idSongSelected, songName, songImg, artistNam
                     {idSongSelected===id?<Image source={icons.playing}/>:
                     <Text>{id}</Text>}
                 </View>
-                <View >
+                <View style={styles.imgContainer}>
                     <Image source={songImg} style={styles.img} />
                 </View>
                 <View style={styles.content}>
@@ -46,20 +46,25 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginHorizontal: 30,
+        marginHorizontal: 22,
         marginVertical: 12,
+
+        // backgroundColor: colors.primary
     },
     stt: {
         marginRight: 22,
         fontFamily: 'Montserrat',
-        fontSize: 17
+        fontSize: 17,
+        
     },
-    img: {
-        resizeMode: 'cover', height: 70,
-        width: 66,
-        borderColor: colors.primary,
-        borderRadius: 15,
-        borderWidth: 3
+    imgContainer: {
+        resizeMode: 'cover', height: 80,
+        width: 80,
+        overflow: 'hidden',
+        borderRadius: 20,
+        shadowColor: '#171717',
+        elevation: 5
+      
     },
     info: {
         display: 'flex',
@@ -68,9 +73,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     img: {
-        height: 70,
-        width: 70,
-        borderRadius: 100,
+        height: 80,
+        width: 80,
+        borderRadius: 20,
         overflow: 'hidden',
         shadowColor: '#171717',
         shadowOffset: { width: -2, height: 4 },
