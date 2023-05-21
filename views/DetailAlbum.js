@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start', 
         marginTop: 25,  
         marginBottom: 27, 
-        marginLeft: 25,
+        marginLeft: 30,
         // backgroundColor: colors.black
     },
     containerImg: {
