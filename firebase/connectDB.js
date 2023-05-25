@@ -3,25 +3,26 @@
 // import * as firebase from "firebase";
 
 import { initializeApp } from 'firebase/app';
-import { 
-  getAuth, 
-  onAuthStateChanged, 
+import {
+  getAuth,
+  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithRedirect,
   GoogleAuthProvider,
   sendEmailVerification,
   signOut
- } from 'firebase/auth';
-import { 
-  getDatabase, 
-  set as firebaseDatabaseSet, 
+} from 'firebase/auth';
+import {
+  getDatabase,
+  set as firebaseDatabaseSet,
   ref as firebaseDatabaseRef,
-  get ,
+  get,
   child,
   onValue,
+  remove,
 
-  serverTimestamp 
+  serverTimestamp
 } from 'firebase/database'
 // import "firebase/database";
 
@@ -44,6 +45,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const firebaseDatabase = getDatabase();
 const provider = new GoogleAuthProvider();
+
 export {
   auth,
   firebaseDatabase,
@@ -59,6 +61,6 @@ export {
   provider,
   signInWithRedirect,
   sendEmailVerification,
-  signOut
-  
+  signOut,
+
 }

@@ -59,5 +59,8 @@ const styles = StyleSheet.create({
     },
     marginTop: {
         marginTop: 18
+    },
+    resizeMode: {
+        resizeMode: 'center'
     }
 })

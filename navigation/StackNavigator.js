@@ -24,39 +24,19 @@ import {
   InterfaceStyle,
   BasicSettings,
   Home3,
-  Notifications
+  Notifications,
+  Notification
 } from "../views";
-
-
-
-import Playing from "../views/Playing";
-import PlayingMore from "../views/PlayingMore";
-import PlayingFullLyric from "../views/PlayingFullLyric";
-import Notification from "../views/Notification";
-
 import Profile from "../views/Profile";
-import { MainTabNavigator } from "./MainTabNavigator";
+
+
+
+
 
 
 const Stack = createNativeStackNavigator();
-// const LoginStack = ({ navigation }) => {
-//   <Stack.Navigator
-//     initialRouteName='Wellcome'
-//     screenOptions={{
-//       headerShown: false
-//     }}
-//   >
-//     <Stack.Screen name='Wellcome' component={Wellcome} />
-//     <Stack.Screen name='Login' component={Login} />
-//     <Stack.Screen name='Register' component={Register} />
-//     <Stack.Screen name='VerifyAccount' component={VerifyAccount} />
-//     <Stack.Screen name='NewPassword' component={NewPassword} />
-//     <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
-//     <Stack.Screen name='LoginToHome' component={Home} />
-//   </Stack.Navigator>
-// }
 
-const HomeStack = ({ navigation }) => (
+const HomeStack = () => (
   <Stack.Navigator
     initialRouteName='HomeStack'
     screenOptions={{
@@ -68,7 +48,7 @@ const HomeStack = ({ navigation }) => (
 )
 
 
-const LibraryStack = ({ navigation }) => (
+const LibraryStack = () => (
   <Stack.Navigator
     initialRouteName='LibraryStack'
     screenOptions={{
@@ -86,7 +66,7 @@ const LibraryStack = ({ navigation }) => (
   </Stack.Navigator>
 )
 
-const SearchStack = ({ navigation }) => (
+const SearchStack = () => (
   <Stack.Navigator
     initialRouteName='SearchStack'
     screenOptions={{
@@ -96,7 +76,7 @@ const SearchStack = ({ navigation }) => (
   </Stack.Navigator>
 )
 
-const MenuStack = ({ navigation }) => (
+const MenuStack = () => (
   <Stack.Navigator
     initialRouteName='MenuStack'
     screenOptions={{
@@ -111,6 +91,7 @@ const MenuStack = ({ navigation }) => (
     <Stack.Screen name='Setting' component={Setting}/>
     <Stack.Screen name='InterfaceStyle' component={InterfaceStyle} />
     <Stack.Screen name='BasicSettings' component={BasicSettings} />
+   
   </Stack.Navigator> 
 
 )
