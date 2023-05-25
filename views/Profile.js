@@ -1,12 +1,14 @@
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
 import HeaderApp from '../components/header/HeaderApp'
 import { icons, images, colors } from '../constants'
 import MyLike from '../components/like/MyLike';
 import ControlMusic from '../components/misc/ControlMusic';
 import RectangleAlbum from '../components/misc/RectangleAlbum';
 import TitleAlbum from '../components/misc/TitleAlbum'
-import { getDataAsyncStorage } from '../untiles/AsyncStorage';
+import { getDataAsyncStorage } from '../utilities/AsyncStorage';
 const music = [
     {
     title: 'Lovely',
@@ -98,19 +100,20 @@ const username = "User Name"
 const follower = "100"
 const following = "124"
 export default function Profile({navigation}) {
+
+    const {user} = useSelector((state) => state.user);
     const [isVisible, setIsVisible] = useState(false);
     
-  
-    const[user, setUser] = useState();
-    const [idSong, setIdSong] = useState(0);
-
     useEffect(() => {
         getDataAsyncStorage('user')
-        .then((userCurr) => {
-            setUser(userCurr);
+        .then(data => {
+            console.log(data)
         })
-        
     }, [])
+  
+    // const[user, setUser] = useState();
+    const [idSong, setIdSong] = useState(0);
+
     const handleLayout = (id) => {
         setIsVisible(true);
         setIdSong(id);
