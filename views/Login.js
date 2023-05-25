@@ -9,6 +9,7 @@ import MyButton from '../components/misc/MyButton';
 import OrLine from '../components/misc/OrLine';
 import MyNavigation from '../components/misc/MyNavigation';
 import { auth, signInWithEmailAndPassword, firebaseDatabaseRef, get, child, firebaseDatabase } from '../firebase/connectDB';
+import { readDataFirebase, writeDataFirebase, deleteDataFirebase } from '../firebase/controllerDB';
 import { saveDataAsyncStorage } from '../untiles/AsyncStorage';
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('tvh140802@gmail.com');
@@ -35,6 +36,14 @@ export default function Login({ navigation }) {
     } else {
       setIsFormatEmail(false)
     }
+    // TEST FIREBASE  
+    //------------------------
+    // deleteDataFirebase("users/thaink").then
+    // (result => {
+    //   console.log("RESULT: ", result)
+    // })
+    
+    // END TEST
 
     console.log(`${email} + ${password}`)
     // signInWithEmailAndPassword(auth, email, password)
