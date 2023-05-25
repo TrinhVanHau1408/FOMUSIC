@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image } from 'react-native'
 import { icons } from "../constants";
 import { HomeStack, LibraryStack, MenuStack, SearchStack } from "./StackNavigator";
+import { Login } from "../views";
 
 
 
@@ -83,6 +84,7 @@ const MainTabNavigator = () => (
     <Tab.Screen name="Library" component={LibraryStack} />
     <Tab.Screen name="Search" component={SearchStack} />
     <Tab.Screen name="Menu" component={MenuStack} />
+   
   </Tab.Navigator>
 );
 

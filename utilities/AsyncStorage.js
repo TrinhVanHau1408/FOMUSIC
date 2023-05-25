@@ -28,9 +28,11 @@ const getDataAsyncStorage = async (key) => {
 const removeDataAsyncStorage = async(key) => {
   try {
       await AsyncStorage.removeItem(key);
+      console.log("Remove data storage succes");
       return true;
   }
   catch(exception) {
+    console.log("Remove data storage error");
       return false;
   }
 }
