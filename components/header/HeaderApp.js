@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     flex: 1,
+    alignSelf: 'center',
   },
 
   color1: {

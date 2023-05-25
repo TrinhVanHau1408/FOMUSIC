@@ -77,9 +77,9 @@ export default function Search({navigation}) {
         <TextInput placeholder={'Demo'} style={styles.InputText} />
       </View>
       <View style={{ marginLeft: 24 }}>
-        <TitleAlbum name={'Tìm kiếm gần đây'} />
+        <TitleAlbum type={3} name={'Tìm kiếm gần đây'} />
         <FlatList
-          style={{ marginTop: 10 }}
+          // style={{ marginTop: 0 }}
           data={music}
           renderItem={({ item, index }) =>
             <RectangleImg
@@ -91,9 +91,9 @@ export default function Search({navigation}) {
         />
       </View>
       <View style={{ marginLeft: 24 }}>
-        <TitleAlbum name={'Đề xuất'} />
+        <TitleAlbum type={4} name={'Đề xuất'} />
         <FlatList
-          style={{ marginTop: 10, marginBottom: 120}}
+          style={{ marginBottom: 120}}
           data={music}
           renderItem={({ item, index }) =>
             <SquareImg
@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     margin: 5,
     marginTop: 16,
-    marginLeft: 15,
-    marginRight: 15,
+    marginLeft: 24,
+    marginRight: 24,
     borderRadius: 20
   },
   InputText:
