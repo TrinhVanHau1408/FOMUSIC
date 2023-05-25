@@ -11,7 +11,6 @@ import MyButton from '../components/misc/MyButton';
 import OrLine from '../components/misc/OrLine';
 import MyNavigation from '../components/misc/MyNavigation';
 
-
 export default function Login({ navigation }) {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
