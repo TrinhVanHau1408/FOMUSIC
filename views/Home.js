@@ -131,7 +131,9 @@ export default function Home({ navigation }) {
                                     id={item.id}
                                     name={item.title}
                                     img={item.songImg}
-                                    handleLayout={handleLayout} />}
+                                    // handleLayout={handleLayout}
+                                    handleNavigator={handleNavigatorPlaying}
+                                     />}
                             keyExtractor={(item, index) => index}
                             horizontal
                             showsHorizontalScrollIndicator={false}
