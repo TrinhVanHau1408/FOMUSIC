@@ -12,7 +12,15 @@ import Slider from '@react-native-community/slider';
 import { colors, icons, images } from '../constants';
 import HeaderApp from '../components/header/HeaderApp';
 
-import { addTracks, changeRepeatMode, playNextTrack, playPreviousTrack, settracks, setupPlayMusic, togglePlayback } from '../redux/slices/playerSlice';
+import { 
+    addTracks, 
+    changeRepeatMode, 
+    playNextTrack, 
+    playPreviousTrack, 
+    settracks, 
+    setupPlayMusic, 
+    togglePlayback } from '../redux/slices/playerSlice';
+import {reactHeartSong} from '../redux/slices/songSlice';
 import PlayingMore from './PlayingMore';
 const tracks = [
     {
@@ -196,7 +204,7 @@ const Playing = ({ navigation }) => {
                             source={repeatMode == 'track' ? icons.loop1 : icons.loopAll}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => dispatch(reactHeartSong({songId:'song1', userId:'userId'}))}>
                         <Image
                             source={icons.heart}
                         />

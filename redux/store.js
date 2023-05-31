@@ -10,6 +10,7 @@ import {
 import userReducer from './slices/userSlice';
 import authReducer from './slices/authSlice';
 import playerReducer from './slices/playerSlice';
+import songReducer from './slices/songSlice';
 // const rootReducer = combineReducers({
 //   auth: authReducer,
 //   user: userReducer,
@@ -20,7 +21,8 @@ const store = configureStore({
   {
     auth: authReducer,
     user: userReducer,
-    player: playerReducer
+    player: playerReducer,
+    song: songReducer,
   }
 ,
   middleware: (getDefaultMiddleware) =>
