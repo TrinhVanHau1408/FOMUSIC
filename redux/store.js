@@ -11,8 +11,8 @@ import {
 import userReducer from './slices/userSlice';
 import authReducer from './slices/authSlice';
 import playerReducer from './slices/playerSlice';
+import songReducer from './slices/songSlice';
 import playlistsReducer from './slices/playlistsSlice';
-
 
 // const rootReducer = combineReducers({
 //   auth: authReducer,
@@ -24,7 +24,8 @@ const store = configureStore({
   {
     auth: authReducer,
     user: userReducer,
-    player: playerReducer
+    player: playerReducer,
+    song: songReducer,
     playlists: playlistsReducer
 
   }
