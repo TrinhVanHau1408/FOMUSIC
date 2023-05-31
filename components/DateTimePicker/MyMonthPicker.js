@@ -1,114 +1,57 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Props } from "@react-native-community/checkbox/dist/CheckBox.android"
+import { useState } from "react";
+import { View, StyleSheet } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
 import { colors } from "../../constants";
 
-export default function MySong({ id, songName, songImg, artistName, handleLayout }) {
+const styles=StyleSheet.create({
+    container:
+    {
+        width: 125,
+        height: 20,
+        marginRight: '3%'
+        // backgroundColor: colors.primary
+    }
+})
 
-    return (
-        <View>
-            <TouchableOpacity
-                onPress={() => handleLayout(id)}
-                style={styles.container}
-            >
-                <Text style={styles.stt}>{id}</Text>
-                <View style={styles.songContainer}>
-                    <Image style={styles.songImg} source={songImg} />
-                    <View style={styles.textSong}>
-                        <Text style={styles.artistName}>{artistName}</Text>
-                        <Text style={styles.songName}>{songName}</Text>
-                    </View>
-                </View>
+export default function MyMonthPicker ()
+{
+    const [isOpen, setIsOpen] = useState(false);
+    const [currentValue, setCurentValue] = useState();
 
+    const dataMonth = [
+        {label: 'Tháng 1, 2023', value: '1/2023'},
+        {label: 'Tháng 2, 2023', value: '2/2023'},
+        {label: 'Tháng 3, 2023', value: '3/2023'},
+        {label: 'Tháng 4, 2023', value: '4/2023'},
+        {label: 'Tháng 5, 2023', value: '5/2023'},
+        {label: 'Tháng 6, 2023', value: '6/2023'},
+        {label: 'Tháng 7, 2023', value: '7/2023'},
+        {label: 'Tháng 8, 2023', value: '8/2023'},
+        {label: 'Tháng 9, 2023', value: '9/2023'},
+        {label: 'Tháng 10, 2023', value: '10/2023'},
+        {label: 'Tháng 11, 2023', value: '11/2023'},
+        {label: 'Tháng 12, 2023', value: '12/2023'},
+       
+    ]
 
-            </TouchableOpacity>
+    return(
+        <View style={styles.container}>
+            <DropDownPicker 
+                items={dataMonth}
+                open={isOpen}
+                setOpen={() => setIsOpen(!isOpen)}
+                value={currentValue}
+                setValue={val => setCurentValue(val)}
+                maxHeight={70}
+                autoScroll
+                disableBorderRadius={true}
+
+                placeholder="Tháng 5/2023"
+                placeholderStyle={{fontSize: 1, fontWeight: '400', lineHeight: 13, color: colors.black}}
+                showTickIcon={true}
+                dropDownDirection="BOTTOM"
+            />
         </View>
     )
 }
-const styles = StyleSheet.create({
-    container:
-    {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        // alignContent: 'center',
-
-        paddingLeft: '2%',
-        marginRight: 0,
-        marginVertical: '1%',
-
-        width: 'auto',
-        height: 80,
-
-        // backgroundColor: colors.black
-    },
-    stt:
-    {
-        width: 20,
-        marginLeft: '2%',
-
-        fontFamily: 'Montserrat',
-        fontSize: 24,
-        fontWeight: '700',
-        lineHeight: 29,
-
-        color: colors.black
-
-        // backgroundColor: '#ffffff'
-
-
-    },
-    songContainer:
-    {
-        display: 'flex',
-        flexDirection: 'row',
-
-        width: 450,
-        height: 70,
-        marginLeft: '2%',
-        alignItems: 'center',
-
-        backgroundColor: '#ffffff',
-        borderRadius: 100,
-
-        shadowColor: colors.black,
-        shadowRadius: 10,
-        elevation: 10
-
-    },
-    songImg:
-    {
-        width: 60,
-        height: 60,
-        marginLeft: '1%',
-        alignSelf: 'center',
-
-        borderRadius: 100,
-
-    },
-    textSong:
-    {
-        display: 'flex',
-        flexDirection: 'column',
-        height: 49,
-        justifyContent: 'space-between',
-        marginLeft: '3%'
-    },
-    artistName:
-    {
-        fontFamily: 'Montserrat',
-        fontSize: 13,
-        fontWeight: '500',
-        lineHeight: 16,
-        color: colors.black
-    },
-    songName:
-    {
-        fontFamily: 'Montserrat',
-        // fontStyle: 'italic',
-        fontSize: 20,
-        fontWeight: 'bold',
-        lineHeight: 24,
-        color: colors.black
-    }
-
-})
-

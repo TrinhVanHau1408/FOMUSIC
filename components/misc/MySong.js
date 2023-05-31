@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
         paddingLeft: '2%',
         marginRight: 0,
-        marginVertical: '1%',
+        marginVertical: 3,
 
         width: 'auto',
         height: 80,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         lineHeight: 29,
 
-        color: colors.black
+        // color: colors.black
 
         // backgroundColor: '#ffffff'
 
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
 
         width: 450,
-        height: 70,
+        height: 73,
         marginLeft: '2%',
         alignItems: 'center',
 
@@ -76,12 +76,14 @@ const styles = StyleSheet.create({
     },
     songImg:
     {
-        width: 60,
-        height: 60,
-        marginLeft: '1%',
+        width: 63,
+        height: 63,
+        marginLeft: '1.1%',
         alignSelf: 'center',
 
         borderRadius: 100,
+        borderColor: colors.primary,
+        borderWidth: 2
 
     },
     textSong:
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         lineHeight: 24,
-        color: colors.black
+        // color: colors.black
     }
 
 })

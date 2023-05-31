@@ -20,7 +20,7 @@ export default function MyButtonWithCheckBox(props) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 40,
+    height: 43,
     marginBottom: '6%',
     marginHorizontal: 32,
 

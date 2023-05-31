@@ -7,7 +7,7 @@ export default function CircleAlbum(props) {
     return (
         <View style={styles.container}>
             <TouchableOpacity 
-            style={styles.buttonƯ}
+            // style={styles.buttonƯ}
             onPress={() =>handleNavigator(id)}
             >
                 <Image source={img ? img : images.demo} style={styles.img} />
@@ -19,13 +19,14 @@ export default function CircleAlbum(props) {
 
 const styles = StyleSheet.create({
     container: {
-        width: 83,
+        width: 98,
         marginRight: 16,
+        // backgroundColor: colors.black
     },
 
     img: {
-        width: 83,
-        height: 83,
+        width: 98,
+        height: 98,
         borderRadius: 50,
         borderWidth: 2,
         borderColor: colors.primary,
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 500,
         textAlign: 'center',
-        color: '#000000'
+        color: '#000000',
+        // backgroundColor: colors.black
     }
 })

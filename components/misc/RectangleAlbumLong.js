@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, images } from '../../constants';
-export default function RectangleAlbum(props) {
-    const { id, name, img, type, handleNavigator, isPlaylist, isDetailPlaylist } = props
+export default function RectangleAlbumLong(props) {
+    const { id, name, img, type, handleNavigator, isPlaylist, isDetailPlaylist, handleLongPress } = props;
     return (
         <View style={[styles.container, (isPlaylist && type===2) && styles.container1]}>
-            <TouchableOpacity onPress={() => handleNavigator(id)}>
+            <TouchableOpacity onPress={() => handleNavigator(id)} onLongPress={() => handleLongPress(id)}>
                 <Image source={img ? img : images.demo} style={[styles.sizeImg1, type===2? styles.imgBorderNoColor : styles.img]} />
                 <Text style={[styles.textName, isPlaylist && styles.textNormal, isDetailPlaylist && styles.marginTop]}>{name}</Text>
             </TouchableOpacity>
