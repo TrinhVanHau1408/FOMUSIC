@@ -1,25 +1,18 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
-export default function MyLike({ id,idSongSelected, songName, songImg, artistName, isLike, index, handleLayout,setIdSong  }) {
+
+export default function MyAdd({ id, idSongSelected, songName, songImg, artistName, isLike, index, handleAdd, setIdSong, status }) {
     const [isLiked, setIsIsLiked] = useState(isLike);
-    // const handlePlayMusic = () => {
-    //     Alert.alert('Play music');
-        
-    // }
-    // useEffect(() => {
-    //     setIdSong(id);
-    //     // Alert.alert('id',id)
-    // },[id]);
+
     return (
         <View style={styles.container}>
-            <TouchableOpacity
-                onPress={() =>handleLayout(id)}
+            <View
                 style={styles.info}
             >
                 <View style={styles.stt}>
-                    {idSongSelected===id?<Image source={icons.playing}/>:
-                    <Text>{id}</Text>}
+                    {idSongSelected === id ? <Image source={icons.playing} /> :
+                        <Text>{index + 1}</Text>}
                 </View>
                 <View style={styles.imgContainer}>
                     <Image source={songImg} style={styles.img} />
@@ -28,11 +21,12 @@ export default function MyLike({ id,idSongSelected, songName, songImg, artistNam
                     <Text style={styles.songName}>{songName}</Text>
                     <Text style={styles.artistName}>{artistName}</Text>
                 </View>
-            </TouchableOpacity>
+            </View>
 
             <View style={[styles.button, isLiked ? styles.buttonClick : styles.buttonUnClick]}>
-                <TouchableOpacity onPress={() => { setIsIsLiked(!isLiked) }}>
-                    <Image source={isLiked ? icons.heart : icons.unHeart} />
+                <TouchableOpacity onPress={() => { handleAdd(status, id)}}
+                    style={{ backgroundColor: colors.primary, borderRadius: 10, padding: 5, paddingLeft: 10, paddingRight: 10 }}>
+                    <Text style={{ fontSize: 17, color: 'white' }}>{status ? "Đã thêm" : "Thêm"}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -55,7 +49,7 @@ const styles = StyleSheet.create({
         marginRight: 22,
         fontFamily: 'Montserrat',
         fontSize: 17,
-        
+
     },
     imgContainer: {
         resizeMode: 'cover', height: 80,
@@ -64,7 +58,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         shadowColor: '#171717',
         elevation: 5
-      
+
     },
     info: {
         display: 'flex',

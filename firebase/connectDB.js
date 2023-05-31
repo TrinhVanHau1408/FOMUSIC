@@ -25,6 +25,9 @@ import {
 
   serverTimestamp
 } from 'firebase/database'
+
+import { getStorage,
+       ref as firebaseStorageRef} from "firebase/storage";
 // import "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -45,6 +48,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const firebaseDatabase = getDatabase();
+const firebaseStorage = getStorage();
 const provider = new GoogleAuthProvider();
 
 export {
@@ -64,5 +68,7 @@ export {
   signInWithRedirect,
   sendEmailVerification,
   signOut,
+  firebaseStorage,
+  firebaseStorageRef
 
 }

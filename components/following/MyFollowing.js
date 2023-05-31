@@ -9,8 +9,9 @@ export default function MyFollowing({ id, userName, userImg, isFollowing, follow
                 <View style={styles.img}>
                     <Image source={userImg}
                         style={{
-                            resizeMode: 'cover', height: 70,
-                            width: 70,
+                            resizeMode: 'cover', 
+                            height: 80,
+                            width: 80,
                         }}
                     />
                 </View>
@@ -51,14 +52,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     img: {
-        height: 70,
-        width: 70,
+        height: 80,
+        width: 80,
         borderRadius: 100,
         overflow: 'hidden',
         shadowColor: '#171717',
-        shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
+        // shadowOffset: { width: -2, height: 4 },
+        // shadowOpacity: 0.2,
+        // shadowRadius: 3,
+        elevation: 10
 
     },
     content: {
@@ -85,12 +87,12 @@ const styles = StyleSheet.create({
     },
     button: {
         fontFamily: 'Montserrat',
-        width: 80,
+        width: 96,
         height: 45,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 20,
+        borderRadius: 24,
     },
 
     buttonClick: {

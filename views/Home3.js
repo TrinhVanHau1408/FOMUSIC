@@ -24,9 +24,11 @@ const styles = StyleSheet.create({
     },
     textHeaderFlatlist:
     {
-        marginLeft: '4%', 
-        marginBottom: '3%', 
-        fontSize: 16, lineHeight: 20, 
+        marginLeft: '6%', 
+        marginBottom: 5, 
+        marginTop: 0,
+        fontSize: 18, 
+        lineHeight: 20, 
         fontWeight: 'bold', 
         color: colors.black,
         alignContent: 'center',

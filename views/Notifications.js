@@ -36,7 +36,7 @@ export default function Notifications({ navigation }) {
                 goBack={goBack} /> */}
                  <HeaderApp 
             iconLeft={icons.arrowBack} 
-            title='Interface Style'
+            title='Notifications'
             goBack={goBack}/>
             <View style={{ marginTop: '5%' }}>
                 <MyButtonWithCheckBox title={'Enable all'} />

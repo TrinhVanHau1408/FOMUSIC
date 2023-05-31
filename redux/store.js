@@ -7,10 +7,13 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist'
+
 import userReducer from './slices/userSlice';
 import authReducer from './slices/authSlice';
 import playerReducer from './slices/playerSlice';
 import songReducer from './slices/songSlice';
+import playlistsReducer from './slices/playlistsSlice';
+
 // const rootReducer = combineReducers({
 //   auth: authReducer,
 //   user: userReducer,
@@ -23,6 +26,8 @@ const store = configureStore({
     user: userReducer,
     player: playerReducer,
     song: songReducer,
+    playlists: playlistsReducer
+
   }
 ,
   middleware: (getDefaultMiddleware) =>

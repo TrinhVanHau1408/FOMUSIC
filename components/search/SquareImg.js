@@ -11,8 +11,8 @@ export default function SquareImg({id, songImg}) {
 
 const styles = StyleSheet.create({
     container: {
-        marginRight: 20,
-        marginBottom: 10,
+        marginRight: 15,
+        marginBottom: 15,
     },
     img: {
         width: 120,
