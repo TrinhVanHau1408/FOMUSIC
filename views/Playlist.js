@@ -175,7 +175,7 @@ export default function Playlist({ navigation, route }) {
 
   return (
     <View>
-      <ScrollView>
+      
         <HeaderApp
           title={'Playlist'}
           iconLeft={icons.arrowBack}
@@ -206,7 +206,7 @@ export default function Playlist({ navigation, route }) {
           }
         </View>
         <View style={{ flex: 1, height: 100 }}></View>
-      </ScrollView>
+      
       {isVisible && <Edit handleNavigator={handleLayout} height={null} edit={sigleEdit} />}
       {islongClick && <Edit title={playlists[idSelector]} handleNavigator={handleLayoutLongPress} height={null} edit={multiEdit} />}
       {isCreate && <CreatePlaylist handleNavigator={handleCreatePlaylist} height={null} />}
