@@ -1,14 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { firebaseDatabaseRef, get, child, firebaseDatabase, firebaseUpdate, firebaseDatabaseSet } from '../../firebase/connectDB';
+import {
+    firebaseDatabaseRef,
+    get,
+    child,
+    firebaseDatabase,
+    firebaseUpdate,
+    firebaseDatabaseSet,
+    equalTo,
+    query,
+    orderByChild
+} from '../../firebase/connectDB';
+import { parse } from 'react-native-svg';
+import { readDataFirebaseWithChildCondition } from '../../firebase/controllerDB';
 
-const getAllSongByUserId = createAsyncThunk('song/getAllSongByUseId', async ({ userId }, { rejectWithValue }) => {
 
-})
+// const getAllSong = createAsyncThunk('song/getAllSong', async ({}))
 
-
-const getAllSong = createAsyncThunk('song/getAllSong', async (_, { rejectWithValue }) => {
-
-})
 
 export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ songId, userId }, { rejectWithValue }) => {
     // path: songs/songId/reactHeart/userId =>> nếu tồn tại thì xóa bỏ nếu chứa thì thêm vào
@@ -16,7 +23,7 @@ export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ s
     console.log('handle click heart');
     const dbRef = firebaseDatabaseRef(firebaseDatabase);
     const responeSnapshot = await get(child(dbRef, `songs/song1/reactHeart/3XUNpCHKq3bC64NzVwHNRBEzzFx2`));
-    
+
     console.log(responeSnapshot.val());
     // True đã like rồi thì unlike
     // False thì update lại true thành like
@@ -24,20 +31,13 @@ export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ s
     if (responeSnapshot.val()) {
         // true: update value false
         console.log("responeSnapshot.key: ", responeSnapshot.val());
-       
-            // await firebaseDatabaseSet(firebaseDatabaseRef(firebaseDatabase, 'songs/song1/reactHeart'), {
-            //     '3XUNpCHKq3bC64NzRBEzzFx2': false,
-            // })
+        nodeRef = firebaseDatabaseRef(firebaseDatabase, 'songs/song1/reactHeart');
 
-            nodeRef =  firebaseDatabaseRef(firebaseDatabase, 'songs/song1/reactHeart');
+        await firebaseUpdate(nodeRef, {
+            '3XUNpCHKq3bC64NzVwHNRBEzzFx2': false,
+        })
 
-           await firebaseUpdate(nodeRef, {
-                '3XUNpCHKq3bC64NzVwHNRBEzzFx2': false,
-            })
-       
     } else {
-
-       
         // false: update value true
         if (responeSnapshot.val() == false) {
             console.log("responeSnapshot.key: false");
@@ -56,26 +56,67 @@ export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ s
             await firebaseDatabaseSet(newChildRef, {
                 '3XUNpCHKq3bC64NzVwHNRBEzzFx2': true,
             })
-            // await firebaseDatabaseSet(firebaseDatabaseRef(firebaseDatabase, 'songs/song1/reactHeart'), {
-            //     '3XUNpCHKq3bC64NzRBEzzFx2': true,
-            // });
-
-
-
         }
     }
 
 })
 
 
+export const getHistorySong = createAsyncThunk('song/getHistorySong',
+    async ({ userId }, {dispatch, rejectWithValue }) => {
+
+        console.log('getHistorySong')
+        const dbRef = firebaseDatabaseRef(firebaseDatabase);
+        const responeSnapshot = await get(child(dbRef, `userHistorys/${userId}`));
+
+        const songIds = Object.keys(responeSnapshot.val());
+        console.log(`songIds ${songIds} \\n`);
+        const dataSong = [];
+        console.log("getHistorySong: ");
+        for (let songId of songIds) {
+
+            console.log(songId)
+            const snapshotSong = await get(child(dbRef, `songs/${songId}`));
+            console.log(`song id ${snapshotSong.key} + ${snapshotSong.val()} `)
+            let song = {
+                id: snapshotSong.key,
+                albumName: snapshotSong.val().albumName,
+                artistID: snapshotSong.val().artistID,
+                audioUrl: snapshotSong.val().audioUrl,
+                duration: snapshotSong.val().duration,
+                genreID: snapshotSong.val().genreID,
+                imgUrl: snapshotSong.val().imgUrl,
+                lyrics: snapshotSong.val().lyrics,
+                name: snapshotSong.val().name,
+                reactHeart: snapshotSong.val().reactHeart,
+                releaseAt: snapshotSong.val().releaseAt,
+            }
+        
+            dataSong.push(song);
+        }
+
+        dispatch(setHistorySong(dataSong))
+    }
+)
+
 const songSlice = createSlice({
     name: 'song',
     initialState: {
         songs: null,
+        historySongs: null,
         loading: false,
         error: null
     },
-    reducers: {},
+    reducers: {
+        setSong: (state, action) => {
+            state.songs = action.payload;
+            console.log('setSong: ', action.payload)
+        },
+        setHistorySong: (state, action) => {
+            state.historySongs = action.payload;
+            console.log('setHistorySong: ', action.payload)
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(reactHeartSong.pending, (state) => {
             state.loading = true;
@@ -94,6 +135,25 @@ const songSlice = createSlice({
             console.log("reactHeartSong rejected: ", action.error.code)
         })
     }
+    // ,
+    // extraReducers: (builder) => {
+    //     builder.addCase(getAllSongByUseId.pending, (state) => {
+    //         state.loading =true;
+    //     })
+    // },
+    // extraReducers: (builder) => {
+    //     builder.addCase(getAllSongByUseId.fulfilled, (state, action) => {
+    //         state.loading = false;
+    //         state.songs = action.payload;
+    //         console.log('getAllSongByUseId: ',action.payload )
+    //     })
+    // },
+    // extraReducers: (builder) => {
+    //     builder.addCase(getAllSongByUseId.rejected, (state, action) => {
+    //         state.loading = false;
+    //         console.log("reactHeartSong rejected: ", action.error.code)
+    //     })
+    // }
 })
-
+export const { setSong, setHistorySong } = songSlice.actions;
 export default songSlice.reducer;
