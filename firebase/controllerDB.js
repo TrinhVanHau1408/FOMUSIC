@@ -14,9 +14,47 @@ import {
   provider,
   signInWithRedirect,
   sendEmailVerification,
-  signOut,
+  signOut,orderByChild, equalTo, query
 } from "./connectDB"
 import { remove, push, update, set } from 'firebase/database'
+
+
+const readDataFirebaseWithChildCondition = async (parentNode, nameCodition, valueCodition) => {
+
+  console.log(`Parent node: ${parentNode}, nameCodition: ${nameCodition}, valueCodition: ${valueCodition}`);
+  const parentRef = firebaseDatabaseRef(firebaseDatabase, parentNode);
+
+  const queryRef = query(parentRef, orderByChild(nameCodition), equalTo(valueCodition));
+
+  get(queryRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      // console.log('readDataFirebaseWithChildCondition: ', data);
+      return {data: data, error: false};
+    } else {
+      // console.log('Không tìm thấy playlist cho userId này.');
+      return {data: null, error: false};
+    }
+  }).catch((error) => {
+    // console.error('Lỗi khi lấy dữ liệu playlist:', error);
+    return {data: null, error: true};
+  });
+
+
+  try {
+    const parentRef = firebaseDatabaseRef(firebaseDatabase, parentNode);
+
+    const queryRef = query(parentRef, orderByChild(nameCodition), equalTo(valueCodition));
+  
+    const snapshot = await get(queryRef);
+
+    if (snapshot.exists()) return snapshot.val();
+    else return null
+
+  } catch {
+    return null;
+  }
+}
 
 const readDataFirebase = async (path) => {
   try {
@@ -74,10 +112,10 @@ const updateDataPlaylistsFirebase = async (path, data) => {
     const data_update =
     {
       name: data.name ? data.name : data_previous.val().name,
-      description: data.description ? data.description : (data_previous.val().description?data_previous.val().description:''),
+      description: data.description ? data.description : (data_previous.val().description ? data_previous.val().description : ''),
       userId: data_previous.val().userId,
-      imageUrl: data.imageUrl ? data.imageUrl : (data_previous.val().imageUrl?data_previous.val().imageUrl:''),
-      songs: data.songs ? data.songs : (data_previous.val().songs?data_previous.val().songs : {}),
+      imageUrl: data.imageUrl ? data.imageUrl : (data_previous.val().imageUrl ? data_previous.val().imageUrl : ''),
+      songs: data.songs ? data.songs : (data_previous.val().songs ? data_previous.val().songs : {}),
       createdAt: data_previous.val().createdAt,
       modifyAt: serverTimestamp(),
     }
@@ -96,5 +134,6 @@ export {
   readDataFirebase,
   writeDataFirebase,
   deleteDataFirebase,
-  updateDataPlaylistsFirebase
+  updateDataPlaylistsFirebase,
+  readDataFirebaseWithChildCondition
 }
