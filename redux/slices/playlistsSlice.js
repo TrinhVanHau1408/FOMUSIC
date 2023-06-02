@@ -22,6 +22,17 @@ export const getPlayLists = createAsyncThunk('playlists/getPlayLists', async ({ 
     }
 })
 
+// Lấy tất cả các playlist của user hiện tại.
+export const getAllPlaylistByUserId = createAsyncThunk('song/getAllSongByUseId', async ({ userId }, {dispatch, rejectWithValue }) => {
+
+    console.log('getAllSongByUserId: ', userId)
+
+    const playlist = await readDataFirebaseWithChildCondition('playlists', 'userId', userId);
+    console.log('playlist:', playlist)
+    dispatch(setPlayLists(playlist));
+})
+
+
 const playlistsSlice = createSlice({
     name: 'playlists',
     initialState: {
