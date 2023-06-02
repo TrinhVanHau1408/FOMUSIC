@@ -5,7 +5,7 @@
  * @param {Object} objectFilter - Object cần fillter.
  * @param {String} nameFilter - trường value cần fillter.
  * @param {String} valueFilter - value fillter
- * @returns {Array Object} - [key, object value]}
+ * @returns {Array} - [key, object value]}
  */
 export const fillterObject = (objectFilter, nameFilter, valueFilter) => {
     const filteredObjects = Object.entries(objectFilter).filter(
