@@ -28,8 +28,9 @@ const readDataFirebaseWithChildCondition = async (parentNode, nameCodition, valu
     const queryRef = query(parentRef, orderByChild(nameCodition), equalTo(valueCodition));
   
     const snapshot = await get(queryRef);
-
+    // console.log(snapshot)
     if (snapshot.exists()) return snapshot.val();
+
     else return null
 
   } catch {
