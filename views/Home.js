@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, SafeAreaView, ScrollView, FlatList, Image, TouchableOpacityBase, TouchableOpacity } from 'react-native'
 import HeaderApp from '../components/header/HeaderApp'
 import RowBoxTranfer from '../components/box/RowBoxTranfer'
@@ -9,51 +9,56 @@ import ControlMusic from '../components/misc/ControlMusic';
 import BoxTranfer from '../components/box/BoxTranfer';
 import { images, icons, colors } from '../constants';
 import TitleText from '../components/forgotPassword.js/TitleText';
-
+import { getAllPlaylistByUserId } from '../redux/slices/playlistsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { filterObject } from '../utilities/Object';
+import { Text } from 'react-native-svg';
+import { usePlaybackState } from 'react-native-track-player';
+import { getHistorySong } from '../redux/slices/songSlice';
 const music = [
     {
-        title: 'Lovely',
+        name: 'Lovely',
         artist: 'Billie Eilish',
-        songImg: images.imgLovely,
+        imgUrl: images.imgLovely,
         // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
         duration: 2 * 60 + 53,
         id: '1',
     },
     {
-        title: 'Understand',
+        name: 'Understand',
         artist: 'Keshi',
-        songImg: images.imgUnderstand,
+        imgUrl: images.imgUnderstand,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '2',
         track_number: '2'
     }, {
-        title: 'Snooze',
+        name: 'Snooze',
         artist: 'SZA',
-        songImg: images.imgSZATout,
+        imgUrl: images.imgSZATout,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '3',
         track_number: '3'
     }, {
-        title: 'If you',
+        name: 'If you',
         artist: 'BigBang',
-        songImg: images.imgIfYou,
+        imgUrl: images.imgIfYou,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '4',
         track_number: '4'
     }, {
-        title: 'Shoong',
+        name: 'Shoong',
         artist: 'Teayang',
-        songImg: images.imgSZATout,
+        imgUrl: images.imgSZATout,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '5',
         track_number: '5'
     }, {
-        title: 'Die For You',
-        artist: 'The Weeknd',
+        name: 'Die For You',
+        imgUrl: 'The Weeknd',
         songImg: images.imgDieForYou,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
@@ -61,9 +66,9 @@ const music = [
         track_number: '6'
     },
     {
-        title: 'double take',
+        name: 'double take',
         artist: 'dhruv',
-        songImg: images.imgDoubleTakeL,
+        imgUrl: images.imgDoubleTakeL,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '7',
@@ -73,6 +78,11 @@ const music = [
 
 
 export default function Home({ navigation }) {
+    const playBackState = usePlaybackState();
+    const dispatch = useDispatch();
+    const {user, loading, error} = useSelector((state) => state.user)
+    const {historySongs} = useSelector((state) => state.song)
+    const {playlists} = useSelector((state) => state.playlists)
     const [isVisible, setIsVisible] = useState(false);
     const [idSong, setIdSong] = useState(0);
     const handleLayout = (id) => {
@@ -81,8 +91,20 @@ export default function Home({ navigation }) {
 
     }
     const handleNavigatorPlaying = () => {
-        navigation.navigate('Playing');
+        
+        // if (!loading && error == null) {
+        //     dispatch(getAllPlaylistByUserId({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
+
+        //     console.log("fillter playlist: ", filterObject(playlists,'name','Demo'));
+        // }
+       
+        // navigation.navigate('Playing');
+        dispatch(getHistorySong({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
     }
+
+    // useEffect(()=>{
+    //     getHistorySong({userId: '3XUNpCHKq3bC64NzVwHNRBEzzFx2'});
+    // }, [])
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -128,17 +150,17 @@ export default function Home({ navigation }) {
                         />
                     </View>
 
-                    <View >
+                    <View style={(playBackState != null && playBackState != 'idle')&&styles.marginBottomControl}>
                         <TitleAlbum 
                             type={3}
                             name={'RECENTLY PLAYED'} />
                         <FlatList
-                            data={music}
+                            data={historySongs?historySongs:music}
                             renderItem={({ item }) =>
                                 <SquareAlbum
                                     id={item.id}
-                                    name={item.title}
-                                    img={item.songImg}
+                                    name={item.name}
+                                    img={item.imgUrl}
                                     // handleLayout={handleLayout}
                                     handleNavigator={handleNavigatorPlaying}
                                      />}
@@ -149,7 +171,7 @@ export default function Home({ navigation }) {
                     </View>
                 </View>
             </ScrollView>
-            {isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} handleNavigator={handleNavigatorPlaying} />}
+            {(playBackState != null && playBackState != 'idle') && <ControlMusic song={music.find(({ id }) => id === idSong)} handleNavigator={handleNavigatorPlaying} />}
         </View>
 
     )
@@ -163,4 +185,7 @@ const styles = StyleSheet.create({
 
         marginHorizontal: 20,
     },
+    marginBottomControl: {
+        marginBottom: 160
+    }
 })
