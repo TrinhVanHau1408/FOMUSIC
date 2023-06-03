@@ -6,7 +6,7 @@ import Edit from '../components/misc/Edit'
 import CreatePlaylist from '../components/misc/CreatePlaylist'
 import { icons, images } from '../constants'
 import { ScrollView } from 'react-native-gesture-handler'
-import { getPlayLists } from '../redux/slices/playlistsSlice'
+import { getPlayLists } from '../redux/slices/playlistsSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import UpdatePlaylist from '../components/misc/UpdatePlaylist'
 import DeletePlaylists from '../components/misc/DeletePlaylists'

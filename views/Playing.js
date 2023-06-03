@@ -19,7 +19,9 @@ import {
     playPreviousTrack, 
     settracks, 
     setupPlayMusic, 
-    togglePlayback } from '../redux/slices/playerSlice';
+    togglePlayback,
+    getCurrentHeartPlaying, 
+    setHeart} from '../redux/slices/playerSlice';
 import {reactHeartSong} from '../redux/slices/songSlice';
 import PlayingMore from './PlayingMore';
 const tracks = [
@@ -65,7 +67,8 @@ const setUpOpenApp = async () => {
             const getTrackCurrent = await TrackPlayer.getTrack(currentTrackIndex);
 
             if (getTrackCurrent != null) {
-                const { title,
+                const { 
+                    title,
                     artist,
                     artwork } = getTrackCurrent;
 
@@ -83,7 +86,8 @@ const setUpOpenApp = async () => {
 }
 const Playing = ({ navigation }) => {
 
-    const { repeatMode } = useSelector((state) => state.player);
+    const { repeatMode, isHeart } = useSelector((state) => state.player);
+    const { songs } = useSelector((state) => state.song);
     const [song, setSong] = useState({});
     const [toggleMore, setToggleMore] = useState(false);
     const dispatch = useDispatch();
@@ -98,6 +102,10 @@ const Playing = ({ navigation }) => {
     }
 
 
+    React.useEffect(() => {
+        dispatch(getCurrentHeartPlaying())
+      }, [dispatch])
+    
 
     useEffect(() => {
 
@@ -121,6 +129,8 @@ const Playing = ({ navigation }) => {
                 artist,
                 artwork
             })
+
+            dispatch(setHeart(true));
         }
     });
 
@@ -206,8 +216,9 @@ const Playing = ({ navigation }) => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => dispatch(reactHeartSong({songId:'song1', userId:'userId'}))}>
                         <Image
-                            source={icons.heart}
+                            source={isHeart?icons.heart:icons.unHeart}
                         />
+                        
                     </TouchableOpacity>
                 </View>
             </View>

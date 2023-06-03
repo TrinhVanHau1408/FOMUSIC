@@ -65,27 +65,29 @@ export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ s
 export const getHistorySong = createAsyncThunk('song/getHistorySong',
     async ({ userId }, {dispatch, rejectWithValue }) => {
 
-        console.log('getHistorySong')
+        // console.log('getHistorySong')
         const dbRef = firebaseDatabaseRef(firebaseDatabase);
         const responeSnapshot = await get(child(dbRef, `userHistorys/${userId}`));
 
         const songIds = Object.keys(responeSnapshot.val());
-        console.log(`songIds ${songIds} \\n`);
+        // console.log(`songIds ${songIds} \\n`);
         const dataSong = [];
-        console.log("getHistorySong: ");
+        // console.log("getHistorySong: ");
         for (let songId of songIds) {
 
-            console.log(songId)
+            // console.log(songId)
             const snapshotSong = await get(child(dbRef, `songs/${songId}`));
-            console.log(`song id ${snapshotSong.key} + ${snapshotSong.val()} `)
+            // console.log(`song id ${snapshotSong.key} + ${snapshotSong.val()} `)
             let song = {
                 id: snapshotSong.key,
                 albumName: snapshotSong.val().albumName,
-                artistID: snapshotSong.val().artistID,
-                audioUrl: snapshotSong.val().audioUrl,
+                artistId: snapshotSong.val().artistId,
+                artist: snapshotSong.val().artist,
+                url: snapshotSong.val().url,
                 duration: snapshotSong.val().duration,
-                genreID: snapshotSong.val().genreID,
-                imgUrl: snapshotSong.val().imgUrl,
+                genreId: snapshotSong.val().genreId,
+                genre: snapshotSong.val().genre,
+                artwork: snapshotSong.val().artwork,
                 lyrics: snapshotSong.val().lyrics,
                 name: snapshotSong.val().name,
                 reactHeart: snapshotSong.val().reactHeart,
@@ -110,11 +112,11 @@ const songSlice = createSlice({
     reducers: {
         setSong: (state, action) => {
             state.songs = action.payload;
-            console.log('setSong: ', action.payload)
+            // console.log('setSong: ', action.payload)
         },
         setHistorySong: (state, action) => {
             state.historySongs = action.payload;
-            console.log('setHistorySong: ', action.payload)
+            // console.log('setHistorySong: ', action.payload)
         }
     },
     extraReducers: (builder) => {

@@ -41,7 +41,7 @@ export const addTracks = createAsyncThunk(
 ;
 export const togglePlayback = createAsyncThunk(
     'player/togglePlayback',
-    async ({playBackState}, { getState }) => {
+    async ({playBackState}, {dispatch ,getState }) => {
 
         
         // const playBackState = getState().player.playBackState;
@@ -54,6 +54,7 @@ export const togglePlayback = createAsyncThunk(
                 await TrackPlayer.play();
             } else {
                 await TrackPlayer.pause();
+               
             }
         }
     }
@@ -143,6 +144,23 @@ export const playPreviousTrack = createAsyncThunk(
     }
   );
 
+  export const getCurrentHeartPlaying = createAsyncThunk('song/getCurrentHeartPlaying', async (_, {dispatch ,rejectWithValue }) => {
+    const songRef = firebaseDatabaseRef(firebaseDatabase, 'songs/song1/reactHeart')
+    await onValue(songRef, (snapshot) => {
+        const song = snapshot.val();
+        console.log("react heart: ",song)
+        // const song = Object.keys(songs).filter(song => song.id =='3XUNpCHKq3bC64NzVwHNRBEzzFx2s');
+        console.log("user id: ",song['3XUNpCHKq3bC64NzVwHNRBEzzFx2'])
+        const isHeart = song['3XUNpCHKq3bC64NzVwHNRBEzzFx2'];
+        dispatch(setHeart(isHeart));
+        // if (isHeart == true) {
+        //   d
+        // } else {
+        //   return false;
+        // }
+       
+    })
+})
 
 const playerSlice = createSlice({
     name: 'player',
@@ -154,6 +172,7 @@ const playerSlice = createSlice({
         },
         tracks: null,
         repeatMode: 'off',
+        isHeart: false,
     },
     reducers: {
         setPlaybackState: (state, action) => {
@@ -169,19 +188,27 @@ const playerSlice = createSlice({
         setRepeatMode: (state, action) => {
             state.repeatMode = action.payload;
         },
+        setHeart: (state, action) => {
+          state.isHeart = action.payload;
+          console.log("getCurrentHeartPlaying",action.payload)
+        }
     },
     extraReducers: (builder) => {
       builder.addCase(changeRepeatMode.fulfilled,(state, action) => {
         state.repeatMode = action.payload;
       })
+     
     }
 });
+
+
 
 export const {
     setPlaybackState,
     setProgress,
     settracks,
     setRepeatMode,
+    setHeart
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

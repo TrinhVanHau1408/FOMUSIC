@@ -3,6 +3,7 @@
 // import * as firebase from "firebase";
 
 import { initializeApp } from 'firebase/app';
+import firebase from 'firebase/app';
 import {
   getAuth,
   onAuthStateChanged,
@@ -22,8 +23,8 @@ import {
   child,
   onValue,
   remove,
-
-  serverTimestamp
+  orderByChild, equalTo, once,value ,query,
+  serverTimestamp, limitToFirst, limitToLast, orderByValue
 } from 'firebase/database'
 
 import { getStorage,
@@ -69,6 +70,7 @@ export {
   sendEmailVerification,
   signOut,
   firebaseStorage,
-  firebaseStorageRef
+  firebaseStorageRef,
+  orderByChild, equalTo, once,value,query,limitToLast, limitToFirst, orderByValue
 
 }

@@ -22,33 +22,15 @@ import { remove, push, update, set } from 'firebase/database'
 const readDataFirebaseWithChildCondition = async (parentNode, nameCodition, valueCodition) => {
 
   console.log(`Parent node: ${parentNode}, nameCodition: ${nameCodition}, valueCodition: ${valueCodition}`);
-  const parentRef = firebaseDatabaseRef(firebaseDatabase, parentNode);
-
-  const queryRef = query(parentRef, orderByChild(nameCodition), equalTo(valueCodition));
-
-  get(queryRef).then((snapshot) => {
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      // console.log('readDataFirebaseWithChildCondition: ', data);
-      return {data: data, error: false};
-    } else {
-      // console.log('Không tìm thấy playlist cho userId này.');
-      return {data: null, error: false};
-    }
-  }).catch((error) => {
-    // console.error('Lỗi khi lấy dữ liệu playlist:', error);
-    return {data: null, error: true};
-  });
-
-
   try {
     const parentRef = firebaseDatabaseRef(firebaseDatabase, parentNode);
 
     const queryRef = query(parentRef, orderByChild(nameCodition), equalTo(valueCodition));
   
     const snapshot = await get(queryRef);
-
+    // console.log(snapshot)
     if (snapshot.exists()) return snapshot.val();
+
     else return null
 
   } catch {
