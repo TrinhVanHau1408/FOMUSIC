@@ -1,77 +1,21 @@
-import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator, ToastAndroid } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import HeaderApp from '../components/header/HeaderApp'
 import { colors, icons, images } from '../constants'
 import RectangleAlbum from '../components/misc/RectangleAlbum'
 import ControlDetatilPalylist from '../components/playlist/ControlDetatilPlaylist'
-import MyLike from '../components/like/MyLike';
+import MyLike from '../components/like/MyLikeLong';
 import ControlMusic from '../components/misc/ControlMusic';
 import { useDispatch, useSelector } from 'react-redux'
-import { readDataFirebase } from '../firebase/controllerDB'
+import { readDataFirebase, writeDataFirebase } from '../firebase/controllerDB'
 import { getPlayLists } from '../redux/slices/playlistsSlice'
 import Edit from '../components/misc/Edit'
-import AddSongPlaylists from '../components/misc/AddSongPlaylists'
+import RequestAddSongs from '../components/misc/RequestAddSongs'
+import { isFulfilled } from '@reduxjs/toolkit'
+import DeleteSongPlaylists from '../components/misc/DeleteSongPlaylist'
+import DeleteSong from '../components/misc/DeleteSong'
 
-// const music = [
-//   {
-//     title: 'Lovely',
-//     artist: 'Billie Eilish',
-//     songImg: images.imgLovely,
-//     // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
-//     duration: 2 * 60 + 53,
-//     id: '1',
-//   },
-//   {
-//     title: 'Understand',
-//     artist: 'Keshi',
-//     songImg: images.imgUnderstand,
-//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-//     duration: 2 * 60,
-//     id: '2',
-//     track_number: '2'
-//   }, {
-//     title: 'Snooze',
-//     artist: 'SZA',
-//     songImg: images.imgSZATout,
-//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-//     duration: 2 * 60,
-//     id: '3',
-//     track_number: '3'
-//   }, {
-//     title: 'If you',
-//     artist: 'BigBang',
-//     songImg: images.imgIfYou,
-//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-//     duration: 2 * 60,
-//     id: '4',
-//     track_number: '4'
-//   }, {
-//     title: 'Shoong',
-//     artist: 'Teayang',
-//     songImg: images.imgSZATout,
-//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-//     duration: 2 * 60,
-//     id: '5',
-//     track_number: '5'
-//   }, {
-//     title: 'Die For You',
-//     artist: 'The Weeknd',
-//     songImg: images.imgDieForYou,
-//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-//     duration: 2 * 60,
-//     id: '6',
-//     track_number: '6'
-//   },
-//   {
-//     title: 'double take',
-//     artist: 'dhruv',
-//     songImg: images.imgDoubleTakeL,
-//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-//     duration: 2 * 60,
-//     id: '7',
-//     track_number: '7'
-//   }
-// ]
+
 export default function DetailPlaylist({ navigation, route }) {
   const { id } = route.params;
   const { loading, error, playlists } = useSelector((state) => state.playlists)
@@ -83,6 +27,10 @@ export default function DetailPlaylist({ navigation, route }) {
   const [songs, setSongs] = useState()
   const [details, setDetails] = useState(playlists[id])
   const [music, setMusic] = useState()
+  const [isDelete, setIsDelete] = useState(false)
+  const [isVisibleLongEdit, setIsVisibleLongEdit] = useState(false)
+  const [idMusicSelected, setIdMusicSelected] = useState('')
+  const [isDeleteSong, setIsDeleteSong] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -90,7 +38,18 @@ export default function DetailPlaylist({ navigation, route }) {
     setIsAddmusic(status)
     setIsVisibleEdit(!status)
     dispatch(getPlayLists({}))
-    // setDetails(playlists[id])
+  }
+
+  const handleDeletemusic = (status) => {
+    setIsDelete(status)
+    setIsVisibleEdit(!status)
+    dispatch(getPlayLists({}))
+  }
+
+  const handleDeleteSong = (status) => {
+    setIsDeleteSong(status)
+    setIsVisibleLongEdit(!status)
+    dispatch(getPlayLists({}))
   }
 
   const sigleEdit = [
@@ -100,13 +59,26 @@ export default function DetailPlaylist({ navigation, route }) {
       handle: handleAddmusic
     },
     {
+      icon: icons.listAdd,
+      title: 'Xóa bài hát',
+      handle: handleDeletemusic
+    },
+    {
       icon: icons.search,
       title: 'Tìm kiếm bài hát trong playlists',
       handle: null
     }
   ]
 
-  React.useEffect(() => {
+  const sigleLongEdit = [
+    {
+      icon: icons.listAdd,
+      title: 'Xóa bài hát',
+      handle: handleDeleteSong
+    },
+  ]
+
+  useEffect(() => {
     const getSongs = async () => {
       const res = await readDataFirebase('songs')
       setSongs(res)
@@ -114,62 +86,29 @@ export default function DetailPlaylist({ navigation, route }) {
     }
     getSongs()
   }, [])
-  React.useEffect(() => {
-    setDetails(playlists[id])
-    // console.log("Thái",playlists[id])
-  }, [playlists[id]])
 
-  // React.useEffect(() => {
-  //   // console.log(details.songs)
-  //   if (songs) {
-  //     if (!details.songs) {
-  //       setMusic([])
-  //     }
-  //     else {
-  //       const data = []
-  //       // console.log(songs)
-  //       var flag = 1
-  //       for (key in details.songs) {
-  //         data.push({
-  //           title: songs[key].name,
-  //           artist: songs[key].artist,
-  //           songImg: songs[key].imgUrl,
-  //           id: flag,
-  //           key: key
-  //         })
-  //         flag = flag + 1
-  //       }
-  //       setMusic(data)
-  //     }
-  //   }
-
-  // }, [details])
-
-  React.useEffect(() => {
-    // console.log(details.songs)
+  useEffect(() => {
     if (songs) {
-      if (!details.songs) {
-        setMusic([])
+      if (playlists[id].songs) {
+        const new_data = Object.keys(playlists[id].songs).map(key => {
+          return {
+            key: key,
+            isLiked: true,
+            artist: songs[key].artistId,
+            songImg: { uri: songs[key].imgUrl },
+            title: songs[key].name
+          }
+        })
+        // console.log(new_data)
+        setMusic(new_data)
       }
-      else {
-        const data = []
-        // console.log(songs)
-        var flag = 1
-        for (key in details.songs) {
-          data.push({
-            title: songs[key].name,
-            artist: songs[key].artist,
-            songImg: songs[key].imgUrl,
-            id: flag,
-            key: key
-          })
-          flag = flag + 1
-        }
-        setMusic(data)
+      else{
+        setMusic([])
       }
     }
 
-  }, [songs, details])
+  }, [playlists, songs])
+
 
   const handleNavigator = () => {
     setIsVisibleEdit(true)
@@ -180,9 +119,72 @@ export default function DetailPlaylist({ navigation, route }) {
     setIdSong(id);
 
   }
+  const handleOutlineAdd = (status) => {
+    setIsAddmusic(status);
+    setIsVisibleEdit(!status);
+  }
+  const handleAdd = async (status, song) => {
+    // console.log(status, song)
+    const new_data = { ...playlists[id].songs, ...song }
+    try {
+      const rep = await writeDataFirebase(`playlists/${id}`, new_data, 'songs')
+      if (rep) {
+        dispatch(getPlayLists({}))
+        setIsVisibleEdit(status)
+        setIsAddmusic(!status)
+        ToastAndroid.show('Successful', ToastAndroid.SHORT);
+      }
+      else {
+        ToastAndroid.show('Failed', ToastAndroid.SHORT);
+      }
+    }
+    catch (error) {
+      console.log(error)
+      ToastAndroid.show('Failed', ToastAndroid.SHORT);
+    }
+  }
+
+  const handleOutlineDelete = (status) => {
+    setIsDelete(status);
+    setIsVisibleEdit(!status);
+  }
+  const handleDelete = async (status, song) => {
+    const new_data = { ...playlists[id].songs }
+    Object.keys(song).map((key) => {
+      delete new_data[key]
+    }
+    )
+
+    try {
+      const rep = await writeDataFirebase(`playlists/${id}`, new_data, 'songs')
+      if (rep) {
+        setIsDelete(!status)
+        setIsVisibleEdit(status)
+        dispatch(getPlayLists({}))
+        ToastAndroid.show('Successful', ToastAndroid.SHORT);
+      }
+      else {
+        ToastAndroid.show('Failed', ToastAndroid.SHORT);
+      }
+    }
+    catch (err) {
+      console.log(err)
+      ToastAndroid.show('Failed', ToastAndroid.SHORT);
+    }
+
+  }
+
+  const handleLongClick = (id) => {
+    setIdMusicSelected(id)
+    setIsVisibleLongEdit(true)
+  }
 
   const handleLayoutEdit = () => {
     setIsVisibleEdit(false);
+  }
+
+  const handleLayoutLongEdit = () => {
+    setIsVisibleLongEdit(false);
   }
   // console.log(playlists[id])
 
@@ -208,7 +210,7 @@ export default function DetailPlaylist({ navigation, route }) {
         data={music}
         renderItem={({ item, index }) =>
           <MyLike
-            id={ index + 1}
+            id={item.key}
             idSongSelected={idSong}
             songName={item.title}
             songImg={item.songImg}
@@ -216,6 +218,7 @@ export default function DetailPlaylist({ navigation, route }) {
             isLike={item.isLiked}
             index={index}
             handleLayout={handleLayout}
+            handleLongClick={handleLongClick}
           />}
         keyExtractor={(item, index) => index}
         showsVerticalScrollIndicator={false}
@@ -224,11 +227,14 @@ export default function DetailPlaylist({ navigation, route }) {
           <ActivityIndicator size="large" color="blue" />
         </View>
       }
+       {/* <View style={{ flex: 1, height: 100 }}></View> */}
 
       {isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} />}
       {isVisibleEdit && <Edit handleNavigator={handleLayoutEdit} height={null} edit={sigleEdit} />}
-      {isAddmusic && <AddSongPlaylists songs={songs} handleNavigator={handleAddmusic} musiced={details.songs} keylist={id}/>}
-
+      {isVisibleLongEdit && <Edit handleNavigator={handleLayoutLongEdit} height={null} edit={sigleLongEdit} />}
+      {isAddmusic && <RequestAddSongs title={"Xong"} songed={playlists[id].songs} handleNavigator={handleOutlineAdd} handleRequestNext={handleAdd} />}
+      {isDelete && <DeleteSongPlaylists title={"Xong"} songed={playlists[id].songs} handleNavigator={handleOutlineDelete} handleRequestNext={handleDelete} />}
+      {isDeleteSong && <DeleteSong idplaylist={id} idSong={idMusicSelected} title={songs[idMusicSelected]} handleNavigator={handleDeleteSong} height={null} />}
     </View>
   )
 }
