@@ -1,32 +1,31 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
-
-export default function MyAdd({ id, idSongSelected, songName, songImg, artistName, isLike, index, handleAdd, setIdSong, status }) {
+export default function MyLikeLong({ id, idSongSelected, songName, songImg, artistName, isLike, index, handleLayout, setIdSong, handleLongClick }) {
     const [isLiked, setIsIsLiked] = useState(isLike);
-
     return (
         <View style={styles.container}>
-            <View
+            <TouchableOpacity
+                onPress={() => handleLayout(id)}
                 style={styles.info}
+                onLongPress={() => handleLongClick(id)}
             >
                 <View style={styles.stt}>
                     {idSongSelected === id ? <Image source={icons.playing} /> :
                         <Text>{index + 1}</Text>}
                 </View>
                 <View style={styles.imgContainer}>
-                    <Image source={songImg?songImg:images.defaultAvt} style={styles.img} />
+                    <Image source={songImg} style={styles.img} />
                 </View>
                 <View style={styles.content}>
                     <Text style={styles.songName}>{songName}</Text>
                     <Text style={styles.artistName}>{artistName}</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
 
             <View style={[styles.button, isLiked ? styles.buttonClick : styles.buttonUnClick]}>
-                <TouchableOpacity onPress={() => { handleAdd( id, index, status)}}
-                    style={{ backgroundColor: colors.primary, borderRadius: 10, padding: 5, paddingLeft: 10, paddingRight: 10 }}>
-                    <Text style={{ fontSize: 17, color: 'white' }}>{status ? "Đã thêm" : "Thêm"}</Text>
+                <TouchableOpacity onPress={() => { setIsIsLiked(!isLiked) }}>
+                    <Image source={isLiked ? icons.heart : icons.unHeart} />
                 </TouchableOpacity>
             </View>
 

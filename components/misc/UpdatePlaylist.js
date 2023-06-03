@@ -7,7 +7,7 @@ import MyButton from "./MyButton";
 import MyInput from "./MyInput";
 import { getDataAsyncStorage } from "../../utilities/AsyncStorage";
 import { pick, types, isCancel } from 'react-native-document-picker'
-import { uploadFileStorage } from "../../firebase/controllerStorage";
+import { uploadFileStorage } from "../../firebase/controllerStorage"
 
 
 const heigtScreen = Dimensions.get('window').height;
