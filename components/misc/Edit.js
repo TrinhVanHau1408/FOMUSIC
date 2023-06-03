@@ -47,7 +47,7 @@ export default function Edit({ title, handleNavigator,
                         showsVerticalScrollIndicator={false}
                     />
                 </View>
-                <View style={{ flex: 1, height: 50 }}></View>
+                <View style={{ flex: 1, height: 100 }}></View>
             </Animated.View>
         </View>
     );
