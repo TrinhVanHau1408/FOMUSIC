@@ -24,7 +24,7 @@ import {
   onValue,
   remove,
   orderByChild, equalTo, once,value ,query,
-  serverTimestamp
+  serverTimestamp, limitToFirst, limitToLast, orderByValue
 } from 'firebase/database'
 
 import { getStorage,
@@ -71,6 +71,6 @@ export {
   signOut,
   firebaseStorage,
   firebaseStorageRef,
-  orderByChild, equalTo, once,value,query
+  orderByChild, equalTo, once,value,query,limitToLast, limitToFirst, orderByValue
 
 }
