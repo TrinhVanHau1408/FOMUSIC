@@ -8,9 +8,9 @@
 * @returns {Array} Array - [ {}, {}, ...].
 */
 export const filterObject = (objectFilter, fieldFilter, valueFilter) => {
-    const mapObjects = Object.entries(objectFilter)
+    const filterObject = Object.entries(objectFilter)
     .map(([key, val]) => ({key, ...val}))
     // .filter(item => item[fieldFilter] === valueFilter)
     
-    return mapObjects;
+    return filterObject;
 }
