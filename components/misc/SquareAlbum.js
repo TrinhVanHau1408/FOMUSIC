@@ -3,11 +3,11 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, images } from '../../constants';
 export default function SquareAlbum(props) {
 
-    const { id, name, img, handleNavigator, isAlbum, handleLayout } = props
+    const { id, name, artwork, handleNavigator, isAlbum, handleLayout } = props
     return (
         <View style={[styles.container,isAlbum&&styles.marginx2]}>
             <TouchableOpacity onPress={()=>handleNavigator(id)}>
-                <Image source={img ? img : images.demo} style={styles.img} />
+                <Image source={artwork ? {uri:artwork} : images.demo} style={styles.img} />
                 <Text style={styles.textName}>{name}</Text>
             </TouchableOpacity>
         </View>
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     },
     img: {
         width: '100%',
+        marginBottom: 3,
         height: 143,
         borderRadius: 20,
         borderWidth: 2,
@@ -34,8 +35,10 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     textName: {
+      
         fontFamily: 'Montserrat',
         fontSize: 14,
+        lineHeight: 15,
         fontWeight: '500',
         textAlign: 'center',
         color: '#000000'

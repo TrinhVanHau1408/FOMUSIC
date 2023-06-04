@@ -3,6 +3,7 @@
 // import * as firebase from "firebase";
 
 import { initializeApp } from 'firebase/app';
+import firebase from 'firebase/app';
 import {
   getAuth,
   onAuthStateChanged,
@@ -17,13 +18,17 @@ import {
   getDatabase,
   set as firebaseDatabaseSet,
   ref as firebaseDatabaseRef,
+  update as firebaseUpdate,
   get,
   child,
   onValue,
   remove,
-
-  serverTimestamp
+  orderByChild, equalTo, once,value ,query,
+  serverTimestamp, limitToFirst, limitToLast, orderByValue
 } from 'firebase/database'
+
+import { getStorage,
+       ref as firebaseStorageRef} from "firebase/storage";
 // import "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -44,6 +49,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const firebaseDatabase = getDatabase();
+const firebaseStorage = getStorage();
 const provider = new GoogleAuthProvider();
 
 export {
@@ -51,6 +57,7 @@ export {
   firebaseDatabase,
   firebaseDatabaseRef,
   firebaseDatabaseSet,
+  firebaseUpdate,
   get,
   child,
   onValue,
@@ -62,5 +69,8 @@ export {
   signInWithRedirect,
   sendEmailVerification,
   signOut,
+  firebaseStorage,
+  firebaseStorageRef,
+  orderByChild, equalTo, once,value,query,limitToLast, limitToFirst, orderByValue
 
 }

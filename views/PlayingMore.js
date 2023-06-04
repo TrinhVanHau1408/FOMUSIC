@@ -1,15 +1,32 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, SliderComponent, Slider, SliderBase } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Animated, Easing } from 'react-native';
 import { icons } from '../constants';
-const PlayingMore = ({ navigation }) => {
+import { useRef, useEffect } from 'react';
+const PlayingMore = ({ setToggleMore }) => {
+
+    
+    const opacity = useRef(new Animated.Value(0.5)).current;
+
+    useEffect(() => {
+      animateIn();
+    }, []);
+  
+    const animateIn = () => {
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }).start();
+    };
     return (
         <View style={styles.containerMore}>
             <View style={styles.headerContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setToggleMore(false)}>
                     <Image source={icons.arrowBackBlack}/>
                 </TouchableOpacity>
             </View>
             <View style={styles.contentContainer}>     
-                    <TouchableOpacity style={styles.ButtonContainer}>
+                  <View style={{flex: 1}}>
+                  <TouchableOpacity style={styles.ButtonContainer}>
                         <Image source={icons.iconGoToPlaylist}/>                       
                         <Text style={styles.TextMore}>
                             Đi tới danh sách phát
@@ -52,6 +69,7 @@ const PlayingMore = ({ navigation }) => {
                         </Text>
                     </TouchableOpacity>  
                                  
+                  </View>
 
             </View>
 
@@ -64,20 +82,21 @@ const styles = StyleSheet.create({
     {
         flex: 1,
         // position: 'relative',
-        backgroundColor: '#ffffff',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+       
     },
     headerContainer:
     {
-        flex: 0.06,
-        height: '10%',
-        paddingTop: '5%',
-        paddingLeft: '5%'
+        flex: 2,
+       padding: 15
     },
     contentContainer:
     {
-        flex: 0.5,
+        flex: 3,
         height: '60%',
         // justifyContent: 'space-evenly',
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     ButtonContainer:
     {

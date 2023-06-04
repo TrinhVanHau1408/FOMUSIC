@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, SliderComponent, Slider, SliderBase } from 'react-native';
 import { colors, icons, images } from '../constants';
+import PlayingMore from './PlayingMore';
 
 
 const Playing = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            {/* Header */}
+            Header
+
+           
             <View style={styles.headerContainer}>
                 <TouchableOpacity>
                     <Image
@@ -37,7 +40,7 @@ const Playing = ({ navigation }) => {
             </View>
 
             {/* ImageSong */}
-            <View style={styles.contentContainer}>
+            {/* <View style={styles.contentContainer}>
                 <Image style={styles.ImageSong}
                     source={images.demo}
                 />
@@ -50,9 +53,9 @@ const Playing = ({ navigation }) => {
             </View>
 
             {/* PlayingMusic */}
-            <View style={styles.audioPlayerContainer}>
-                <Slider style={{ alignSelf: 'stretch', height: 50, color: colors.primary }} />
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', paddingHorizontal: 10 }}>
+            {/* <View style={styles.audioPlayerContainer}>
+                {/* <Slider style={{ alignSelf: 'stretch', height: 50, color: colors.primary }} /> */}
+                {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', paddingHorizontal: 10 }}>
                     <Text style={styles.TextTimeSong} >
                         2:30
                     </Text>
@@ -90,17 +93,21 @@ const Playing = ({ navigation }) => {
                         />
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View>  */}
 
-            {/* Lyrics */}
-            <View style={styles.lyricContainer}>
+            /* Lyrics */
+            {/* <View style={styles.lyricContainer}>
                 <TouchableOpacity >
                     <Text style={styles.TextLyrics}>
                         Lyrics
                     </Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
+            {/* <View style={{ position: 'absolute', backgroundColor: 'red', flex:1, height:200 }}> */}
+                
+            {/* </View> */}
         </View>
+
     )
 }
 
@@ -258,8 +265,7 @@ const styles = StyleSheet.create({
         color: colors.black,
     }
 });
-const setFullLyrics = async (e) => 
-{
+const setFullLyrics = async (e) => {
 
 }
 export default Playing;
