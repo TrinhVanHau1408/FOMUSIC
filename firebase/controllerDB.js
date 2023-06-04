@@ -1,67 +1,121 @@
 
-import {  auth,
-    firebaseDatabase,
-    firebaseDatabaseRef,
-    firebaseDatabaseSet,
-    get,
-    child,
-    onValue,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    serverTimestamp,
-    provider,
-    signInWithRedirect,
-    sendEmailVerification,
-    signOut,} from "./connectDB"
-import { remove } from 'firebase/database'
+import {
+  auth,
+  firebaseDatabase,
+  firebaseDatabaseRef,
+  firebaseDatabaseSet,
+  get,
+  child,
+  onValue,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  serverTimestamp,
+  provider,
+  signInWithRedirect,
+  sendEmailVerification,
+  signOut,orderByChild, equalTo, query
+} from "./connectDB"
+import { remove, push, update, set } from 'firebase/database'
 
-const readDataFirebase = async ( path) => {
-    try {
-      const dbRef = firebaseDatabaseRef(firebaseDatabase);
-      const snapshot = await get(child(dbRef, path))
+
+const readDataFirebaseWithChildCondition = async (parentNode, nameCodition, valueCodition) => {
+
+  console.log(`Parent node: ${parentNode}, nameCodition: ${nameCodition}, valueCodition: ${valueCodition}`);
+  try {
+    const parentRef = firebaseDatabaseRef(firebaseDatabase, parentNode);
+
+    const queryRef = query(parentRef, orderByChild(nameCodition), equalTo(valueCodition));
   
-      console.log("read data firebase successfully")
-      // console.log(snapshot)
-  
-      return snapshot
-    }
-    catch (error) {
-      console.log("ERROR", error)
-      return null
-    }
+    const snapshot = await get(queryRef);
+    // console.log(snapshot)
+    if (snapshot.exists()) return snapshot.val();
+
+    else return null
+
+  } catch {
+    return null;
   }
-  
-  const writeDataFirebase = async ( path, id, data) => {
-    try {
+}
+
+const readDataFirebase = async (path) => {
+  try {
+    const dbRef = firebaseDatabaseRef(firebaseDatabase);
+    const snapshot = await get(child(dbRef, path))
+
+    console.log("read data firebase successfully")
+    // console.log(snapshot)
+
+    return snapshot.val()
+  }
+  catch (error) {
+    console.log("ERROR", error)
+    return null
+  }
+}
+
+const writeDataFirebase = async (path, data, id) => {
+  try {
+    if (id) {
       await firebaseDatabaseSet(firebaseDatabaseRef(firebaseDatabase, `${path}/${id}`), data);
       console.log("save data firebase successfully")
       return true;
     }
-    catch (err) {
-      console.log("save data firebase failed", err);
-      return false;
+    else {
+      await push(firebaseDatabaseRef(firebaseDatabase, path), data)
+      console.log("save data firebase successfully")
+      return true;
     }
-  
   }
-  
-  const deleteDataFirebase = async ( path ) => {
-    try {
-      const dbRef = firebaseDatabaseRef(firebaseDatabase, path)
-      await remove(dbRef)
-      console.log('delete data firebase successfully')
-      return true
-    }
-    catch(err)
+  catch (err) {
+    console.log("save data firebase failed", err);
+    return false;
+  }
+
+}
+
+const deleteDataFirebase = async (path) => {
+  try {
+    const dbRef = firebaseDatabaseRef(firebaseDatabase, path)
+    await remove(dbRef)
+    console.log('delete data firebase successfully')
+    return true
+  }
+  catch (err) {
+    console.log('delete data firebase failed', err)
+    return false
+  }
+}
+
+const updateDataPlaylistsFirebase = async (path, data) => {
+  try {
+    const dbRef = await firebaseDatabaseRef(firebaseDatabase, path)
+    const data_previous = await get(dbRef)
+    const data_update =
     {
-      console.log('delete data firebase failed', err)
-      return false
+      name: data.name ? data.name : data_previous.val().name,
+      description: data.description ? data.description : (data_previous.val().description ? data_previous.val().description : ''),
+      userId: data_previous.val().userId,
+      imageUrl: data.imageUrl ? data.imageUrl : (data_previous.val().imageUrl ? data_previous.val().imageUrl : ''),
+      songs: data.songs ? data.songs : (data_previous.val().songs ? data_previous.val().songs : {}),
+      createdAt: data_previous.val().createdAt,
+      modifyAt: serverTimestamp(),
     }
+    console.log(data_update)
+    firebaseDatabaseSet(dbRef, data_update)
+    console.log('update data firebase successfully')
+    return true
   }
-  
+  catch (err) {
+    console.log('Update data firebase failed', err)
+    return false
+  }
+}
 
 export {
-    readDataFirebase,
-    writeDataFirebase,
-    deleteDataFirebase
+  readDataFirebase,
+  writeDataFirebase,
+  deleteDataFirebase,
+  updateDataPlaylistsFirebase,
+  readDataFirebaseWithChildCondition
 }
