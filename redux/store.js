@@ -9,7 +9,11 @@ import {
 } from 'redux-persist'
 import userReducer from './slices/userSlice'
 import authReducer from './slices/authSlice'
-import historySlice from './slices/historySlice';
+import userHistoryReducer from './slices/historySlice';
+import playlistsReducer from './slices/playlistsSlice';
+import artistSlice from './slices/artistSlice';
+import albumSlice from './slices/albumSlice';  
+
 
 // const rootReducer = combineReducers({
 //   auth: authReducer,
@@ -21,7 +25,10 @@ const store = configureStore({
   {
     auth: authReducer,
     user: userReducer,
-    history: historySlice,
+    userHistory: userHistoryReducer,
+    playlists: playlistsReducer,
+    artist: artistSlice,
+    album: albumSlice,
   }
 ,
   middleware: (getDefaultMiddleware) =>

@@ -1,34 +1,51 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {firebaseDatabaseRef, get, child, firebaseDatabase } from '../../firebase/connectDB';
+import { firebaseDatabaseRef, get, child, firebaseDatabase } from '../../firebase/connectDB';
 
-export const getUserHistoryUid = createAsyncThunk('history/getHistoryUid', async({userHistoryUid},{ rejectWithValue })=> {
+export const getUserHistoryUid = createAsyncThunk('userHistory/getUserHistoryUid', async ({ userHistoryUid }, { rejectWithValue }) => {
     try {
-        console.log('songuid createAsyncThunk' , userHistoryUid)
+        console.log('songuid createAsyncThunk', userHistoryUid)
         const dbRef = firebaseDatabaseRef(firebaseDatabase);
         const responeSnapshot = await get(child(dbRef, `userHistorys/${userHistoryUid}`));
-        // const userHistory = {
-            // uid: responeSnapshot.key,
+        const userHistory = {
+            uid: responeSnapshot.key,
+            nameSong: responeSnapshot.child
             // song: responeSnapshot.song,
             // displayName: responeSnapshot.val().displayName,
             // email: responeSnapshot.val().email,
             // imgUrl: responeSnapshot.val().imgUrl,
             // emailVerified: responeSnapshot.val().emailVerified,
             // typeUser: responeSnapshot.val().typeUser,
-        // }
-        return responeSnapshot.val();
+        }
+        return userHistory.uid;
     } catch (error) {
-        console.log('error' , error.message)
+        console.log('error', error.message)
         return rejectWithValue(error.message);
     }
 })
 
-const historySlice = createSlice({
+// export const getSongInUserHistory = createAsyncThunk('userHistory/getUserHistoryUid', async ({ userHistoryUid }, { rejectWithValue }) => {
+//     try {
+//         const dbRef = firebaseDatabaseRef(firebaseDatabase);
+//         const historyUid = getUserHistoryUid({});
+//         const responeSnapshot = await get(child(dbRef, ))
+//         const songInUserhistory = {
+
+//         }
+//         return songInUserhistory;
+//     }
+//     catch (error) {
+//         console.log('error', error.message)
+//         return rejectWithValue(error.message);
+//     }
+// })
+
+const userHistorySlice = createSlice({
     name: 'userHistory',
     initialState: {
         userHistory: null,
         loading: false,
         error: null,
-      },
+    },
     reducers: {
         setUserHistory: (state, action) => {
             state.userHistory = action.payload;
@@ -52,5 +69,7 @@ const historySlice = createSlice({
         })
     }
 })
-export const { setUserHistory } = historySlice.actions;
-export default historySlice.reducer;
+// export const { setUserHistory } = userHistorySlice.actions;
+// export default userHistorySlice.reducer;
+export const { setUserHistory } = userHistorySlice.actions;
+export default userHistorySlice.reducer;
