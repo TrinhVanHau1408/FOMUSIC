@@ -10,7 +10,21 @@
 export const filterObject = (objectFilter, fieldFilter, valueFilter) => {
     const filterObject = Object.entries(objectFilter)
     .map(([key, val]) => ({key, ...val}))
-    // .filter(item => item[fieldFilter] === valueFilter)
+    .filter(item => item[fieldFilter] === valueFilter)
     
     return filterObject;
+}
+
+
+/**
+* Conver object object to array object.
+*
+* @param {Object} objectFilter - Object need convert.
+* @returns {Array} Array - [ {}, {}, ...].
+*/
+export const convertObjectToArray = (objectFilter) => {
+    const array = Object.entries(objectFilter)
+    .map(([key, val]) => ({key, ...val}))
+    
+    return array;
 }
