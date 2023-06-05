@@ -1,19 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {firebaseDatabaseRef, get, child, firebaseDatabase } from '../../firebase/connectDB';
 
-export const getAlbum = createAsyncThunk('album/getAlbum', async({album},{ rejectWithValue })=> {
+export const getAlbum = createAsyncThunk('album/getAlbum', async({ },{ rejectWithValue }) => {
     try {
-        console.log('albumuid createAsyncThunk' , album)
+        // console.log('albumuid createAsyncThunk' , album)
         const dbRef = firebaseDatabaseRef(firebaseDatabase);
-        const responeSnapshot = await get(child(dbRef, `albums/${album}`));
-        // const user = {
-        //     displayName: responeSnapshot.val().displayName,
-        //     email: responeSnapshot.val().email,
-        //     uid: responeSnapshot.key,
+        const responeSnapshot = await get(child(dbRef, 'albums'));
+        // const album = {
+        //     id: responeSnapshot.key,
+        //     name: responeSnapshot.val().name,
         //     imgUrl: responeSnapshot.val().imgUrl,
-        //     emailVerified: responeSnapshot.val().emailVerified,
-        //     typeUser: responeSnapshot.val().typeUser,
+
         // }
+        console.log('ALBUM IN SLICE: ', responeSnapshot.val())
         return responeSnapshot.val();
     } catch (error) {
         console.log('error', error.message)
@@ -41,8 +40,8 @@ const albumSlice = createSlice({
         })
         builder.addCase(getAlbum.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
-            console.log("getArtistUid fulfilled")
+            state.album = action.payload;
+            console.log("getAlbumtUid fulfilled")
         })
         builder.addCase(getAlbum.rejected, (state, action) => {
             state.loading = false;
