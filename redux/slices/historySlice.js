@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { firebaseDatabaseRef, get, child, firebaseDatabase } from '../../firebase/connectDB';
+import { setPlayLists } from './playlistsSlice';
+
 
 export const getUserHistoryUid = createAsyncThunk('userHistory/getUserHistoryUid', async ({ userHistoryUid }, { rejectWithValue }) => {
     try {
@@ -9,12 +11,6 @@ export const getUserHistoryUid = createAsyncThunk('userHistory/getUserHistoryUid
         const userHistory = {
             uid: responeSnapshot.key,
             nameSong: responeSnapshot.child
-            // song: responeSnapshot.song,
-            // displayName: responeSnapshot.val().displayName,
-            // email: responeSnapshot.val().email,
-            // imgUrl: responeSnapshot.val().imgUrl,
-            // emailVerified: responeSnapshot.val().emailVerified,
-            // typeUser: responeSnapshot.val().typeUser,
         }
         return userHistory.uid;
     } catch (error) {
@@ -23,21 +19,6 @@ export const getUserHistoryUid = createAsyncThunk('userHistory/getUserHistoryUid
     }
 })
 
-// export const getSongInUserHistory = createAsyncThunk('userHistory/getUserHistoryUid', async ({ userHistoryUid }, { rejectWithValue }) => {
-//     try {
-//         const dbRef = firebaseDatabaseRef(firebaseDatabase);
-//         const historyUid = getUserHistoryUid({});
-//         const responeSnapshot = await get(child(dbRef, ))
-//         const songInUserhistory = {
-
-//         }
-//         return songInUserhistory;
-//     }
-//     catch (error) {
-//         console.log('error', error.message)
-//         return rejectWithValue(error.message);
-//     }
-// })
 
 const userHistorySlice = createSlice({
     name: 'userHistory',
