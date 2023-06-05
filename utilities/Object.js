@@ -22,8 +22,8 @@ export const filterObject = (objectFilter, fieldFilter, valueFilter) => {
 * @param {Object} objectFilter - Object need convert.
 * @returns {Array} Array - [ {}, {}, ...].
 */
-export const convertObjectToArray = (objectFilter) => {
-    const array = Object.entries(objectFilter)
+export const convertObjectToArray = (object) => {
+    const array = Object.entries(object)
     .map(([key, val]) => ({key, ...val}))
     
     return array;
