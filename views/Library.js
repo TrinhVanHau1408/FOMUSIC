@@ -10,265 +10,242 @@ import TitleAlbum from '../components/misc/TitleAlbum';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { writeDataFirebase } from '../firebase/controllerDB';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSongInUserHistory, historySlice } from '../redux/slices/historySlice';
+import { getAllHistoryByUserId, getSongInUserHistory, historySlice } from '../redux/slices/historySlice';
 import { getUserHistoryUid } from '../redux/slices/historySlice';
-import { getPlayLists } from '../redux/slices/playlistsSlice'
-import { getArtist } from '../redux/slices/artistSlice';
+import { getAllPlaylistByUserId, getPlayLists } from '../redux/slices/playlistsSlice'
+import { getArtist, getFollowArtistByUserId, queryFollowedArtists } from '../redux/slices/artistSlice';
 import { getAlbum } from '../redux/slices/albumSlice';
+import { getHistorySong } from '../redux/slices/songSlice';
+import { getUserUid } from '../redux/slices/userSlice';
 
-const musics = [
-  {
-    title: 'Lovely',
-    artist: 'Billie Eilish',
-    songImg: images.imgLovely,
-    // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
-    duration: 2 * 60 + 53,
-    id: '1',
-  },
-  {
-    title: 'Understand',
-    artist: 'Keshi',
-    songImg: images.imgUnderstand,
-    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-    duration: 2 * 60,
-    id: '2',
-    track_number: '2'
-  },
-  {
-    title: 'Snooze',
-    artist: 'SZA',
-    songImg: images.imgSZATout,
-    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-    duration: 2 * 60,
-    id: '3',
-    track_number: '3'
-  },
-  {
-    title: 'If you',
-    artist: 'BigBang',
-    songImg: images.imgIfYou,
-    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-    duration: 2 * 60,
-    id: '4',
-    track_number: '4'
-  },
-  {
-    title: 'Shoong',
-    artist: 'Teayang',
-    songImg: images.imgSZATout,
-    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-    duration: 2 * 60,
-    id: '5',
-    track_number: '5'
-  }, {
-    title: 'Die For You',
-    artist: 'The Weeknd',
-    songImg: images.imgDieForYou,
-    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-    duration: 2 * 60,
-    id: '6',
-    track_number: '6'
-  },
-  {
-    title: 'double take',
-    artist: 'dhruv',
-    songImg: images.imgDoubleTakeL,
-    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-    duration: 2 * 60,
-    id: '7',
-    track_number: '7'
-  }
-]
-const playlist = [
-  {
-    title: 'SVT Playlist 2023',
-    artist: 'FOMUSIC ',
-    songImg: images.playlistSVT,
-    // url: require(''),
-    duration: 2 * 60 + 53,
-    id: '1',
-  },
-  {
-    title: 'Playlist For Relax',
-    artist: 'FOMISUC',
-    songImg: images.playlistFlower,
-    // url: require(''),
-    duration: 2 * 60,
-    id: '2',
-    track_number: '2'
-  },
-  {
-    title: 'Nhac Buon Ngay Mua',
-    artist: 'FOMUSIC',
-    songImg: images.playlistBuon,
-    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-    duration: 2 * 60,
-    id: '3',
-    track_number: '3'
-  },
-  {
-    title: 'Twice Are Once',
-    artist: 'FOMUSIC',
-    songImg: images.playlistTwice,
-    // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-    duration: 2 * 60,
-    id: '4',
-    track_number: '4'
-  },
-]
-const getItem = (_data, index) => ({
-  id: Math.random().toString(12).substring(0),
-  title: `Item ${index + 1}`,
-});
+// const musics = [
+//   {
+//     title: 'Lovely',
+//     artist: 'Billie Eilish',
+//     songImg: images.imgLovely,
+//     // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
+//     duration: 2 * 60 + 53,
+//     id: '1',
+//   },
+//   {
+//     title: 'Understand',
+//     artist: 'Keshi',
+//     songImg: images.imgUnderstand,
+//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+//     duration: 2 * 60,
+//     id: '2',
+//     track_number: '2'
+//   },
+//   {
+//     title: 'Snooze',
+//     artist: 'SZA',
+//     songImg: images.imgSZATout,
+//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+//     duration: 2 * 60,
+//     id: '3',
+//     track_number: '3'
+//   },
+//   {
+//     title: 'If you',
+//     artist: 'BigBang',
+//     songImg: images.imgIfYou,
+//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+//     duration: 2 * 60,
+//     id: '4',
+//     track_number: '4'
+//   },
+//   {
+//     title: 'Shoong',
+//     artist: 'Teayang',
+//     songImg: images.imgSZATout,
+//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+//     duration: 2 * 60,
+//     id: '5',
+//     track_number: '5'
+//   }, {
+//     title: 'Die For You',
+//     artist: 'The Weeknd',
+//     songImg: images.imgDieForYou,
+//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+//     duration: 2 * 60,
+//     id: '6',
+//     track_number: '6'
+//   },
+//   {
+//     title: 'double take',
+//     artist: 'dhruv',
+//     songImg: images.imgDoubleTakeL,
+//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+//     duration: 2 * 60,
+//     id: '7',
+//     track_number: '7'
+//   }
+// ]
+// const playlist = [
+//   {
+//     title: 'SVT Playlist 2023',
+//     artist: 'FOMUSIC ',
+//     songImg: images.playlistSVT,
+//     // url: require(''),
+//     duration: 2 * 60 + 53,
+//     id: '1',
+//   },
+//   {
+//     title: 'Playlist For Relax',
+//     artist: 'FOMISUC',
+//     songImg: images.playlistFlower,
+//     // url: require(''),
+//     duration: 2 * 60,
+//     id: '2',
+//     track_number: '2'
+//   },
+//   {
+//     title: 'Nhac Buon Ngay Mua',
+//     artist: 'FOMUSIC',
+//     songImg: images.playlistBuon,
+//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+//     duration: 2 * 60,
+//     id: '3',
+//     track_number: '3'
+//   },
+//   {
+//     title: 'Twice Are Once',
+//     artist: 'FOMUSIC',
+//     songImg: images.playlistTwice,
+//     // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
+//     duration: 2 * 60,
+//     id: '4',
+//     track_number: '4'
+//   },
+// ]
+// const getItem = (_data, index) => ({
+//   id: Math.random().toString(12).substring(0),
+//   title: `Item ${index + 1}`,
+// });
 
-const getItemCount = _data => 50;
+// const getItemCount = _data => 50;
 
 
 export default function Library({ navigation }) {
   // const {userHistory} = useSelector((state) => state[historySlice.name])
   // const userHistory = useSelector(state => state.historySlice.userHistory)
-  const [arrayuserHistory, setArrayUserHistory] = React.useState(null)
+  const [arrayHistorySongs, setArrayHistorySongs] = React.useState([])
   const [songs, setSongs] = useState(null)
   // const [details, setDetails] = useState(userHistory[id])
   const [music, setMusic] = useState()
 
-  const [arrayplaylist, setArrayPlaylist] = useState(null)
-  const [arrayArtist, setArrayArtist] = useState(null)
+  const [arrayplaylist, setArrayPlaylist] = useState([])
+  const [arrayFollowArtist, setArrayFollowArtist] = useState(null)
   const [arrayAlbum, setArrayAlbum] = useState(null)
 
   // const [songs, setSongs] = useState()
   // const [details, setDetails] = useState(userHistory[id])
   // const [music, setMusic] = useState()
   // const [idSong, setIdSong] = useState(0);
+  const {user} = useSelector((state) => state.user);
   const { userHistory } = useSelector((state) => state.userHistory);
-  const { playlists } = useSelector((state) => state.playlists);
-  const { artist } = useSelector((state) => state.artist)
-  const album = useSelector((state) => state.album)
+  const historySongs = useSelector(state => state.song.historySongs);
+  const playlists = useSelector((state) => state.playlists.playlists);
+  const followedArtist  = useSelector((state) => state.followedArtist);
+  const album = useSelector((state) => state.album.album);
 
-  // History-------------------------------------------
-  // Nhan data songs
-  // useEffect(() => {
-  //   const getSongs = async () => {
-  //     const res = await readDataFirebase('songs')
-  //     setSongs(res)
-  //     // console.log(res)
-  //   }
-  //   getSongs()
-  // }, [])
-  console.log(album.album)
+  // ------------------------------History-------------------------------------------
+  
+  const dispatch = useDispatch();
+
+  
+  const userId = user.uid;
+
+  console.log('userId get in Libarary: ', userId);
 
   useEffect(() => {
-    if (userHistory) {
-      const { userHistoryId } = userHistory;
-      const getdata = async () => {
-        dispatch(getUserHistoryUid({}))
-      }
-      getdata()
-    }
-  }, [])
+    dispatch(getHistorySong({userId})).unwrap().then((result) => {
+      setArrayHistorySongs(result); 
+      
+    }).catch((err) => {
+      console.log('loading history error')
+    });
+  },[dispatch, userId])
 
-  // useEffect(() => {
-  //   setDetails(userHistory[id])
-  //   // console.log(playlists[id])
-  // }, [playlists[id]])
+  // console.log('history result: ', historySongs)
+  //---------------------------------- Artist--------------------------------------------
 
-  // useEffect(() => {
-  //   if (songs) {
-  //     if (!details.songs)
-  //       setMusic([])
-  //   }
-  //   else {
-  //     const data = []
-  //     for (key in userHistory) {
-  //       console.log(key)
-  //       data.push({
-  //         id: key
-  //       })
-  //     }
-  //   }
-  //   setArrayUserHistory(data)
-  // }, [userHistory])
-
-  // React.useEffect(() => {
-  //     const songData = async () => {
-  //       dispatch(getSongInUserHistory({}))
-  //     }
-  //     songData()
-  //     for (key in userHistory) {
-  //       songData.push({
-  //         id: key,
-  //         title: userHistory[key].song
-
-  //       })
-  //     }
-  //     setArrayUserHistory(songData)
-  //   }, [userHistory])
-
-  // }
-
-  // Playlist------------------------------------
-  React.useEffect(() => {
+  // queryFollowedArtists(userId)
+  useEffect(() => {
     const getdata = async () => {
-      dispatch(getPlayLists({}))
+      dispatch(queryFollowedArtists({userId}))
+    }
+    getdata()
+  }, [dispatch, userId])
+
+  useEffect(() => {
+    const data = []
+    for (key in followedArtist) {
+      // if (playlists[key].userId == user.user.uid) {
+        data.push({
+          name: followedArtist[key].name,
+          imageUrl: followedArtist[key].photoUrl,
+          id: key
+        })
+      // }
+    }
+    setArrayFollowArtist(data)
+  }, [followedArtist])
+
+
+  console.log("ARTIST dang follow: ", followedArtist)
+
+  // ------------------------------Playlist------------------------------------
+  
+  useEffect(() => {
+    const getdata = async () => {
+      dispatch(getAllPlaylistByUserId({userId}))
     }
     getdata()
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const data = []
     for (key in playlists) {
-      data.push({
-        title: playlists[key].name,
-        imageUrl: playlists[key].imageUrl,
-        id: key
-      })
+      // if (playlists[key].userId == user.user.uid) {
+        data.push({
+          name: playlists[key].name,
+          imageUrl: playlists[key].imageUrl,
+          id: key
+        })
+      // }
     }
     setArrayPlaylist(data)
   }, [playlists])
 
-  // Artist--------------------------------------------
+  // console.log('playlist moi tao ne: ', playlists)
+
+
+
+  // --------------------------------- ALBUM----------------------------------------------
 
   React.useEffect(() => {
     const getdata = async () => {
-      dispatch(getArtist({}))
+      dispatch(getAlbum())
     }
     getdata()
-  }, [])
+  }, [dispatch])
+  console.log("ALBUM: ", album)
 
-  React.useEffect(() => {
-    const data = []
-    var flag = 1
-    for (key in artist) {
-      data.push({
-        title: artist[key].name,
-        imageUrl: artist[key].imageUrl,
-        id: flag,
-        key: key
-      })
-    }
-    setArrayArtist(data)
-  }, [artist])
-
-  //  ALBUM----------------------------------------------
-
-  React.useEffect(() => {
-    const getdata = async () => {
-      dispatch(getAlbum({}))
-    }
-    getdata()
-  }, [])
 
   React.useEffect(() => {
     const data = []
     for (key in album) {
       data.push({
-        title: album[key].name,
-        imageUrl: album[key].imgUrl,
+        name: album[key].name,
+        imgUrl: album[key].imgUrl,
         id: key
       })
     }
     setArrayAlbum(data)
   }, [album])
+
+  console.log("ALBUM: ", album)
 
 
 
@@ -294,8 +271,7 @@ export default function Library({ navigation }) {
   const handleNavigatorLikes = () => {
     navigation.navigate('Like');
   }
-  const dispatch = useDispatch();
-
+  
   // React.useEffect(() => {
   //   const getdata = async () => {
   //     dispatch(getUserHistoryUid({}))
@@ -368,15 +344,15 @@ export default function Library({ navigation }) {
               type={1}
               name={'Listening history'} />
             <View>
-              {arrayuserHistory && (
+              {historySongs && (
                 <>
                   <FlatList
-                    data={arrayuserHistory}
+                    data={historySongs}
                     renderItem={({ item, index }) =>
                       <SquareAlbum
                         id={item.id}
-                        name={"aaaas"}
-                        images={images.defaultAvt}
+                        name={item.name}
+                        artwork={item.artwork}
                       // img={item.songImg}
                       // handleButton={handleButton}
                       />}
@@ -391,18 +367,18 @@ export default function Library({ navigation }) {
 
           {/* ---------------------------------ARTIST----------------------------------------------  */}
           <View>
-            {arrayArtist && (
+            {arrayFollowArtist && (
               <>
                 <TitleAlbum
                   type={4}
                   name={'Artists'} />
                 <FlatList
-                  data={arrayArtist}
+                  data={arrayFollowArtist}
                   renderItem={({ item, index }) =>
                     <CircleAlbum
                       id={item.id}
                       name={item.name}
-                      img={{ uri: item.photoUrl }}
+                      artwork={ item.artwork }
                       handleNavigator={handleNavigatorArtist} />}
                   keyExtractor={(item, index) => index}
                   horizontal
@@ -413,6 +389,7 @@ export default function Library({ navigation }) {
           </View>
 
           {/* ----------------------------------PLAYLIST----------------------------------------------  */}
+          
           <View>
             {arrayplaylist && (
               <>
@@ -423,9 +400,9 @@ export default function Library({ navigation }) {
                   data={arrayplaylist}
                   renderItem={({ item, index }) =>
                     <RectangleAlbum
-                      id={item.id.toString()}
-                      name={item.title.toString()}
-                      img={{ uri: item.imageUrl }}
+                      id={item.key}
+                      name={item.name}
+                      artwork={ item.imageUrl }
                       type={2}
                       isPlaylist={true}
                       handleNavigator={handleNavigatorPlaylist} />}
@@ -450,7 +427,7 @@ export default function Library({ navigation }) {
                     <SquareAlbum
                       id={item.id}
                       name={item.title}
-                      img={{ uri: item.imageUrl }}
+                      artwork={{ uri: item.imgUrl }}
                       handleNavigator={handleNavigatorAlbum} />}
                   keyExtractor={(item, index) => index}
                   horizontal
@@ -460,12 +437,14 @@ export default function Library({ navigation }) {
             )}
           </View>
 
+          {/* ------------------------------FOLLOWING------------------------------ */}
           {/* <View>
             <TitleAlbum
               type={4}
               name={'Following'} />
             <FlatList
-              data={arrayuserHistory}
+            // Chua them data!
+              data={}
               renderItem={({ item }) =>
                 <CircleAlbum
                   id={item.id}
@@ -478,11 +457,13 @@ export default function Library({ navigation }) {
             />
           </View> */}
 
+          {/* ------------------------------LIKE------------------------------ */}
           {/* <View>
             <TitleAlbum name={'Likes'} />
             <FlatList
+            // Chua them data!
               style={{ marginBottom: 100 }}
-              data={arrayuserHistory}
+              data={}
               renderItem={({ item }) =>
                 <SquareAlbum
                   id={item.id}
@@ -494,6 +475,7 @@ export default function Library({ navigation }) {
               showsHorizontalScrollIndicator={false}
             />
           </View> */}
+
           <View style={{ flex: 1, height: 50 }}></View>
         </View>
       </ScrollView>
