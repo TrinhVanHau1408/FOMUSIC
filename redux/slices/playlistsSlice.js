@@ -5,10 +5,11 @@ import { readDataFirebaseWithChildCondition } from '../../firebase/controllerDB'
 export const getAllPlaylistByUserId = createAsyncThunk('song/getAllSongByUseId',
     async ({ userId }, { dispatch, rejectWithValue }) => {
 
-        console.log('getAllSongByUserId:', userId)
+        // console.log('getAllSongInPlaylistByUserId:', userId)
 
         const playlist = await readDataFirebaseWithChildCondition('playlists', 'userId', userId);
-        // console.log('playlist:', playlist)
+        // console.log('userId:', userId)
+        // console.log('playlist: ', playlist)
         dispatch(setPlayLists(playlist));
     })
 
