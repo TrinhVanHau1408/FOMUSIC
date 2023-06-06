@@ -35,6 +35,7 @@ import {
 // import Notifications from "../views/Notifications";
 
 import Home3 from "../views/Home3";
+import MyFOMUSIC from "../views/MyFOMUSIC";
 
 const Stack = createNativeStackNavigator();
 const MainStackNavigator = () => (
@@ -75,6 +76,7 @@ const MainStackNavigator = () => (
     <Stack.Screen name="Profile" component={Profile} />
 
     <Stack.Screen name="Home3" component={Home3} />
+    <Stack.Screen name="MyFOMUSIC" component={MyFOMUSIC} />
 
   </Stack.Navigator>
 );
