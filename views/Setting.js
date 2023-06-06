@@ -26,6 +26,9 @@ export default function Setting({navigation}) {
     const handleNavigatorNotifications = () => {
         navigation.navigate('Notification')
     }
+    const handleNavigatorMyFOMUSIC = () => {
+        navigation.navigate('MyFOMUSIC')
+    }
     const goBack= () => {
         navigation.goBack()
     }
@@ -36,6 +39,7 @@ export default function Setting({navigation}) {
                 <MyWhiteButton title='Basic settings' handleNavigator={handleNavigatorBasicSetting}/>
                 <MyWhiteButton title='Interface style' handleNavigator={handleNavigatorInterfaceStyle}/>
                 <MyWhiteButton title='Notifications' handleNavigator={handleNavigatorNotifications}/>
+                <MyWhiteButton title='MyFOMUSIC' handleNavigator={handleNavigatorMyFOMUSIC}/>
             </View>
         </View>
     )
