@@ -37,7 +37,7 @@ export default function DetailPlaylist({ navigation, route }) {
   const handleAddmusic = (status) => {
     setIsAddmusic(status)
     setIsVisibleEdit(!status)
-    dispatch(getPlayLists({}))
+    // dispatch(getPlayLists({}))
   }
 
   const handleDeletemusic = (status) => {
