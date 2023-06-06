@@ -15,11 +15,13 @@ import { filterObject } from '../utilities/Object';
 import { Text } from 'react-native-svg';
 import { usePlaybackState } from 'react-native-track-player';
 import { getHistorySong } from '../redux/slices/songSlice';
+import { addRankingSongListen, getRankingCurrentWeek } from '../redux/slices/rankingSlice';
+import { setTracks, settracks, setupPlayMusic, togglePlayback } from '../redux/slices/playerSlice';
 const music = [
     {
         name: 'Lovely',
         artist: 'Billie Eilish',
-        imgUrl: images.imgLovely,
+        artwork: images.imgLovely,
         // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
         duration: 2 * 60 + 53,
         id: '1',
@@ -27,7 +29,7 @@ const music = [
     {
         name: 'Understand',
         artist: 'Keshi',
-        imgUrl: images.imgUnderstand,
+        artwork: images.imgUnderstand,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '2',
@@ -35,7 +37,7 @@ const music = [
     }, {
         name: 'Snooze',
         artist: 'SZA',
-        imgUrl: images.imgSZATout,
+        artwork: images.imgSZATout,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '3',
@@ -43,7 +45,7 @@ const music = [
     }, {
         name: 'If you',
         artist: 'BigBang',
-        imgUrl: images.imgIfYou,
+        artwork: images.imgIfYou,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '4',
@@ -51,14 +53,14 @@ const music = [
     }, {
         name: 'Shoong',
         artist: 'Teayang',
-        imgUrl: images.imgSZATout,
+        artwork: images.imgSZATout,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '5',
         track_number: '5'
     }, {
         name: 'Die For You',
-        imgUrl: 'The Weeknd',
+        artwork: 'The Weeknd',
         songImg: images.imgDieForYou,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
@@ -68,7 +70,7 @@ const music = [
     {
         name: 'double take',
         artist: 'dhruv',
-        imgUrl: images.imgDoubleTakeL,
+        artwork: images.imgDoubleTakeL,
         // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
         duration: 2 * 60,
         id: '7',
@@ -76,13 +78,15 @@ const music = [
     }
 ]
 
-
+// 1685232000000 = 28/05/2022
+//1684627200000 = 21/05/2023
 export default function Home({ navigation }) {
     const playBackState = usePlaybackState();
     const dispatch = useDispatch();
     const {user, loading, error} = useSelector((state) => state.user)
     const {historySongs} = useSelector((state) => state.song)
     const {playlists} = useSelector((state) => state.playlists)
+    const {ranking} = useSelector((state) => state.ranking)
     const [isVisible, setIsVisible] = useState(false);
     const [idSong, setIdSong] = useState(0);
     const handleLayout = (id) => {
@@ -90,21 +94,33 @@ export default function Home({ navigation }) {
         setIdSong(id);
 
     }
-    const handleNavigatorPlaying = () => {
-        
+    const handleNavigatorPlaying = (id, songs) => {
+        console.log(songs)
+
+            dispatch(setTracks(songs));
+            dispatch(setupPlayMusic());
+            
+            console.log(ranking)
+       
+       
         // if (!loading && error == null) {
         //     dispatch(getAllPlaylistByUserId({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
 
-        //     console.log("fillter playlist: ", filterObject(playlists,'name','Demo'));
+        //     console.log("fillter playlist: ", playlists && filterObject(playlists,'name','Demo'));
         // }
+        // console.log("fillter playlist: ", playlists && filterObject(playlists,'name','Demo'));
+        // dispatch(getRankingCurrentWeek());
+        // dispatch(filterObject(getAllPlaylistByUserId()))
+        navigation.navigate('Playing');
        
-        // navigation.navigate('Playing');
-        dispatch(getHistorySong({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
     }
 
-    // useEffect(()=>{
-    //     getHistorySong({userId: '3XUNpCHKq3bC64NzVwHNRBEzzFx2'});
-    // }, [])
+  
+
+    useEffect(()=>{
+        dispatch(getHistorySong({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
+        dispatch(getRankingCurrentWeek());
+    }, [])
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -137,13 +153,14 @@ export default function Home({ navigation }) {
                             type={2}
                             name={'TOP CHARTS'} />
                         <FlatList
-                            data={music}
+                            data={ranking&&ranking}
                             renderItem={({ item }) =>
                                 <SquareAlbum
                                     id={item.id}
                                     name={item.title}
-                                    img={item.songImg}
-                                    handleLayout={handleLayout} />}
+                                    artwork={item.artwork}
+                                    songs = {ranking}
+                                    handleNavigator={handleNavigatorPlaying}/>}
                             keyExtractor={(item, index) => index}
                             horizontal
                             showsHorizontalScrollIndicator={false}
@@ -155,12 +172,13 @@ export default function Home({ navigation }) {
                             type={3}
                             name={'RECENTLY PLAYED'} />
                         <FlatList
-                            data={historySongs?historySongs:music}
+                            data={historySongs&&historySongs}
                             renderItem={({ item }) =>
                                 <SquareAlbum
                                     id={item.id}
                                     name={item.name}
-                                    img={item.imgUrl}
+                                    artwork={item.artwork}
+                                    songs = {historySongs}
                                     // handleLayout={handleLayout}
                                     handleNavigator={handleNavigatorPlaying}
                                      />}

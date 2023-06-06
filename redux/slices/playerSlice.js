@@ -6,7 +6,7 @@ export const setupPlayMusic = createAsyncThunk(
     'player/setupPlayMusic',
     async(_, {getState}) => {
 
-        console.log("player/setupPlayMusic");
+        // console.log("player/setupPlayMusic");
         try {
 
             await TrackPlayer.setupPlayer();
@@ -18,9 +18,21 @@ export const setupPlayMusic = createAsyncThunk(
                     Capability.SkipToPrevious,
                     Capability.Stop,
                 ],
-                compactCapabilities: [Capability.Play, Capability.Pause, Capability.SkipToNext, Capability.SkipToPrevious,]
+                compactCapabilities: [
+                  Capability.Play, 
+                  Capability.Pause, 
+                  Capability.SkipToPrevious,
+                  Capability.SkipToNext,]
             });
-            await TrackPlayer.add(getState().player.tracks);
+            if (getState().player.tracks != null) {
+              await TrackPlayer.add(getState().player.tracks);
+              // const track = getState().player.tracks;
+              console.log('track',await TrackPlayer.getQueue())
+              // await TrackPlayer.prepare(track,0, true);
+             
+              await TrackPlayer.play();
+            }
+           
         }
         catch (e) {
             console.log("Error setup: ", e)
@@ -50,7 +62,7 @@ export const togglePlayback = createAsyncThunk(
         console.log('player/togglePlayback',playBackState + " " + currentTrack);
         if (currentTrack != null) {
             if (playBackState != State.Playing) {
-              console.log('TrackPlayer.play()');
+              // console.log('TrackPlayer.play()');
                 await TrackPlayer.play();
             } else {
                 await TrackPlayer.pause();
@@ -59,7 +71,10 @@ export const togglePlayback = createAsyncThunk(
         }
     }
 );
-
+export const playCurrentSongClick = createAsyncThunk('song/playCurrentSongClick',
+async({songId}, {dispatch}) => {
+  
+})
 export const playPreviousTrack = createAsyncThunk(
     'player/playPreviousTrack',
     async (_, { getState, dispatch }) => {
@@ -181,7 +196,7 @@ const playerSlice = createSlice({
         setProgress: (state, action) => {
             state.progress = action.payload;
         },
-        settracks: (state, action) => {
+        setTracks: (state, action) => {
           
             state.tracks = action.payload;
         },
@@ -206,7 +221,7 @@ const playerSlice = createSlice({
 export const {
     setPlaybackState,
     setProgress,
-    settracks,
+    setTracks,
     setRepeatMode,
     setHeart
 } = playerSlice.actions;
