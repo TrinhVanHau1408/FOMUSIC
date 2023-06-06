@@ -4,10 +4,12 @@ import { colors, images } from '../../constants';
 export default function SquareAlbum(props) {
 
     const { id, name, artwork, handleNavigator, isAlbum, handleLayout } = props
+    // console.log('artwork img square album', artwork)
+    
     return (
         <View style={[styles.container,isAlbum&&styles.marginx2]}>
             <TouchableOpacity onPress={()=>handleNavigator(id)}>
-                <Image source={artwork ? {uri:artwork} : images.demo} style={styles.img} />
+                <Image source={artwork ? {uri: artwork} : images.demo} style={styles.img} />
                 <Text style={styles.textName}>{name}</Text>
             </TouchableOpacity>
         </View>

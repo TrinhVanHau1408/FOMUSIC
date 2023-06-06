@@ -65,14 +65,16 @@ export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ s
 export const getHistorySong = createAsyncThunk('song/getHistorySong',
     async ({ userId }, {dispatch, rejectWithValue }) => {
 
-        // console.log('getHistorySong')
+        console.log('getHistorySong')
+
         const dbRef = firebaseDatabaseRef(firebaseDatabase);
         const responeSnapshot = await get(child(dbRef, `userHistorys/${userId}`));
 
         const songIds = Object.keys(responeSnapshot.val());
         // console.log(`songIds ${songIds} \\n`);
+
         const dataSong = [];
-        // console.log("getHistorySong: ");
+        console.log("getHistorySong: ");
         for (let songId of songIds) {
 
             // console.log(songId)
@@ -93,6 +95,7 @@ export const getHistorySong = createAsyncThunk('song/getHistorySong',
                 reactHeart: snapshotSong.val().reactHeart,
                 releaseAt: snapshotSong.val().releaseAt,
             }
+            // console.log(`song id ${snapshotSong.key} + ${snapshotSong.val().name} + ${snapshotSong.val().artwork}`)
         
             dataSong.push(song);
         }
