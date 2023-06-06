@@ -109,8 +109,8 @@ const Playing = ({ navigation }) => {
 
     useEffect(() => {
 
-        dispatch(settracks(tracks));
-        dispatch(setupPlayMusic());
+        // dispatch(settracks(tracks));
+        // dispatch(setupPlayMusic());
         // addEventListeners();
         console.log("fff", repeatMode)
         console.log("setup: ", playBackState)
@@ -118,11 +118,13 @@ const Playing = ({ navigation }) => {
             setUpOpenApp();
         }
     }, [])
+
     useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
+        console.log('PlaybackTrackChanged')
         if (event.type === Event.PlaybackTrackChanged && event.nextTrack != null) {
             const track = await TrackPlayer.getTrack(event.nextTrack);
             const { title, artwork, artist } = track || {};
-            console.log("artwork ", artwork);
+            console.log("artwork ", artwork, artist);
 
             setSong({
                 title,
@@ -388,7 +390,7 @@ const styles = StyleSheet.create({
         // fontStyle: normal,
         fontWeight: 500,
         fontSize: 14,
-        lineHeight: 17,
+        lineHeight: 15,
         /* identical to box height */
 
         textAlign: 'center',
