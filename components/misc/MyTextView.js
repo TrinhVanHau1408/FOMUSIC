@@ -1,5 +1,4 @@
-import { Text } from "react-native-svg";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { colors } from "../../constants";
 
 export default function MyTextView(props) {
