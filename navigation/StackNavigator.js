@@ -28,6 +28,11 @@ import {
   Notification
 } from "../views";
 import Profile from "../views/Profile";
+import MyFOMUSIC from "../views/MyFOMUSIC";
+import OptionSong from "../views/OptionSong";
+import DetailSong from "../views/DetailSong";
+import EditDetailSong from "../views/EditDetailSong";
+import DeleteSong from "../views/DeleteSong";
 
 
 
@@ -91,6 +96,11 @@ const MenuStack = () => (
     <Stack.Screen name='Setting' component={Setting}/>
     <Stack.Screen name='InterfaceStyle' component={InterfaceStyle} />
     <Stack.Screen name='BasicSettings' component={BasicSettings} />
+    <Stack.Screen name='MyFOMUSIC' component={MyFOMUSIC} />
+    <Stack.Screen name='OptionSong' component={OptionSong} />
+    <Stack.Screen name='DetailSong' component={DetailSong} />
+    <Stack.Screen name='EditDetailSong' component={EditDetailSong} />
+    <Stack.Screen name='DeleteSong' component={DeleteSong} />
    
   </Stack.Navigator> 
 

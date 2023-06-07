@@ -55,4 +55,7 @@ export default {
     greyAvt: require('../assets/images/grey_avt.png'),
     editProfile: require('../assets/images/editProfile.png'),
     frame902: require('../assets/images/frame-902.png'),
+    blackEyeOpen: require('../assets/images/black-eye-open.png'),
+    blackEyeClose: require('../assets/images/black-eye-close.png'),
+    blackEditProfile: require('../assets/images/black-edit-profile.png')
 }
