@@ -1,4 +1,4 @@
-import { StyleSheet, Image, Text, View, FlatList, SafeAreaView, Alert } from 'react-native';
+import { StyleSheet, Image, Text, TextInput, View, FlatList, SafeAreaView, Alert } from 'react-native';
 import HeaderApp from "../components/header/HeaderApp";
 import { colors, icons, images } from "../constants";
 import MyInput from '../components/misc/MyInput';
@@ -14,12 +14,12 @@ const musics = [
         id: '1',
     },
 ]
-export default function DetailSong({ navigation }) {
+export default function EditDetailSong({ navigation }) {
     return (
         <View style={styles.container}>
-            <HeaderApp iconLeft={icons.arrowBack} />
+            <HeaderApp iconLeft={icons.arrowBack} iconRight={icons.listAdd}/>
             <View>
-                <Image source={images.defaultAvt} style={styles.imgSong}/>
+                <Image source={images.defaultAvt} style={styles.imgSong} />
             </View>
             <View style={styles.containerContent}>
                 {/* <MyTextView 
@@ -31,7 +31,7 @@ export default function DetailSong({ navigation }) {
                         Tên bài hát
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <TextInput style={styles.textContent}>Em Khong Phai Ai</TextInput>
                     </View>
                 </View>
                 <View>
@@ -39,7 +39,12 @@ export default function DetailSong({ navigation }) {
                         Tác giả
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <TextInput
+                            style={styles.textContent}
+                            // onChangeText={text => setState(text)}
+                            >
+                            Bao Anh
+                        </TextInput>
                     </View>
                 </View>
                 <View>
@@ -47,7 +52,7 @@ export default function DetailSong({ navigation }) {
                         Ca sĩ
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <TextInput style={styles.textContent}>Bao Anh</TextInput>
                     </View>
                 </View>
                 <View>
@@ -55,7 +60,7 @@ export default function DetailSong({ navigation }) {
                         Thể loại
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <TextInput style={styles.textContent}>Pop Ballad</TextInput>
                     </View>
                 </View>
                 <View>
@@ -63,7 +68,7 @@ export default function DetailSong({ navigation }) {
                         Album
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <TextInput style={styles.textContent}>Tuoi 36</TextInput>
                     </View>
                 </View>
                 <View>
@@ -71,7 +76,7 @@ export default function DetailSong({ navigation }) {
                         Ngày phát hành
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <TextInput style={styles.textContent}>30/05/2023</TextInput>
                     </View>
                 </View>
                 <View>
@@ -79,7 +84,7 @@ export default function DetailSong({ navigation }) {
                         Nhà sản xuất
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <TextInput style={styles.textContent}>Mmm Entertaiment</TextInput>
                     </View>
                 </View>
                 <View>
@@ -87,7 +92,7 @@ export default function DetailSong({ navigation }) {
                         Lời bài hát
                     </Text>
                     <View style={styles.longtextView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <TextInput style={styles.textContent}>{musics.title}</TextInput>
                     </View>
                 </View>
 
@@ -106,7 +111,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '7%',
         // backgroundColor: colors.primary
     },
-    imgSong: 
+    imgSong:
     {
         // flex: 1,
         width: 160,
@@ -121,7 +126,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flex: 1,
         // backgroundColor: colors.black
-        
+
     },
     textView:
     {
@@ -147,7 +152,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         backgroundColor: '#FFFFFF'
     },
-    title: 
+    title:
     {
         marginLeft: '3%',
         marginTop: 10,
@@ -164,7 +169,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '500',
         color: colors.primary,
-       
-        
-    }, 
+        // backgroundColor: colors.black
+
+
+    },
 })

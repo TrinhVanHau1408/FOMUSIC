@@ -1,7 +1,7 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, Alert, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
-export default function MySongWithOptionMenu({ id,idSongSelected, songName, songImg, artistName, index, handleLayout, setIdSong  }) {
+export default function MySongWithOptionMenu({ id,idSongSelected, songName, songImg, artistName, index, handleLayout, setIdSong, handleNavigator  }) {
     // const [isLiked, setIsIsLiked] = useState(isLike);
     // const handlePlayMusic = () => {
     //     Alert.alert('Play music');
@@ -31,9 +31,13 @@ export default function MySongWithOptionMenu({ id,idSongSelected, songName, song
             </TouchableOpacity>
 
             <View style={styles.button}>
-                <TouchableOpacity>
-                    <Image source={icons.option} />
+                <TouchableOpacity onPress={handleNavigator}>
+                    <Image source={icons.option} onPress={() => navigation.navigate('OptionSong')} />
+                    
                 </TouchableOpacity>
+                {/* <Button onPress={handleNavigator}>
+                    <Image source={icons.option} />
+                </Button> */}
 
             </View>
         </View>
@@ -71,6 +75,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        // backgroundColor: colors.primary
     },
     img: {
         height: 80,

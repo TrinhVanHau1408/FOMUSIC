@@ -3,6 +3,8 @@ import HeaderApp from '../components/header/HeaderApp';
 import { icons, images } from '../constants';
 import MySong from '../components/misc/MySong';
 import MySongWithOptionMenu from '../components/misc/MySongWithOptionMenu';
+import { useState } from 'react';
+import ControlMusic from '../components/misc/ControlMusic';
 
 const music = [
     {
@@ -68,13 +70,17 @@ const music = [
     }
 ]
 export default function MyFOMUSIC({ navigation }) {
+    const [isVisible, setIsVisible] = useState(false);
+    const [idSong, setIdSong] = useState(0);
     const handleLayout = (id) => {
         setIsVisible(true);
         setIdSong(id);
-    
-      }
+    }
     const goBack = () => {
         navigation.goBack();
+    }
+    const handleNavigatorOptionSong = () => {
+        navigation.navigate('OptionSong');
     }
     return (
         <View style={{ flex: 1 }}>
@@ -84,16 +90,21 @@ export default function MyFOMUSIC({ navigation }) {
                     data={music}
                     renderItem={({ item, index }) =>
                         <MySongWithOptionMenu
-                        id={item.id}
-                        songName={item.title}
-                        songImg={item.songImg}
-                        artistName={item.artist}
-                        handleLayout={handleLayout}
-
+                            id={item.id}
+                            idSongSelected={idSong}
+                            songName={item.title}
+                            songImg={item.songImg}
+                            artistName={item.artist}
+                            index={index}
+                            handleNavigator={handleNavigatorOptionSong}
+                            handleLayout={handleLayout}
                         />
                     }
-                    />
+                    keyExtractor={(item, index) => index}
+                    showsVerticalScrollIndicator={false}
+                />
             </View>
+            {isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} />}
         </View>
     )
 }
