@@ -9,6 +9,7 @@ import MyInput from "./MyInput";
 import CreatePlaylist from "./CreatePlaylist";
 import { getDataAsyncStorage } from "../../utilities/AsyncStorage";
 import { readDataFirebaseWithChildCondition } from "../../firebase/controllerDB";
+import { convertObjectToArray } from "../../utilities/Object";
 
 const heigtScreen = Dimensions.get('window').height;
 
@@ -19,76 +20,62 @@ export default function AddSongPlaylists({ handleNavigator, handleRequestNext,
 }) {
     const [inputSearch, setInputSearch] = useState('')
     const [songs, setSongs] = useState()
+    const[filterSongs, setFilterSongs] = useState([]);
     const [allsongs, setallsongs] = useState()
     const translateY = useState(new Animated.Value(heigtScreen * 0.5))[0];
     const [songAdded, setSongsAdded] = useState({})
     const [isNext, setIsNext] = useState(false)
     const [isFlatlist, setIsFlatlist] = useState()
+    const [songIdPicks, setSongIdPicks] = useState([]);
+
 
     const getSongs = async () => {
-        const rep = await readDataFirebase('songs')
-        // console.log(rep)
-        setallsongs(rep)
-        const data = Object.keys(rep).map(key => {
-            const check = key in songed
-            if (!check)
-                return {
-                    title: rep[key].name,
-                    artist: rep[key].artist,
-                    songImg: rep[key].imgUrl,
-                    key: key,
-                    status: false
-                }
-        })
-        const datafilter = data.filter((element) => element != undefined)
-        setSongs(datafilter)
-        // if (ischeck) {
-        //     setSongs([])
-        // }
-        // else {
-        //     setSongs(data)
-        // }
-        // console.log(data)
+        const snapshotSongs = await readDataFirebase('songs')
+        const convertArraySong = convertObjectToArray(snapshotSongs);
+        setSongs(convertArraySong)
+        setFilterSongs(convertArraySong)
     }
 
-    const handleAdd = (id, index, status) => {
-        const dataSong = [...songs]
-        dataSong[index].status = !status
-        setSongs(dataSong)
-        if (!status) {
-            const dataSongAdded = { ...songAdded }
-            dataSongAdded[id] = ""
-            ToastAndroid.show('Đã thêm', ToastAndroid.SHORT);
-            setSongsAdded(dataSongAdded)
+
+    // Xử lý pick song
+
+    const handlePickSong = (songIdPick) => {
+
+        console.log("requestAddsong ")
+        // kiểm tra xem songPickId đã có trong songPickIds chua
+        // nếu chưa thì add vào songPickIds
+
+        if (songIdPicks.includes(songIdPick)) {
+            console.log("đã có rồi")
+
+            // Xóa songId
+            setSongIdPicks(
+                songIdPicks.filter( songId => songId != songIdPick)
+            )
+            ToastAndroid.show('Đã chọn', ToastAndroid.SHORT);
+        } else {
+            console.log("Cần thêm mới")
+
+            // Thêm song Id
+            setSongIdPicks([...songIdPicks, songIdPick])
+            ToastAndroid.show('Đã bỏ chọn', ToastAndroid.SHORT);
         }
-        else {
-            const dataSongAdded = { ...songAdded }
-            delete dataSongAdded[id]
-            ToastAndroid.show('Đã xóa', ToastAndroid.SHORT);
-            setSongsAdded(dataSongAdded)
-        }
+
+        console.log("mang song id pick: ", songIdPicks);
+      
     }
 
-    const getSongInput = async (inputSearch) => {
-        // console.log(inputSearch)
-        // console.log(Object.entries(allsongs))
-        const data = await Object.entries(allsongs).map(([ key, value] ) => {
-            // console.log(value)
-            const check = key in songed
-            if (!check)
-                if (value.name.toLowerCase().includes(inputSearch.toLowerCase())) {
-                    return {
-                        title: value.name,
-                        artist: value.artist,
-                        songImg: value.imgUrl,
-                        key: key,
-                        status: false
-                    }
-                }
-        })
-        const datafilter = data.filter((element) => element != undefined)
-        // console.log(datafilter)
-        setSongs(datafilter)
+    const getSongInput =  (inputSearch) => {
+
+        inputSearch = inputSearch.toLowerCase();
+        // Lọc theo tên bài hát or tên nghệ sĩ
+        //  // normalize("NFD").replace(/[\u0300-\u036f]/g, "") => convert thành chữ không chứa các dấu
+        const filterSong = songs.filter(({name, artist}) => (
+            name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(inputSearch)
+            || artist.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(inputSearch)
+            ))
+        // console.log('filterSong: ', filterSong)
+        setFilterSongs(filterSong)
     }
 
     useEffect(() => {
@@ -97,7 +84,7 @@ export default function AddSongPlaylists({ handleNavigator, handleRequestNext,
         }
         else {
             getSongInput(inputSearch)
-            // setSongs([])
+           
         }
     }, [inputSearch])
 
@@ -123,18 +110,17 @@ export default function AddSongPlaylists({ handleNavigator, handleRequestNext,
                     {songs ?
                         <FlatList
                             style={{ marginTop: 28, marginBottom: 15, height: 275 }}
-                            data={songs}
+                            data={filterSongs}
                             renderItem={({ item, index }) => {
                                 if (item) {
                                     return (<MyAdd
-                                        id={item.key}
-                                        songName={item.title}
-                                        songImg={{ uri: item.songImg }}
+                                        songId={item.key}
+                                        songName={item.name}
+                                        songImg={ item.artwork}
                                         artistName={item.artist}
                                         isLike={item.isLiked}
-                                        index={index}
-                                        status={item.status}
-                                        handleAdd={handleAdd}
+                                        songIdPicks= {songIdPicks}
+                                        handleAdd={handlePickSong}
                                     />)
                                 }
                             }
@@ -148,7 +134,7 @@ export default function AddSongPlaylists({ handleNavigator, handleRequestNext,
                 </View>
                 <View style={{ height: 50, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity style={{ padding: 10, backgroundColor: colors.primary, borderRadius: 10 }}
-                        onPress={() => handleRequestNext(true, songAdded)}>
+                        onPress={() => handleRequestNext(songIdPicks)}>
                         <Text style={{ textAlign: 'center', fontSize: 20, color: 'white' }}>{title}</Text>
                     </TouchableOpacity>
                 </View>

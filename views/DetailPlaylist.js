@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator, ToastAndroid } from 'react-native'
+import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator, ToastAndroid, Modal } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import HeaderApp from '../components/header/HeaderApp'
 import { colors, icons, images } from '../constants'
@@ -8,130 +8,106 @@ import MyLike from '../components/like/MyLikeLong';
 import ControlMusic from '../components/misc/ControlMusic';
 import { useDispatch, useSelector } from 'react-redux'
 import { readDataFirebase, writeDataFirebase } from '../firebase/controllerDB'
-import { getPlayLists } from '../redux/slices/playlistsSlice'
+import { setPlayLists } from '../redux/slices/playlistsSlice'
 import Edit from '../components/misc/Edit'
 import RequestAddSongs from '../components/misc/RequestAddSongs'
 import { isFulfilled } from '@reduxjs/toolkit'
 import DeleteSongPlaylists from '../components/misc/DeleteSongPlaylist'
 import DeleteSong from '../components/misc/DeleteSong'
+import PopupMenu from '../components/popup/PopupMenu'
+import PopupAddSong from '../components/popup/PopupAddSong'
+import PopupDelele from '../components/popup/PopupDelele'
 
 
 export default function DetailPlaylist({ navigation, route }) {
-  const { id } = route.params;
-  const { loading, error, playlists } = useSelector((state) => state.playlists)
+  const { playlist } = route.params;
+  const dispatch = useDispatch()
+  const { playlists } = useSelector((state) => state.playlists)
   // const dataPlaylist = music.find((artist) => artist.id == id);
+  const [currPlaylist, setCurrPlaylist] = useState({ ...playlist }); // playlis là [{}] nên destruct bỏ []
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleEdit, setIsVisibleEdit] = useState(false);
   const [isAddmusic, setIsAddmusic] = useState(false);
   const [idSong, setIdSong] = useState(0);
   const [songs, setSongs] = useState()
-  const [details, setDetails] = useState(playlists[id])
-  const [music, setMusic] = useState()
-  const [isDelete, setIsDelete] = useState(false)
-  const [isVisibleLongEdit, setIsVisibleLongEdit] = useState(false)
-  const [idMusicSelected, setIdMusicSelected] = useState('')
-  const [isDeleteSong, setIsDeleteSong] = useState(false)
+  // const [details, setDetails] = useState(playlists[id])
+  const [mySongs, setMySongs] = useState()
+  const [mySongSelected, setMySongSelectd] = useState({})
+  
 
-  const dispatch = useDispatch()
 
-  const handleAddmusic = (status) => {
-    setIsAddmusic(status)
-    setIsVisibleEdit(!status)
-    // dispatch(getPlayLists({}))
+
+  const [isVisiblePopupMenuIcon, setIsVisiblePopupMenuIcon] = useState(false);
+  const [isVisiblePopupAddSong, setIsVisiblePopupAddSong] = useState(false);
+  const [isVisiblePopupMenuLongLick, setIsVisiblePopupMenuLongLick] = useState(false);
+  const [isVisiblePopupDelete, setIsVisiblePopupDelete] = useState(false)
+  const handleOpenPopupMenuIcon = () => {
+    setIsVisiblePopupMenuIcon(true);
   }
 
-  const handleDeletemusic = (status) => {
-    setIsDelete(status)
-    setIsVisibleEdit(!status)
-    dispatch(getPlayLists({}))
+  const handleOpenPopupAddSong = () => {
+    setIsVisiblePopupAddSong(true)
   }
 
-  const handleDeleteSong = (status) => {
-    setIsDeleteSong(status)
-    setIsVisibleLongEdit(!status)
-    dispatch(getPlayLists({}))
+  const handleOpenPopupDelete = () => {
+    setIsVisiblePopupDelete(true)
   }
 
-  const sigleEdit = [
+  const menuCLickIcon = [
     {
       icon: icons.listAdd,
       title: 'Thêm bài hát',
-      handle: handleAddmusic
-    },
-    {
-      icon: icons.listAdd,
-      title: 'Xóa bài hát',
-      handle: handleDeletemusic
-    },
-    {
-      icon: icons.search,
-      title: 'Tìm kiếm bài hát trong playlists',
-      handle: null
+      handle: handleOpenPopupAddSong
     }
   ]
 
-  const sigleLongEdit = [
+
+   const menuLongClick = [
     {
       icon: icons.listAdd,
       title: 'Xóa bài hát',
-      handle: handleDeleteSong
+      handle: handleOpenPopupDelete
     },
   ]
 
-  useEffect(() => {
-    const getSongs = async () => {
-      const res = await readDataFirebase('songs')
-      setSongs(res)
-      // console.log(res)
-    }
-    getSongs()
-  }, [])
+  const handleAddSong = async (songPicked) => {
+    const platlistId = currPlaylist.key;
 
-  useEffect(() => {
-    if (songs) {
-      if (playlists[id].songs) {
-        const new_data = Object.keys(playlists[id].songs).map(key => {
-          return {
-            key: key,
-            isLiked: true,
-            artist: songs[key].artistId,
-            songImg: { uri: songs[key].imgUrl },
-            title: songs[key].name
-          }
-        })
-        // console.log(new_data)
-        setMusic(new_data)
-      }
-      else{
-        setMusic([])
-      }
-    }
+    const objSongIdPicks = songPicked.reduce(function (acc, value) {
+      acc[value] = "";
+      return acc;
+    }, {});
 
-  }, [playlists, songs])
+    const dataSongs = { ...currPlaylist.songs, ...objSongIdPicks }
+    console.log('songIdPicks handleAdd 134', dataSongs)
 
-
-  const handleNavigator = () => {
-    setIsVisibleEdit(true)
-  }
-
-  const handleLayout = (id) => {
-    setIsVisible(true);
-    setIdSong(id);
-
-  }
-  const handleOutlineAdd = (status) => {
-    setIsAddmusic(status);
-    setIsVisibleEdit(!status);
-  }
-  const handleAdd = async (status, song) => {
-    // console.log(status, song)
-    const new_data = { ...playlists[id].songs, ...song }
     try {
-      const rep = await writeDataFirebase(`playlists/${id}`, new_data, 'songs')
-      if (rep) {
-        dispatch(getPlayLists({}))
-        setIsVisibleEdit(status)
-        setIsAddmusic(!status)
+      const resAddSong = await writeDataFirebase(`playlists/${platlistId}`, dataSongs, 'songs')
+
+      if (resAddSong) {
+
+        let indexPlaylist = -1;
+
+        const updatedDataArray = playlists.map((obj, index) => {
+          // console.log("obj", obj)
+          if (obj.key === currPlaylist.key) {
+
+            indexPlaylist = index;
+            return {
+              ...obj,
+              songs: dataSongs
+            };
+          }
+          return obj;
+        });
+
+        console.log('dispatch(setPlayLists', updatedDataArray)
+        setCurrPlaylist(updatedDataArray[indexPlaylist])
+        dispatch(setPlayLists(updatedDataArray))
+
+
+
+
         ToastAndroid.show('Successful', ToastAndroid.SHORT);
       }
       else {
@@ -144,49 +120,69 @@ export default function DetailPlaylist({ navigation, route }) {
     }
   }
 
-  const handleOutlineDelete = (status) => {
-    setIsDelete(status);
-    setIsVisibleEdit(!status);
+  const handleLongPressOneSong = (songIdSelected) => {
+    setIsVisiblePopupMenuLongLick(true);
+    const songSelected = mySongs.filter(({key}) => key === songIdSelected)[0];
+    setMySongSelectd(songSelected)
   }
-  const handleDelete = async (status, song) => {
-    const new_data = { ...playlists[id].songs }
-    Object.keys(song).map((key) => {
-      delete new_data[key]
+
+  const handleCheckDeleteSongSuccess = (songIdDelete) => {
+    const songsIds= currPlaylist.songs;
+    delete songsIds[songIdDelete];
+
+    console.log('handleDeleteSongInPlaylist songsIds')
+    console.log(songsIds)
+    setCurrPlaylist({...currPlaylist, songs: songsIds})
+    dispatch(setPlayLists([...playlists, currPlaylist]))
+  }
+  //............................
+  // const sigleLongEdit = [
+  //   {
+  //     icon: icons.listAdd,
+  //     title: 'Xóa bài hát',
+  //     handle: handlePopupDeleteMySong
+  //   },
+  // ]
+
+  useEffect(() => {
+    const getSongs = async () => {
+      const res = await readDataFirebase('songs')
+      setSongs(res)
+      // console.log(res)
     }
-    )
+    getSongs()
+  }, [])
 
-    try {
-      const rep = await writeDataFirebase(`playlists/${id}`, new_data, 'songs')
-      if (rep) {
-        setIsDelete(!status)
-        setIsVisibleEdit(status)
-        dispatch(getPlayLists({}))
-        ToastAndroid.show('Successful', ToastAndroid.SHORT);
-      }
-      else {
-        ToastAndroid.show('Failed', ToastAndroid.SHORT);
-      }
-    }
-    catch (err) {
-      console.log(err)
-      ToastAndroid.show('Failed', ToastAndroid.SHORT);
+  const getAllSongByPlaylist = async () => {
+    console.log('92', currPlaylist)
+    const songIds = currPlaylist.songs;
+
+    const song = []
+    for (const songId in songIds) {
+      // console.log(id); // In ra các khóa (keys)
+      const data = await readDataFirebase(`songs/${songId}`)
+
+      song.push({ key: songId, ...data });
     }
 
+    // console.log("My song: ", song)
+
+    setMySongs(song);
   }
 
-  const handleLongClick = (id) => {
-    setIdMusicSelected(id)
-    setIsVisibleLongEdit(true)
-  }
+  useEffect(() => {
+    // console.log(playlist);
+    //  if (playlist) console.log(playlist.songs);
 
-  const handleLayoutEdit = () => {
-    setIsVisibleEdit(false);
-  }
+    console.log('songs add', currPlaylist.songs);
+    getAllSongByPlaylist();
 
-  const handleLayoutLongEdit = () => {
-    setIsVisibleLongEdit(false);
-  }
-  // console.log(playlists[id])
+  }, [currPlaylist.songs, currPlaylist])
+
+
+ 
+  
+ 
 
   const goBack = () => {
     navigation.goBack();
@@ -194,32 +190,30 @@ export default function DetailPlaylist({ navigation, route }) {
   return (
     <View style={{ flex: 1 }}>
 
-      <HeaderApp title={'Playlist'} iconLeft={icons.arrowBack} iconRight={icons.option} goBack={goBack} handleNavigator={handleNavigator} />
+      <HeaderApp title={currPlaylist.name} iconLeft={icons.arrowBack} iconRight={icons.option} goBack={goBack} handleNavigator={handleOpenPopupMenuIcon} />
       <View style={{
         display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 25,
-        // alignContent: 'center',
-        // backgroundColor: colors.primary
       }}>
-        <RectangleAlbum id={id} name={details.name} img={{ uri: details.imageUrl }} isPlaylist={true} isDetailPlaylist={true} />
+        <RectangleAlbum id={playlist.key} name={playlist.name} artwork={playlist.imageUrl} isPlaylist={true} isDetailPlaylist={true} />
       </View>
       <ControlDetatilPalylist />
       <View style={styles.line}></View>
       {/* <View style={{ marginTop: 28 }}> */}
-      {music ? <FlatList
-        style={{ marginTop: 28, marginBottom: 150 }}
-        data={music}
+      {mySongs ? <FlatList
+        style={{}}
+        data={[...mySongs].reverse()}
         renderItem={({ item, index }) =>
           <MyLike
             id={item.key}
-            idSongSelected={idSong}
-            songName={item.title}
-            songImg={item.songImg}
+            songName={item.name}
+            songImg={item.artwork}
             artistName={item.artist}
             isLike={item.isLiked}
             index={index}
-            handleLayout={handleLayout}
-            handleLongClick={handleLongClick}
+          
+            handleLongClick={handleLongPressOneSong}
           />}
+          
         keyExtractor={(item, index) => index}
         showsVerticalScrollIndicator={false}
       /> :
@@ -227,15 +221,44 @@ export default function DetailPlaylist({ navigation, route }) {
           <ActivityIndicator size="large" color="blue" />
         </View>
       }
-       {/* <View style={{ flex: 1, height: 100 }}></View> */}
 
-      {isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} />}
-      {isVisibleEdit && <Edit handleNavigator={handleLayoutEdit} height={null} edit={sigleEdit} />}
-      {isVisibleLongEdit && <Edit handleNavigator={handleLayoutLongEdit} height={null} edit={sigleLongEdit} />}
-      {isAddmusic && <RequestAddSongs title={"Xong"} songed={playlists[id].songs} handleNavigator={handleOutlineAdd} handleRequestNext={handleAdd} />}
-      {isDelete && <DeleteSongPlaylists title={"Xong"} songed={playlists[id].songs} handleNavigator={handleOutlineDelete} handleRequestNext={handleDelete} />}
-      {isDeleteSong && <DeleteSong idplaylist={id} idSong={idMusicSelected} title={songs[idMusicSelected]} handleNavigator={handleDeleteSong} height={null} />}
-    </View>
+
+      {/* <View style={{ flex: 1, height: 100 }}></View> */}
+
+      {/* { isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} /> }
+  { isVisibleEdit && <Edit handleNavigator={handleLayoutEdit} height={null} edit={sigleEdit} /> }
+  { isVisibleLongEdit && <Edit handleNavigator={handleLayoutLongEdit} height={null} edit={sigleLongEdit} /> }
+  { isAddmusic && <RequestAddSongs title={"Xong"} handlePopup={handlePopupAdd} handleRequestNext={handleAddMySong} /> }
+
+  {/* Để làm sao */ }
+      {/* {isDelete && <DeleteSongPlaylists title={"Xong"} songed={currPlaylist.songs} handleNavigator={handleOutlineDelete} handleRequestNext={handleDeleteMySong} />} */}
+      {/* isDeleteMySong && <DeleteSong idPlaylist={currPlaylist.key} setCurrPlaylist={setCurrPlaylist} currPlaylist={currPlaylist} idSong={songIdSelected} title={'mySongs'} handlePopup={handlePopupDeleteMySong} height={null} /> */}
+
+      <PopupMenu
+        menu={menuCLickIcon}
+        isVisiblePopup={isVisiblePopupMenuIcon}
+        setIsVisiblePopup={setIsVisiblePopupMenuIcon} />
+      <PopupAddSong
+        playlist={currPlaylist}
+        isVisiblePopup={isVisiblePopupAddSong}
+        setMySongPlaylist= {setCurrPlaylist}
+        setIsVisiblePopup={setIsVisiblePopupAddSong}
+        handleClickButtonCreate={handleAddSong} />
+
+      <PopupMenu 
+        menu = {menuLongClick}
+        isVisiblePopup={isVisiblePopupMenuLongLick}
+        setIsVisiblePopup={setIsVisiblePopupMenuLongLick}
+      />
+      {/* //parentNode, playlistSeclected, isVisiblePopup, setIsVisiblePopup */}
+      <PopupDelele 
+        parentNode={`playlists/${currPlaylist.key}/songs/`}
+        Seclected = {mySongSelected}
+        isVisiblePopup={isVisiblePopupDelete}
+        setIsVisiblePopup={setIsVisiblePopupDelete}
+        handleCheckDeleleSuccess = {handleCheckDeleteSongSuccess}
+        />
+    </View >
   )
 }
 

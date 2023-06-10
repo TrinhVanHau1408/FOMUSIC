@@ -1,8 +1,6 @@
 import { StyleSheet, Image, Text, TextInput, View, FlatList, SafeAreaView, Alert } from 'react-native';
 import HeaderApp from "../components/header/HeaderApp";
 import { colors, icons, images } from "../constants";
-import MyInput from '../components/misc/MyInput';
-import MyTextView from '../components/misc/MytextView';
 
 const musics = [
     {

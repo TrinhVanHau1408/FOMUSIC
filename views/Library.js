@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Text, View, FlatList, SafeAreaView, Alert } from 'react-native';
+import { Image, Text, View, FlatList, SafeAreaView, Alert, TouchableOpacity } from 'react-native';
 import HeaderApp from '../components/header/HeaderApp';
 import { colors, icons, images } from '../constants';
 import SquareAlbum from '../components/misc/SquareAlbum';
@@ -7,16 +7,16 @@ import { ScrollView, State } from 'react-native-gesture-handler';
 import CircleAlbum from '../components/misc/CircleAlbum';
 import RectangleAlbum from '../components/misc/RectangleAlbum';
 import TitleAlbum from '../components/misc/TitleAlbum';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { writeDataFirebase } from '../firebase/controllerDB';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllHistoryByUserId, getSongInUserHistory, historySlice } from '../redux/slices/historySlice';
-import { getUserHistoryUid } from '../redux/slices/historySlice';
+
 import { getAllPlaylistByUserId, getPlayLists } from '../redux/slices/playlistsSlice'
-import { getArtist, getFollowArtistByUserId, queryFollowedArtists } from '../redux/slices/artistSlice';
+
 import { getAlbum } from '../redux/slices/albumSlice';
 import { getHistorySong } from '../redux/slices/songSlice';
-import { getUserUid } from '../redux/slices/userSlice';
+import { getUserUid,getArtistFollowByUserUid } from '../redux/slices/userSlice';
+import { filterObject } from '../utilities/Object';
+import PopupCreateNewPlaylist from '../components/popup/PopupCreateNewPlaylist';
+import PopupAddSong from '../components/popup/PopupAddSong';
 
 // const musics = [
 //   {
@@ -145,107 +145,108 @@ export default function Library({ navigation }) {
   const {user} = useSelector((state) => state.user);
   const { userHistory } = useSelector((state) => state.userHistory);
   const historySongs = useSelector(state => state.song.historySongs);
-  const playlists = useSelector((state) => state.playlists.playlists);
+  const {playlists} = useSelector((state) => state.playlists);
   const followedArtist  = useSelector((state) => state.followedArtist);
   const album = useSelector((state) => state.album.album);
 
+  const [imgUrlNewPlaylist, setImgUrlNewPlaylist] = useState('');
+  const [imgNameNewPlaylist, setImgNameNewPlaylist] = useState('');
+  const [infoNewPlaylist, setInfoNewPlaylist] = useState({}); // name, description, imgUrl
+  const [isVisiblePopupCreateNewPlaylist, setIsVisiblePopupCreateNewPlaylist] = useState(false)
+  const [isVisiblePopupAddSong, setIsVisiblePopupAddSong] = useState(false);
   // ------------------------------History-------------------------------------------
   
   const dispatch = useDispatch();
 
-  
-  const userId = user.uid;
-
-  console.log('userId get in Libarary: ', userId);
-
   useEffect(() => {
-    dispatch(getHistorySong({userId})).unwrap().then((result) => {
-      setArrayHistorySongs(result); 
-      
-    }).catch((err) => {
-      console.log('loading history error')
-    });
-  },[dispatch, userId])
+    if (user != null) {
+      dispatch(getHistorySong({userId: user.uid}));
+    }
+  },[dispatch, user])
 
   // console.log('history result: ', historySongs)
   //---------------------------------- Artist--------------------------------------------
 
   // queryFollowedArtists(userId)
-  useEffect(() => {
-    const getdata = async () => {
-      dispatch(queryFollowedArtists({userId}))
-    }
-    getdata()
-  }, [dispatch, userId])
+  // useEffect(() => {
+  //   const getdata = async () => {
+  //     dispatch(queryFollowedArtists({userId}))
+  //   }
+  //   getdata()
+  // }, [dispatch, userId])
 
   useEffect(() => {
-    const data = []
-    for (key in followedArtist) {
-      // if (playlists[key].userId == user.user.uid) {
-        data.push({
-          name: followedArtist[key].name,
-          imageUrl: followedArtist[key].photoUrl,
-          id: key
-        })
-      // }
-    }
-    setArrayFollowArtist(data)
-  }, [followedArtist])
+    // const data = []
+    // for (key in followedArtist) {
+    //   // if (playlists[key].userId == user.user.uid) {
+    //     data.push({
+    //       name: followedArtist[key].name,
+    //       imageUrl: followedArtist[key].photoUrl,
+    //       id: key
+    //     })
+    //   // }
+    // }
+    // setArrayFollowArtist(data)
+
+    dispatch(getArtistFollowByUserUid());
 
 
-  console.log("ARTIST dang follow: ", followedArtist)
+  }, [])
+
+
+  // console.log("ARTIST dang follow: ", followedArtist)
 
   // ------------------------------Playlist------------------------------------
   
   useEffect(() => {
-    const getdata = async () => {
-      dispatch(getAllPlaylistByUserId({userId}))
-    }
-    getdata()
-  }, [])
+     if (user != null) {
+      dispatch(getAllPlaylistByUserId({userId: user.uid}))
+     }
+  }, [user])
 
-  useEffect(() => {
-    const data = []
-    for (key in playlists) {
-      // if (playlists[key].userId == user.user.uid) {
-        data.push({
-          name: playlists[key].name,
-          imageUrl: playlists[key].imageUrl,
-          id: key
-        })
-      // }
-    }
-    setArrayPlaylist(data)
-  }, [playlists])
+  // useEffect(() => {
+  //   const data = []
+  //   for (key in playlists) {
+  //     // if (playlists[key].userId == user.user.uid) {
+  //       data.push({
+  //         name: playlists[key].name,
+  //         imageUrl: playlists[key].imageUrl,
+  //         id: key
+  //       })
+  //     // }
+  //   }
+  //   setArrayPlaylist(data)
+  // }, [playlists])
 
   // console.log('playlist moi tao ne: ', playlists)
 
 
+  
+
 
   // --------------------------------- ALBUM----------------------------------------------
 
-  React.useEffect(() => {
-    const getdata = async () => {
-      dispatch(getAlbum())
-    }
-    getdata()
-  }, [dispatch])
-  console.log("ALBUM: ", album)
+  // React.useEffect(() => {
+  //   const getdata = async () => {
+  //     dispatch(getAlbum())
+  //   }
+  //   getdata()
+  // }, [dispatch])
+  // console.log("ALBUM: ", album)
 
 
-  React.useEffect(() => {
-    const data = []
-    for (key in album) {
-      data.push({
-        name: album[key].name,
-        imgUrl: album[key].imgUrl,
-        id: key
-      })
-    }
-    setArrayAlbum(data)
-  }, [album])
+  // React.useEffect(() => {
+  //   const data = []
+  //   for (key in album) {
+  //     data.push({
+  //       name: album[key].name,
+  //       imgUrl: album[key].imgUrl,
+  //       id: key
+  //     })
+  //   }
+  //   setArrayAlbum(data)
+  // }, [album])
 
-  console.log("ALBUM: ", album)
 
 
 
@@ -256,8 +257,11 @@ export default function Library({ navigation }) {
     navigation.navigate('Artist', { id: id });
   }
 
-  const handleNavigatorPlaylist = (id) => {
-    navigation.navigate('Playlist', { id: id });
+  const handleNavigatorPlaylist = (id, ) => {
+
+    // const playlist = filterObject(playlists, 'key', id);
+    // console.log(id, playlist)
+    navigation.navigate('Playlist', {playlists});
   }
 
   const handleNavigatorAlbum = (id) => {
@@ -272,63 +276,31 @@ export default function Library({ navigation }) {
     navigation.navigate('Like');
   }
   
-  // React.useEffect(() => {
-  //   const getdata = async () => {
-  //     dispatch(getUserHistoryUid({}))
-  //   }
-  //   getdata()
-  // }, [])
 
-  // React.useEffect(() => {
-  //   const data = []
-  //   for (key in userHistory) {
-  //     data.push({
-  //       id: key
+  const handleOpenPopuCreatnNePlaylist = () => {
+    setIsVisiblePopupCreateNewPlaylist(true)
+  }
 
-  //     })
-  //   }
-  //   setArrayUserHistory(data)
-  // }, [userHistory])
+  const handleOpenPopupAddSong_setInfoNewPlaylist = (namePlaylist, descriptionPlaylist, imgUrlNewPlaylist, imgNameNewPlaylist) => {
 
-  // React.useEffect(() => {
-  //   const getSongs = async () => {
-  //     const res = await readDataFirebase('songs')
-  //     setSongs(res)
-  //     // console.log(res)
-  //   }
-  //   getSongs()
-  // }, [])
+    // Set thông tin của playlist mới
+    setInfoNewPlaylist({
+      ...infoNewPlaylist,
+      'name': namePlaylist,
+      'description': descriptionPlaylist
+    })
 
-  // React.useEffect(() => {
-  //   setDetails(userHistory[id])
-  // }, [userHistory[id]])
+    setImgUrlNewPlaylist(imgUrlNewPlaylist);
+    setImgNameNewPlaylist(imgNameNewPlaylist);
 
-  // React.useEffect(() => {
-  //   // console.log(details.songs)
-  //   if (songs) {
-  //     if (!details.songs) {
-  //       setMusic([])
-  //     }
-  //     else {
-  //       const data = []
-  //       // console.log(songs)
-  //       var flag = 1
-  //       for (key in details.songs) {
-  //         data.push({
-  //           title: songs[key].name,
-  //           artist: songs[key].artist,
-  //           songImg: songs[key].imgUrl,
-  //           id: flag,
-  //           key: key
-  //         })
-  //         flag = flag + 1
-  //       }
-  //       setMusic(data)
-  //     }
-  //   }
-
-  // }, [songs, details])
-
+    // console.log('handleOpenPopupAddSong_setInfoNewPlaylist - setInfoNewPlaylist: ', namePlaylist + '' + descriptionPlaylist + '' + imgUrlNewPlaylist 
+    // + " " + imgNameNewPlaylist);
+    // if (infoNewPlaylist != {}) console.log('handleOpenPopupAddSong_setInfoNewPlaylist - setInfoNewPlaylist: ', infoNewPlaylist)
+    // Di chuyển qua popup chọn nhạc thêm vào playlist
+    setIsVisiblePopupCreateNewPlaylist(false);
+    setIsVisiblePopupAddSong(true);
+  }
+ 
   return (
     <SafeAreaView style={{ flex: 1, }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -391,13 +363,11 @@ export default function Library({ navigation }) {
           {/* ----------------------------------PLAYLIST----------------------------------------------  */}
           
           <View>
-            {arrayplaylist && (
-              <>
                 <TitleAlbum
                   type={4}
                   name={'Playlist'} />
-                <FlatList
-                  data={arrayplaylist}
+               {playlists ?  <FlatList
+                  data={playlists}
                   renderItem={({ item, index }) =>
                     <RectangleAlbum
                       id={item.key}
@@ -409,9 +379,9 @@ export default function Library({ navigation }) {
                   keyExtractor={(item, index) => index}
                   horizontal
                   showsHorizontalScrollIndicator={false}
-                />
-              </>
-            )}
+                />: <TouchableOpacity onPress={handleOpenPopuCreatnNePlaylist}><Text>Ddd</Text></TouchableOpacity>}
+            
+            
           </View>
 
           {/* ------------------------------ALBUM------------------------------ */}
@@ -477,6 +447,19 @@ export default function Library({ navigation }) {
           </View> */}
 
           <View style={{ flex: 1, height: 50 }}></View>
+          <PopupCreateNewPlaylist
+          isVisiblePopup={isVisiblePopupCreateNewPlaylist}
+          setIsVisiblePopup={setIsVisiblePopupCreateNewPlaylist}
+          handleMoveToPopupAddSong={handleOpenPopupAddSong_setInfoNewPlaylist}
+           />
+
+{/* playlist, infoImg, isVisiblePopup, setIsVisiblePopup, handleGoBackPopup */}
+           <PopupAddSong 
+           playlist={infoNewPlaylist} 
+           infoImg={{imgUrlNewPlaylist, imgNameNewPlaylist}}
+           isVisiblePopup={isVisiblePopupAddSong}
+           setIsVisiblePopup={setIsVisiblePopupAddSong}
+           />
         </View>
       </ScrollView>
     </SafeAreaView>

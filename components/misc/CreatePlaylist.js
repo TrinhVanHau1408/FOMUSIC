@@ -57,7 +57,8 @@ export default function CreatePlaylist({ song, handleNavigator, handleOutside,
     }, [])
 
     const handleCreatePlaylist = async () => {
-        if (namePlaylist != '' && description != '') {
+        console.log("handleCreatePlaylist")
+        if (namePlaylist != '') {
             const check = Object.keys(playlists).find(key => playlists[key].name.toLowerCase() === namePlaylist.toLowerCase())
             if(!check)
             {
@@ -69,7 +70,7 @@ export default function CreatePlaylist({ song, handleNavigator, handleOutside,
                         const blob = await result.blob()
                         urlFireBase = await uploadFileStorage(`images/${imageName}`, blob)
                     }
-                    const userId = await getDataAsyncStorage('userUid')
+                    const userId = await getDataAsyncStorage('userUid') // user
                     const wiriteData = {
                         name: namePlaylist,
                         description: description,
@@ -101,12 +102,12 @@ export default function CreatePlaylist({ song, handleNavigator, handleOutside,
             }
             else
             {
-                alert("Tên playlist đã tồn tại")
+                Alert.alert("Tên playlist đã tồn tại")
 
             }
         }
         else {
-            alert('Vui lòng điền thông tin của playlist')
+            Alert.alert('Vui lòng điền thông tin của playlist')
         }
     }
 
@@ -114,9 +115,9 @@ export default function CreatePlaylist({ song, handleNavigator, handleOutside,
     return (
         <View style={{ position: 'absolute', top: 0, width: '100%', height: '100%' }}>
             <TouchableOpacity style={{ height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', top: 0, zIndex: -1 }}
-                onPress={() => handleOutside(false)}
+                onPress={() => handleNavigator(false)}
                 activeOpacity={1.0} />
-            <Animated.View style={[styles.container, { transform: [{ translateY }], height: height }]}>
+            <View style={[styles.container, { transform: [{ translateY }], height: height }]}>
                 <View style={{ marginTop: 5, marginLeft: 15, marginRight: 15 }}>
                     <MyInput placeholder={"Tên playlist"} icon={icons.userCircle} setState={setNamePlaylist} valueState={namePlaylist} />
                 </View>
@@ -144,7 +145,7 @@ export default function CreatePlaylist({ song, handleNavigator, handleOutside,
                     <MyButton title="Tạo playlist" handleNavigator={handleCreatePlaylist} />
                 </View>
                 <View style={{ flex: 1, height: 10 }}></View>
-            </Animated.View>
+            </View>
         </View>
     );
 };

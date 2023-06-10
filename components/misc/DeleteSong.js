@@ -9,9 +9,10 @@ import { getDataAsyncStorage } from "../../utilities/AsyncStorage";
 
 const heigtScreen = Dimensions.get('window').height;
 
-export default function DeleteSong({ idplaylist, idSong ,title, handleNavigator,
+export default function DeleteSong({ idPlaylist, idSong , setCurrPlaylist, currPlaylist, title, handlePopup,
     height = heigtScreen * 0.5,
 }) {
+    console.log(`DeleteSong 15: idplaylist ${idPlaylist}, idSong ${idSong}, title ${title}}`)
     const translateY = React.useState(new Animated.Value(heigtScreen * 0.5))[0];
 
     React.useEffect(() => {
@@ -22,14 +23,22 @@ export default function DeleteSong({ idplaylist, idSong ,title, handleNavigator,
         }).start();
     }, [])
 
-    const handleDeletePlaylist = async () => {
-        // console.log('Delete Playlist')
+    const handleDeleteSongInPlaylist = async () => {
+        console.log('handleDeleteSongInPlaylist')
+
         try{
-            const path = `playlists/${idplaylist}/songs/${idSong}`
+            const path = `playlists/${idPlaylist}/songs/${idSong}`
             const rep = await deleteDataFirebase(path)
             if(rep)
             {
-                handleNavigator(false)
+                // xóa id song ra khỏi giao diện
+                const songsIds= currPlaylist.songs;
+                delete songsIds[idSong];
+            
+                console.log('handleDeleteSongInPlaylist songsIds')
+                console.log(songsIds)
+                setCurrPlaylist({...currPlaylist, songs: songsIds})
+                handlePopup(false)
             }
         }
         catch(err){
@@ -40,14 +49,14 @@ export default function DeleteSong({ idplaylist, idSong ,title, handleNavigator,
     return (
         <View style={{ position: 'absolute', top: 0, width: '100%', height: '100%' }}>
             <TouchableOpacity style={{ height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', top: 0, zIndex: -1 }}
-                onPress={() => handleNavigator(false)}
+                onPress={() => handlePopup(false)}
                 activeOpacity={1.0} />
             <Animated.View style={[styles.container, { transform: [{ translateY }], height: height }]}>
                 <View style={{ marginTop: 5, marginLeft: 15, marginRight: 15 }}>
-                    <Text style={{ fontSize:20, marginTop:10, marginBottom:10, textAlign:'center', fontWeight:'bold'}}>Bạn đã chắt chắn xóa playlist {title.name}?</Text>
+                    <Text style={{ fontSize:20, marginTop:10, marginBottom:10, textAlign:'center', fontWeight:'bold'}}>Bạn đã chắt chắn xóa playlist {title}?</Text>
                 </View>
                 <View >
-                    <MyButton title="Xóa" handleNavigator={handleDeletePlaylist} />
+                    <MyButton title="Xóa" handleNavigator={handleDeleteSongInPlaylist} />
                 </View>
                 <View style={{ flex: 1, height: 10 }}></View>
             </Animated.View>

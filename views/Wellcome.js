@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { colors, icons } from '../constants'
 import { getDataAsyncStorage } from '../utilities/AsyncStorage';
 import { getUserUid } from '../redux/slices/userSlice';
+import { getAllPlaylistByUserId } from '../redux/slices/playlistsSlice';
 export default function Wellcome({ navigation }) {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.user);
@@ -18,6 +19,7 @@ export default function Wellcome({ navigation }) {
 
         if (!loading && error == null) {
           navigation.navigate('App');
+          dispatch(getAllPlaylistByUserId({userId: userUid}));
         }
 
       } else {
