@@ -59,6 +59,7 @@ export const getRankingCurrentWeek = createAsyncThunk('ranking/getRankingCurrent
                 }
                 
             }
+            // console.log("rankingData",rankingData);
             dispatch(setRanking(rankingData));
         });
     }
