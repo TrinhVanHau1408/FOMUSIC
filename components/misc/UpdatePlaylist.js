@@ -160,8 +160,10 @@ export default function UpdatePlaylist({ id, handleNavigator,
                 <Animated.View style={[styles.container, { transform: [{ translateY }], height: height }]}>
                     <View style={{ marginLeft: 35, marginRight: 35, marginTop:30 }}>
                         <TouchableOpacity style={{
-                            backgroundColor: 'rgba(0, 0, 255,0.6)',
-                            borderRadius: 20, display: 'flex', justifyContent: 'center',
+                            
+                            borderRadius: 20, 
+                            display: 'flex', 
+                            justifyContent: 'center',
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 10,
@@ -171,7 +173,6 @@ export default function UpdatePlaylist({ id, handleNavigator,
                             {
                                 imageUrl && <Image source={{ uri: imageUrl }} style={{ height: 40, width: 40, marginRight: 20 }} />
                             }
-                            <Text style={{ fontSize: 17, color: 'white', fontWeight: 'bold' }}>{imageName ? imageName : "Hình ảnh"}</Text>
                         </TouchableOpacity>
                     </View>
                     <View >
