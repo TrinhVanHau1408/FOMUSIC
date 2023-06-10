@@ -1,11 +1,11 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
-export default function MySongWithOptionMenu({ id,idSongSelected, songName, songImg, artistName, index, handleLayout, setIdSong, handleNavigator  }) {
+export default function MySongWithOptionMenu({ id, idSongSelected, songName, songImg, artistName, index, handleLayout, setIdSong, handleNavigator }) {
     // const [isLiked, setIsIsLiked] = useState(isLike);
     // const handlePlayMusic = () => {
     //     Alert.alert('Play music');
-        
+
     // }
     // useEffect(() => {
     //     setIdSong(id);
@@ -14,12 +14,12 @@ export default function MySongWithOptionMenu({ id,idSongSelected, songName, song
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={() =>handleLayout(id)}
+                onPress={() => handleLayout(id)}
                 style={styles.info}
             >
                 <View style={styles.stt}>
-                    {idSongSelected===id?<Image source={icons.playing}/>:
-                    <Text>{id}</Text>}
+                    {idSongSelected === id ? <Image source={icons.playing} /> :
+                        <Text>{index + 1}</Text>}
                 </View>
                 <View style={styles.imgContainer}>
                     <Image source={songImg} style={styles.img} />
@@ -31,9 +31,9 @@ export default function MySongWithOptionMenu({ id,idSongSelected, songName, song
             </TouchableOpacity>
 
             <View style={styles.button}>
-                <TouchableOpacity onPress={handleNavigator}>
-                    <Image source={icons.option} onPress={() => navigation.navigate('OptionSong')} />
-                    
+                <TouchableOpacity onPress={() => handleNavigator(id)}>
+                    <Image source={icons.option} />
+
                 </TouchableOpacity>
                 {/* <Button onPress={handleNavigator}>
                     <Image source={icons.option} />
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         marginRight: 22,
         fontFamily: 'Montserrat',
         fontSize: 17,
-        
+
     },
     imgContainer: {
         resizeMode: 'cover', height: 80,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         shadowColor: '#171717',
         elevation: 5
-      
+
     },
     info: {
         display: 'flex',

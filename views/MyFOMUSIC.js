@@ -1,77 +1,90 @@
-import { View, Text, FlatList, Alert } from 'react-native';
+import { View, Text, FlatList, Alert, ActivityIndicator } from 'react-native';
 import HeaderApp from '../components/header/HeaderApp';
 import { icons, images } from '../constants';
-import MySong from '../components/misc/MySong';
 import MySongWithOptionMenu from '../components/misc/MySongWithOptionMenu';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ControlMusic from '../components/misc/ControlMusic';
+import { readDataFirebaseWithChildCondition } from '../firebase/controllerDB';
+import Edit from '../components/misc/Edit';
+import DeleteSong from './DeleteSong';
 
-const music = [
-    {
-        title: 'Lovely',
-        artist: 'Billie Eilish',
-        songImg: images.imgLovely,
-        // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
-        duration: 2 * 60 + 53,
-        id: '1',
-    },
-    {
-        title: 'Understand',
-        artist: 'Keshi',
-        songImg: images.imgUnderstand,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '2',
-        track_number: '2'
-    }, {
-        title: 'Snooze',
-        artist: 'SZA',
-        songImg: images.imgSZATout,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '3',
-        track_number: '3'
-    }, {
-        title: 'If you',
-        artist: 'BigBang',
-        songImg: images.imgIfYou,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '4',
-        track_number: '4',
-        isLike: true
-    }, {
-        title: 'Shoong',
-        artist: 'Teayang',
-        songImg: images.imgSZATout,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '5',
-        track_number: '5',
-        isLike: true
-    }, {
-        title: 'Die For You',
-        artist: 'The Weeknd',
-        songImg: images.imgDieForYou,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '6',
-        track_number: '6'
-    },
-    {
-        title: 'double take',
-        artist: 'dhruv',
-        songImg: images.imgDoubleTakeL,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '7',
-        track_number: '7',
-        isLike: true
-    }
-]
 export default function MyFOMUSIC({ navigation }) {
-    const [isVisible, setIsVisible] = useState(false);
     const [idSong, setIdSong] = useState(0);
+    const [isVisible, setIsVisible] = useState(false);
+    const [isVisibleMenuSingleSong, setIsVisibleMenuSingleSong] = useState(false);
+    const [isDeleteSong, setIsDeleteSong] = useState(false)
+    const [isVisibleMenuSingle, setIsVisibleMenuSingle] = useState(false); // this is single to control menu of artist
+    const [objsongsArtist, setObjsongsArtist] = useState();
+    const [songsArtist, setSongsArtist] = useState() // here is array contains the songs of artist
+    const [idSongSelected, setIdSongSelected] = useState() // here is id select to do something
+
+    // This is function processing when handle menu of My FoMusic
+    // ----------------------------------------------------------------
+    const MenuSingle = [
+        {
+            title: "Đăng bài hát",
+            icon: icons.listAdd,
+            handle: () => {
+                navigation.navigate('Upload')
+            }
+        },
+        {
+            title: "Tìm kiếm bài hát",
+            icon: icons.search,
+            handle: handleNavigatorEditDetaillSong
+        },
+    ]
+    // --------------------------------------------------------------
+
+    const handleNavigatorDetailSong = () => {
+        navigation.navigate('DetailSong', { detailSong: objsongsArtist[idSongSelected] })
+    }
+    const handleNavigatorEditDetaillSong = () => {
+        navigation.navigate('EditDetailSong', { songdetails: objsongsArtist[idSongSelected], id: idSongSelected })
+    }
+    const handleNavigatorDeleteSong = () => {
+        setIsDeleteSong(true)
+        setIsVisibleMenuSingleSong(false)
+    }
+    const MenuSingleSong = [
+        {
+            title: "Xem thông tin bài hát",
+            icon: icons.blackEyeOpen,
+            handle: handleNavigatorDetailSong
+        },
+        {
+            title: "Sửa thông tin bài hát",
+            icon: icons.blackEditProfile,
+            handle: handleNavigatorEditDetaillSong
+        },
+        {
+            title: "Thêm bài hát yêu thích",
+            icon: icons.heartAdd,
+            handle: handleNavigatorDetailSong
+        },
+        {
+            title: "Ẩn bài hát",
+            icon: icons.blackEyeClose,
+            handle: handleNavigatorEditDetaillSong
+        },
+        {
+            title: "Thêm vào playlist",
+            icon: icons.playlistAdd,
+            handle: handleNavigatorEditDetaillSong
+        },
+        {
+            title: "Thêm vào Album",
+            icon: icons.listAdd,
+            handle: handleNavigatorEditDetaillSong
+        },
+        {
+            title: "Xóa bài hát",
+            icon: icons.removeCircle,
+            handle: handleNavigatorDeleteSong
+        },
+    ]
+    //----------------------------------------------------------------
+
     const handleLayout = (id) => {
         setIsVisible(true);
         setIdSong(id);
@@ -79,32 +92,74 @@ export default function MyFOMUSIC({ navigation }) {
     const goBack = () => {
         navigation.goBack();
     }
-    const handleNavigatorOptionSong = () => {
-        navigation.navigate('OptionSong');
+    const handleNavigatorOptionSong = (id) => {
+        // navigation.navigate('OptionSong');
+        setIsVisibleMenuSingleSong(true)
+        setIdSongSelected(id)
     }
+
+    const handleMenuOfMyFoMusic = () => {
+        setIsVisibleMenuSingle(true)
+    }
+
+    // This is function get all songs of artists, with condition is artistId (current fixed artists is "artist1")
+    // Funtion will be activity when songs in firebase change
+    useEffect(() => {
+
+        const getSongsArtist = async () => {
+            const rep = await readDataFirebaseWithChildCondition('songs', 'artistId', 'artist1')
+            if (rep) {
+                const data = Object.entries(rep).map(([key, value]) => {
+                    return {
+                        title: value.name,
+                        artist: value.artist,
+                        songImg: value.artwork,
+                        id: key,
+                    }
+                })
+                // console.log(data)
+                setObjsongsArtist(rep)
+                setSongsArtist(data)
+            }
+            else {
+                setSongsArtist([])
+            }
+        }
+        getSongsArtist()
+
+    }, [isDeleteSong, isVisibleMenuSingleSong, isVisibleMenuSingle])
+
     return (
         <View style={{ flex: 1 }}>
-            <HeaderApp title='My FOMusic' iconLeft={icons.arrowBack} goBack={goBack} />
+            <HeaderApp title='My FOMusic' iconLeft={icons.arrowBack} goBack={goBack} iconRight={icons.option} handleNavigator={handleMenuOfMyFoMusic} />
             <View style={{ marginTop: 28 }}>
-                <FlatList
-                    data={music}
-                    renderItem={({ item, index }) =>
-                        <MySongWithOptionMenu
-                            id={item.id}
-                            idSongSelected={idSong}
-                            songName={item.title}
-                            songImg={item.songImg}
-                            artistName={item.artist}
-                            index={index}
-                            handleNavigator={handleNavigatorOptionSong}
-                            handleLayout={handleLayout}
-                        />
-                    }
-                    keyExtractor={(item, index) => index}
-                    showsVerticalScrollIndicator={false}
-                />
+                {songsArtist ?
+                    <FlatList
+                        data={songsArtist}
+                        renderItem={({ item, index }) =>
+                            <MySongWithOptionMenu
+                                id={item.id}
+                                idSongSelected={idSong}
+                                songName={item.title}
+                                songImg={{ uri: item.songImg }}
+                                artistName={item.artist}
+                                index={index}
+                                handleNavigator={handleNavigatorOptionSong}
+                                handleLayout={handleLayout}
+                            />
+                        }
+                        keyExtractor={(item, index) => index}
+                        showsVerticalScrollIndicator={false}
+                    /> :
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator size="large" color="blue" />
+                    </View>
+                }
             </View>
             {isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} />}
+            {isVisibleMenuSingleSong && <Edit handleNavigator={() => setIsVisibleMenuSingleSong(false)} edit={MenuSingleSong} height={380} />}
+            {isVisibleMenuSingle && <Edit handleNavigator={() => setIsVisibleMenuSingle(false)} edit={MenuSingle} height={170} />}
+            {isDeleteSong && <DeleteSong id={idSongSelected} songName={objsongsArtist[idSongSelected].name} setIsVisibleMenuSingleSong={setIsVisibleMenuSingleSong} setIsDeleteSong={setIsDeleteSong} />}
         </View>
     )
 }
