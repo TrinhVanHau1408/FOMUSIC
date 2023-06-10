@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { firebaseDatabaseRef, get, child, firebaseDatabase } from '../../firebase/connectDB';
-import { equalTo, orderByChild, ref } from 'firebase/database';
-
+import { readDataFirebase, readDataFirebaseWithChildCondition } from '../../firebase/controllerDB';
+import { firebaseDatabaseRef, firebaseDatabase, get, orderByChild, equalTo, query } from '../../firebase/connectDB';
 export const getArtist = createAsyncThunk('artist/getArtist', async ({ artist }, { rejectWithValue }) => {
     try {
         console.log('useruid createAsyncThunk', artist)
@@ -24,31 +23,54 @@ export const getArtist = createAsyncThunk('artist/getArtist', async ({ artist },
 
 
 // Truy vấn tất cả các nghệ sĩ đã theo dõi
-export const queryFollowedArtists = createAsyncThunk('followedArtist/queryFollowedArtists',
+export const getFollowedArtists = createAsyncThunk('artist/getFollowedArtists',
     async ({ userId }, { dispatch, rejectWithValue }) => {
-        try {
-            const dbRef = firebaseDatabaseRef(firebaseDatabase);
-            const snapshot = await get(orderByChild(child(dbRef, 'artists'), 'follows/' + userId), equalTo('', 'value'));
+        console.log("getFollowedArtists");
 
-            // Lấy giá trị của tất cả các nghệ sĩ đã theo dõi
-            const followedArtists = snapshot.val();
+        // const artistsRef = firebaseDatabaseRef(firebaseDatabase, 'artists');
+        // console.log(`follows/${userId}`)
+        // const queryRef = query(artistsRef, orderByChild(userId+'/active'), equalTo(""));
 
-            // Kiểm tra nếu không có nghệ sĩ nào đã theo dõi
-            if (!followedArtists) {
-                console.log('Không có nghệ sĩ nào đã theo dõi!');
-                return;
-            }
-            dispatch(setFollowedArtist(followedArtists))
+        // try {
+        //   const snapshot = await get(queryRef);
+        //   const artists = snapshot.val();
+        //   console.log("artists",artists);
+        // } catch (error) {
+        //   console.log("Lỗi khi truy vấn dữ liệu:", error);
+        //   return null;
+        // }
 
-            // Lặp qua từng nghệ sĩ đã theo dõi và truy cập thông tin của họ
-            // Object.keys(followedArtists).forEach((artistId) => {
-            //     const artist = followedArtists[artistId];
-            //     console.log('Thông tin nghệ sĩ:', artist);
-            // });
-        } catch (error) {
-            console.log('Lỗi truy vấn:', error);
-        }
-        
+        // const as =await readDataFirebase('artists');
+        // console.log(as)
+
+        const artistsRef = firebaseDatabaseRef(firebaseDatabase, 'artists');
+
+        // Tạo query với orderByChild và equalTo
+        const followsQuery = query(
+            firebaseDatabaseRef(artistsRef, "follows"),
+            orderByChild('active'),
+            equalTo(false)
+        );
+
+        // Truy vấn dữ liệu
+        get(followsQuery)
+            .then((snapshot) => {
+                console.log(snapshot)
+                if (snapshot.exists()) {
+                  
+                    snapshot.forEach((childSnapshot) => {
+                        const followId = childSnapshot.key;
+                        const followData = childSnapshot.val();
+
+                        // Xử lý dữ liệu theo ý muốn
+                        console.log(`Follow: ${followId}, Active: ${followData.active}`);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
     }
 )
 
@@ -71,20 +93,20 @@ const artistSlice = createSlice({
     },
     extraReducers: (builder) => {
         // getUserUid
-        builder.addCase(queryFollowedArtists.pending, (state) => {
-            state.loading = true;
-            console.log("getArtistUid pending")
-        })
-        builder.addCase(queryFollowedArtists.fulfilled, (state, action) => {
-            state.loading = false;
-            // state.artist = action.payload;
-            console.log("getArtistUid fulfilled")
-        })
-        builder.addCase(queryFollowedArtists.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.error.message;
-            console.log("getArtistUid rejected")
-        })
+        // builder.addCase(queryFollowedArtists.pending, (state) => {
+        //     state.loading = true;
+        //     console.log("getArtistUid pending")
+        // })
+        // builder.addCase(queryFollowedArtists.fulfilled, (state, action) => {
+        //     state.loading = false;
+        //     // state.artist = action.payload;
+        //     console.log("getArtistUid fulfilled")
+        // })
+        // builder.addCase(queryFollowedArtists.rejected, (state, action) => {
+        //     state.loading = false;
+        //     state.error = action.error.message;
+        //     console.log("getArtistUid rejected")
+        // })
     }
 })
 export const { setArtist, setFollowedArtist } = artistSlice.actions;

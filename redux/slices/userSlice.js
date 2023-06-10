@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {firebaseDatabaseRef, get, child, firebaseDatabase } from '../../firebase/connectDB';
+import { readDataFirebase } from '../../firebase/controllerDB';
 
 export const getUserUid = createAsyncThunk('user/getUserUid', async({userUid},{ rejectWithValue })=> {
     try {
@@ -21,16 +22,29 @@ export const getUserUid = createAsyncThunk('user/getUserUid', async({userUid},{ 
     }
 })
 
+export const getArtistFollowByUserUid = createAsyncThunk('user/getArtistFollowByUserUid', 
+    async(_, {getState,dispatch, rejectWithValue}) => {
+        console.log("getArtistFollowByUserUid")
+        const {uid} = getState().user.user;
+        // console.log('userId 29: ',uid)
+        const followArtist = await readDataFirebase(`follows/${uid}`);
+        // console.log("followArtist - 31: ", followArtist);
+        dispatch(setFollow(followArtist));
+    })
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         user: null,
+        follows: null,
         loading: false,
         error: null,
       },
     reducers: {
         setUser: (state, action) => {
             state.user = action.payload;
+        },
+        setFollow: (state, action) => {
+            state.follows = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -51,5 +65,5 @@ const userSlice = createSlice({
         })
     }
 })
-export const { setUser } = userSlice.actions;
+export const { setUser, setFollow } = userSlice.actions;
 export default userSlice.reducer;

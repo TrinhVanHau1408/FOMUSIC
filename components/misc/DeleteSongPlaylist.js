@@ -11,7 +11,7 @@ import { getDataAsyncStorage } from "../../utilities/AsyncStorage";
 
 const heigtScreen = Dimensions.get('window').height;
 
-export default function     DeleteSongPlaylists({ handleNavigator, handleRequestNext,
+export default function DeleteSongPlaylists({ handleNavigator, handleRequestNext,
     height = null,
     title,
     songed = {}

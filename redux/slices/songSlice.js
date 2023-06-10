@@ -74,7 +74,7 @@ export const getHistorySong = createAsyncThunk('song/getHistorySong',
         // console.log(`songIds ${songIds} \\n`);
 
         const dataSong = [];
-        console.log("getHistorySong: ");
+        // console.log("getHistorySong: ");
         for (let songId of songIds) {
 
             // console.log(songId)

@@ -33,7 +33,6 @@ const store = configureStore({
     song: songReducer,
     playlists: playlistsReducer,
     ranking: rankingReducer,
-
     userHistory: userHistoryReducer,
     artist: artistSlice,
     album: albumSlice,

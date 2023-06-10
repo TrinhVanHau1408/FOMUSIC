@@ -1,3 +1,4 @@
+import { DataSnapshot } from "firebase/database";
 
 /**
 * Filter object by field value.
@@ -23,8 +24,23 @@ export const filterObject = (objectFilter, fieldFilter, valueFilter) => {
 * @returns {Array} Array - [ {}, {}, ...].
 */
 export const convertObjectToArray = (object) => {
-    const array = Object.entries(object)
-    .map(([key, val]) => ({key, ...val}))
-    
+    // console.log(object)
+    const array = Object.entries(object).map(([key, val]) => ({key, ...val}))
+   
     return array;
 }
+
+// export const convertDataSnapshotToArray = (dataSnapshot) => {
+//     console.log('convertDataSnapshotToArray')
+//     // const array = [];
+//     // dataSnapshot.val().forEach((childSnapshot) => {
+//     //     const data = {
+//     //         key: childSnapshot,
+//     //     }
+
+//     //     array.push(data);
+//     //   });
+
+//     console.log("data", dataSnapshot.val())
+//     return data;
+// }

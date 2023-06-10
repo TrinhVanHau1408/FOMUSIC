@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
 export default function MyLikeLong({ id, idSongSelected, songName, songImg, artistName, isLike, index, handleLayout, setIdSong, handleLongClick }) {
     const [isLiked, setIsIsLiked] = useState(isLike);
+  
     return (
         <View style={styles.container}>
             <TouchableOpacity
@@ -15,7 +16,7 @@ export default function MyLikeLong({ id, idSongSelected, songName, songImg, arti
                         <Text>{index + 1}</Text>}
                 </View>
                 <View style={styles.imgContainer}>
-                    <Image source={songImg} style={styles.img} />
+                    <Image source={songImg? {uri: songImg}: images.demo} style={styles.img} />
                 </View>
                 <View style={styles.content}>
                     <Text style={styles.songName}>{songName}</Text>
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 22,
         marginVertical: 12,
 
-        // backgroundColor: colors.primary
+       
     },
     stt: {
         marginRight: 22,
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     songName: {
         fontWeight: 'bold',
         fontSize: 17,
+        lineHeight: 20
     },
     artistName: {
         fontSize: 12,

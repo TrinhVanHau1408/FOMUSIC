@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, SafeAreaView, ScrollView, FlatList, Image, TouchableOpacityBase, TouchableOpacity } from 'react-native'
 import HeaderApp from '../components/header/HeaderApp'
-import RowBoxTranfer from '../components/box/RowBoxTranfer'
-import RowBoxTitle from '../components/box/RowBoxTitle';
 import TitleAlbum from '../components/misc/TitleAlbum';
 import SquareAlbum from '../components/misc/SquareAlbum';
 import ControlMusic from '../components/misc/ControlMusic';
 import BoxTranfer from '../components/box/BoxTranfer';
 import { images, icons, colors } from '../constants';
-import TitleText from '../components/forgotPassword.js/TitleText';
-import { getAllPlaylistByUserId } from '../redux/slices/playlistsSlice';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { filterObject } from '../utilities/Object';
-import { Text } from 'react-native-svg';
+
 import { usePlaybackState } from 'react-native-track-player';
 import { getHistorySong } from '../redux/slices/songSlice';
 import { addRankingSongListen, getRankingCurrentWeek } from '../redux/slices/rankingSlice';
-import { setTracks, settracks, setupPlayMusic, togglePlayback } from '../redux/slices/playerSlice';
+
+import { getAllPlaylistByUserId } from '../redux/slices/playlistsSlice';
 const music = [
     {
         name: 'Lovely',
@@ -95,23 +92,26 @@ export default function Home({ navigation }) {
 
     }
     const handleNavigatorPlaying = (id, songs) => {
-        console.log(songs)
+        
 
-            dispatch(setTracks(songs));
-            dispatch(setupPlayMusic());
+            // dispatch(setTracks(songs));
+            // dispatch(setupPlayMusic());
             
-            console.log(ranking)
+            // console.log(ranking)
        
+            // dispatch(getFollowedArtists({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}))
+            // dispatch(getArtistFollowByUserUid());
+            // readDataFirebaseWithChildCondition('songs', 'name', 'baihat1')
        
         // if (!loading && error == null) {
-        //     dispatch(getAllPlaylistByUserId({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
+            dispatch(getAllPlaylistByUserId({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
 
         //     console.log("fillter playlist: ", playlists && filterObject(playlists,'name','Demo'));
         // }
         // console.log("fillter playlist: ", playlists && filterObject(playlists,'name','Demo'));
         // dispatch(getRankingCurrentWeek());
-        // dispatch(filterObject(getAllPlaylistByUserId()))
-        navigation.navigate('Playing');
+        // dispatch(getAllPlaylistByUserId({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}))
+        // navigation.navigate('Playing');
        
     }
 
