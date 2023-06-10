@@ -1,26 +1,19 @@
-import { StyleSheet, Image, Text, View, FlatList, SafeAreaView, Alert } from 'react-native';
+import { StyleSheet, Image, Text, View, FlatList, SafeAreaView, Alert, ScrollView } from 'react-native';
 import HeaderApp from "../components/header/HeaderApp";
 import { colors, icons, images } from "../constants";
+import { format } from 'date-fns';
 
 
-const musics = [
-    {
-        title: 'Lovely',
-        artist: 'Billie Eilish',
-        songImg: images.imgLovely,
-        // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
-        duration: 2 * 60 + 53,
-        id: '1',
-    },
-]
-export default function DetailSong({ navigation }) {
+export default function DetailSong({ navigation, route }) {
+    const { detailSong } = route.params;
+    // console.log(detailSong)
     return (
         <View style={styles.container}>
-            <HeaderApp iconLeft={icons.arrowBack} />
+            <HeaderApp iconLeft={icons.arrowBack} goBack={() => navigation.goBack()} />
             <View>
-                <Image source={images.defaultAvt} style={styles.imgSong}/>
+                <Image source={{ uri: detailSong.artwork }} style={styles.imgSong} />
             </View>
-            <View style={styles.containerContent}>
+            <ScrollView style={styles.containerContent}>
                 {/* <MyTextView 
                 title='Tên bài hát' 
                 text={musics.title} 
@@ -30,7 +23,7 @@ export default function DetailSong({ navigation }) {
                         Tên bài hát
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <Text style={styles.textContent}>{detailSong.name}</Text>
                     </View>
                 </View>
                 <View>
@@ -38,7 +31,7 @@ export default function DetailSong({ navigation }) {
                         Tác giả
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <Text style={styles.textContent}>{detailSong.nameAuthor}</Text>
                     </View>
                 </View>
                 <View>
@@ -46,7 +39,7 @@ export default function DetailSong({ navigation }) {
                         Ca sĩ
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <Text style={styles.textContent}>{detailSong.artist}</Text>
                     </View>
                 </View>
                 <View>
@@ -54,7 +47,7 @@ export default function DetailSong({ navigation }) {
                         Thể loại
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <Text style={styles.textContent}>{detailSong.genre}</Text>
                     </View>
                 </View>
                 <View>
@@ -62,7 +55,7 @@ export default function DetailSong({ navigation }) {
                         Album
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <Text style={styles.textContent}>{detailSong.albumName}</Text>
                     </View>
                 </View>
                 <View>
@@ -70,7 +63,7 @@ export default function DetailSong({ navigation }) {
                         Ngày phát hành
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <Text style={styles.textContent}>{typeof detailSong.releaseAt =='number' ? format(detailSong.releaseAt, 'dd/MM/yyyy') : detailSong.releaseAt}</Text>
                     </View>
                 </View>
                 <View>
@@ -78,7 +71,7 @@ export default function DetailSong({ navigation }) {
                         Nhà sản xuất
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <Text style={styles.textContent}>{detailSong.nameExport}</Text>
                     </View>
                 </View>
                 <View>
@@ -86,11 +79,11 @@ export default function DetailSong({ navigation }) {
                         Lời bài hát
                     </Text>
                     <View style={styles.longtextView}>
-                        <Text style={styles.textContent}>{musics.title}</Text>
+                        <Text style={styles.textContent}>{detailSong.lyrics}</Text>
                     </View>
                 </View>
 
-            </View>
+            </ScrollView>
         </View>
 
     )
@@ -105,7 +98,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '7%',
         // backgroundColor: colors.primary
     },
-    imgSong: 
+    imgSong:
     {
         // flex: 1,
         width: 160,
@@ -120,7 +113,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flex: 1,
         // backgroundColor: colors.black
-        
+        marginBottom: 70,
+
     },
     textView:
     {
@@ -132,7 +126,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderColor: colors.primary,
         borderWidth: 1,
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
+        paddingTop: 8
     },
     longtextView:
     {
@@ -146,14 +141,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         backgroundColor: '#FFFFFF'
     },
-    title: 
+    title:
     {
         marginLeft: '3%',
         marginTop: 10,
         fontFamily: 'Montserrat',
         fontSize: 12,
         fontWeight: '500',
-        colors: '#797979',
+        color: '#797979',
     },
     textContent:
     {
@@ -163,7 +158,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '500',
         color: colors.primary,
-       
-        
-    }, 
+
+
+    },
 })

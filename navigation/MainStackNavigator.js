@@ -36,7 +36,7 @@ import {
 
 import Home3 from "../views/Home3";
 import MyFOMUSIC from "../views/MyFOMUSIC";
-import OptionSong from "../views/OptionSong";
+// import OptionSong from "../views/OptionSong";
 
 const Stack = createNativeStackNavigator();
 const MainStackNavigator = () => (
@@ -78,7 +78,7 @@ const MainStackNavigator = () => (
 
     <Stack.Screen name="Home3" component={Home3} />
     <Stack.Screen name="MyFOMUSIC" component={MyFOMUSIC} /> */}
-    <Stack.Screen name="OptionSong" component={OptionSong}/>
+    {/* <Stack.Screen name="OptionSong" component={OptionSong}/> */}
 
   </Stack.Navigator>
 );

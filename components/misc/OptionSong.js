@@ -1,9 +1,8 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
-import { colors, icons } from '../constants';
-import HeaderApp from '../components/header/HeaderApp';
+import { colors, icons } from '../../constants';
 import { useState } from 'react';
 import Slider from '@react-native-community/slider';
-export default function OptionSong({ navigation, setToggleMore }) {
+export default function OptionSong({ navigation, setToggleMore, options }) {
     // const [toggleMore, setToggleMore] = useState(false);
     const goBack = () => {
         setToggleMore(false);
@@ -11,32 +10,30 @@ export default function OptionSong({ navigation, setToggleMore }) {
     // const handleToggleMore = () => {
     //     setToggleMore(true);
     // }
-    const handleNavigatorDetailSong = () => {
-        navigation.navigate('DetailSong')
-    }
-    const handleNavigatorEditDetaillSong = () => {
-        navigation.navigate('EditDetailSong')
-    }
-    const handleNavigatorDeleteSong = () => {
-        navigation.navigate('DeleteSong')
-    }
     return (
         <View style={styles.containerMore}>
-            {/* <HeaderApp
-                // title={'Playing'}
-                iconLeft={icons.arrowBack}
-                // iconRight={icons.option}
-                goBack={goBack}
-                // handleNavigator={handleToggleMore}
-                /> */}
             <View style={styles.headerContainer}>
-                <TouchableOpacity onPress={() => setToggleMore(false)}>
-                    <Image source={icons.arrowBackBlack} />
+                <TouchableOpacity onPress={() => setToggleMore(false)} style={{ width: '100%', height: '100%' }}>
+
                 </TouchableOpacity>
             </View>
             <View style={styles.contentContainer}>
-                <View style={{ flex: 1 }}>
-                    <TouchableOpacity
+                <View style={{ flex: 1, }}>
+                    {
+                        options.map((value, key) => {
+                            return <TouchableOpacity
+                                style={styles.ButtonContainer}
+                                onPress={value.hanle}
+                                key={key}
+                            >
+                                <Image source={value.icon} />
+                                <Text style={styles.TextMore}>
+                                   {value.title}
+                                </Text>
+                            </TouchableOpacity>
+                        })
+                    }
+                    {/* <TouchableOpacity
                         style={styles.ButtonContainer}
                         onPress={handleNavigatorDetailSong}
                     >
@@ -86,7 +83,7 @@ export default function OptionSong({ navigation, setToggleMore }) {
                         <Text style={styles.TextMore}>
                             Xóa bài hát
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                 </View>
 
@@ -102,12 +99,16 @@ const styles = StyleSheet.create({
         // position: 'relative',
         // backgroundColor: 'rgba(255, 255, 255, 0.7)',
         // backgroundColor: colors.primary
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
 
     },
     headerContainer:
     {
         flex: 2,
-        padding: 15
+        padding: 15,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)'
     },
     contentContainer:
     {
@@ -118,6 +119,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'flex-end',
         // backgroundColor: colors.primary
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
+
     },
     ButtonContainer:
     {
