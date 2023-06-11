@@ -1,27 +1,42 @@
-import { StyleSheet, Image, Text, TextInput, View, FlatList, ToastAndroid, Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, TextInput, View, Modal, ToastAndroid, Alert, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import HeaderApp from "../components/header/HeaderApp";
 import { colors, icons, images } from "../constants";
-import MyInput from '../components/misc/MyInput';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { pick, types, isCancel } from 'react-native-document-picker'
 import { uploadFileStorage } from '../firebase/controllerStorage';
 import { readDataFirebase, writeDataFirebase } from '../firebase/controllerDB';
 import { serverTimestamp } from 'firebase/database'
+import { useDispatch, useSelector } from 'react-redux'
+// import { Picker } from '@react-native-picker/picker';
+import SelectDropdown from 'react-native-select-dropdown'
+import { getAlbum } from '../redux/slices/albumSlice';
+import DatePicker from 'react-native-modern-datepicker'
 
 
 // ToastAndroid.show('Successful', ToastAndroid.SHORT);
+const alltype = ["Bolero", "Rap", "Nhạc Trẻ", "Nhạc Đỏ", "Nhạc EDM", "Nhạc Trịnh"]
 
 export default function EditDetailSong({ navigation }) {
+    const { artist } = useSelector((state) => state.artist)
+    const { album } = useSelector((state) => state.album)
+    const dispatch = useDispatch()
+
+    const today = new Date()
+
+    const [open, setOpen] = useState(false)
+    const [allAlbums, setAllAlbum] = useState([])
+    const [isupLoad, setIsupLoad] = useState(false)
+
     const [imageName, setImageName] = useState()
     const [imageUrl, setImageUrl] = useState()
     const [mp3Url, setMp3Url] = useState()
     const [mp3Name, setMp3Name] = useState()
     const [nameSong, setNameSong] = useState()
     const [nameAuthor, setNameAuthor] = useState()
-    const [nameSinger, setNameSinger] = useState()
-    const [typeSong, setTypeSong] = useState()
+    const [nameSinger, setNameSinger] = useState(artist.name)
+    const [typeSong, setTypeSong] = useState(alltype[0])
     const [albumName, setAlbumName] = useState()
-    const [dayProduce, setDayProduce] = useState()
+    const [dayProduce, setDayProduce] = useState(`${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate() + 1}`)
     const [nameExport, setNameExport] = useState()
     const [lyrics, setLyrics] = useState()
 
@@ -67,7 +82,7 @@ export default function EditDetailSong({ navigation }) {
         }
 
         // upoad lên firebase
-
+        setIsupLoad(true)
         try {
             let urlFirebaseImage = "https://firebasestorage.googleapis.com/v0/b/fomusicapp-12403.appspot.com/o/images%2FdefaultAvt.jpg?alt=media&token=bdbe9c78-be0b-41c7-afa1-d0ebbd193ba9&_gl=1*1fyo95k*_ga*MzgxMzQ1MzAyLjE2ODI1NjYwMjQ.*_ga_CW55HF8NVT*MTY4NjM3NzEyMi40Mi4xLjE2ODYzNzcyMjEuMC4wLjA."
             if (imageUrl) {
@@ -77,7 +92,7 @@ export default function EditDetailSong({ navigation }) {
             }
 
             try {
-                const result = await fetch(imageUrl)
+                const result = await fetch(mp3Url)
                 const blob = await result.blob()
                 const urlFirebaseMp3 = await uploadFileStorage(`songs/${nameSong}`, blob)
 
@@ -93,7 +108,7 @@ export default function EditDetailSong({ navigation }) {
                     genreId: "genre1",
                     lyrics: lyrics,
                     name: nameSong,
-                    releaseAt: serverTimestamp(),
+                    releaseAt: dayProduce,
                     url: urlFirebaseMp3,
                     reactHeart: {},
                     modifyAt: serverTimestamp(),
@@ -121,6 +136,8 @@ export default function EditDetailSong({ navigation }) {
         catch (e) {
             ToastAndroid.show(`Failed: ${e}`, ToastAndroid.SHORT);
         }
+
+        setIsupLoad(false)
 
     }
 
@@ -150,13 +167,6 @@ export default function EditDetailSong({ navigation }) {
             const res = await pick({
                 type: [types.images]
             })
-            // const result = await fetch(res[0].uri)
-            // const blog = await result.blob()
-            // // console.log(blog)
-            // // const file = await RNFS.readFile('content://com.android.providers.media.documents/document/image%3A17', 'base64')
-            // // console.log(file)
-            // await uploadFileStorage(`images/${res[0].name}`, blog)
-
             setImageName(res[0].name)
             setImageUrl(res[0].uri)
         } catch (err) {
@@ -168,6 +178,33 @@ export default function EditDetailSong({ navigation }) {
             }
         }
         console.log("button pressed");
+    }
+
+    const renderIcon = () => {
+        return <Image source={icons.dropdown} />
+    }
+    useEffect(() => {
+        if (!album) {
+            dispatch(getAlbum({}))
+        }
+    }, [])
+
+    useEffect(() => {
+        if (album) {
+            const data = Object.entries(album).map(([key, value]) => {
+                // console.log(key, value)
+                return value.name
+            })
+            setAllAlbum(data)
+            setAlbumName(data[0])
+            // console.log(data)
+        }
+
+    }, [album])
+
+    // console.log(date)
+    const handleChangeDate = (propDate) => {
+        setDayProduce(propDate)
     }
 
     return (
@@ -199,6 +236,7 @@ export default function EditDetailSong({ navigation }) {
                         <TextInput
                             style={styles.textContent}
                             placeholder={"Nhập tên Tác giả"}
+                            value={nameAuthor}
                             onChangeText={text => setNameAuthor(text)}
                         />
                     </View>
@@ -209,6 +247,7 @@ export default function EditDetailSong({ navigation }) {
                     </Text>
                     <View style={styles.textView}>
                         <TextInput style={styles.textContent}
+                            value={nameSinger}
                             placeholder={"Nhập tên ca sĩ"}
                             onChangeText={text => setNameSinger(text)} />
                     </View>
@@ -217,20 +256,79 @@ export default function EditDetailSong({ navigation }) {
                     <Text style={styles.title}>
                         Thể loại
                     </Text>
-                    <View style={styles.textView}>
-                        <TextInput style={styles.textContent}
+                    <View style={styles.PickerView}>
+                        {/* <TextInput style={styles.textContent}
                             placeholder={"Nhập tên thể loại"}
-                            onChangeText={text => setTypeSong(text)} />
+                            onChangeText={text => setTypeSong(text)} /> */}
+                        {/* <Picker
+                            selectedValue={typeSong}
+                            style={styles.Picker}
+                            onValueChange={(itemValue, itemIndex) => setTypeSong(itemValue)}
+                        >
+                            <Picker.Item style={styles.pickerItem} label="Rap" value="Rap" />
+                            <Picker.Item style={styles.pickerItem} label="Bolero" value="Boloro" />
+
+                        </Picker> */}
+                        <SelectDropdown
+                            data={alltype}
+                            defaultValue={typeSong}
+                            defaultIndex={0}
+                            value={typeSong}
+                            onSelect={(selectedItem, index) => {
+                                setTypeSong(selectedItem)
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                return selectedItem
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item
+                            }}
+                            buttonStyle={styles.PickerButton}
+                            buttonTextStyle={styles.PickerButtonText}
+                            dropdownStyle={styles.dropdownStyle}
+                            renderDropdownIcon={renderIcon}
+                        />
+
                     </View>
                 </View>
                 <View>
                     <Text style={styles.title}>
                         Album
                     </Text>
-                    <View style={styles.textView}>
-                        <TextInput style={styles.textContent}
+                    <View style={styles.PickerView}>
+
+                        {/* <TextInput style={styles.textContent}
                             placeholder={"Nhập tên Album"}
-                            onChangeText={text => setAlbumName(text)} />
+                            value={albumName}
+                            onChangeText={text => setAlbumName(text)} /> */}
+                        <SelectDropdown
+                            data={allAlbums}
+                            defaultValue={albumName}
+                            defaultIndex={0}
+                            value={albumName}
+                            onSelect={(selectedItem, index) => {
+                                setAlbumName(selectedItem)
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                return selectedItem
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item
+                            }}
+                            buttonStyle={styles.PickerButton}
+                            buttonTextStyle={styles.PickerButtonText}
+                            dropdownStyle={styles.dropdownStyle}
+                            renderDropdownIcon={renderIcon}
+                        />
+
                     </View>
                 </View>
                 <View>
@@ -238,9 +336,46 @@ export default function EditDetailSong({ navigation }) {
                         Ngày phát hành
                     </Text>
                     <View style={styles.textView}>
-                        <TextInput style={styles.textContent}
+                        {/* <TextInput style={styles.textContent}
+                            value={dayProduce}
                             placeholder={"Nhập ngày phát hành"}
-                            onChangeText={text => setDayProduce(text)} />
+                            onChangeText={text => setDayProduce(text)} /> */}
+                        <TouchableOpacity onPress={() => setOpen(true)}
+                            style={{
+                                width: '100%', height: '100%',
+                            }}>
+                            <View style={{
+                                width: '100%', height: '100%',
+                                display: 'flex', justifyContent: 'space-between',
+                                flexDirection: 'row',
+                                alignContent: 'center',
+                                alignItems: 'center',
+                                paddingLeft: 15,
+                                paddingRight: 15
+                            }}
+                            >
+                                <Text style={{ color: colors.primary, fontSize: 15, }}>{dayProduce}</Text>
+                                <Image source={icons.schedule} />
+                            </View>
+                        </TouchableOpacity>
+                        <Modal animationType='slide'
+                            transparent={true}
+                            visible={open}>
+                            <View style={styles.centeredView} >
+                                <View style={styles.modalView}>
+                                    <DatePicker
+                                        mode='calendar'
+                                        selected={dayProduce}
+                                        onDateChange={handleChangeDate}
+                                    />
+                                    <TouchableOpacity onPress={() => setOpen(false)}>
+                                        <Text>Đóng</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            </View>
+                        </Modal>
+
                     </View>
                 </View>
                 <View>
@@ -249,6 +384,7 @@ export default function EditDetailSong({ navigation }) {
                     </Text>
                     <View style={styles.textView}>
                         <TextInput style={styles.textContent}
+                            value={nameExport}
                             placeholder={"Nhập nhà sản xuất"}
                             onChangeText={text => setNameExport(text)} />
                     </View>
@@ -286,13 +422,25 @@ export default function EditDetailSong({ navigation }) {
                     </Text>
                     <View style={styles.longtextView}>
                         <TextInput style={styles.textContent}
+                            value={lyrics}
                             placeholder={"Nhập lời bài hát"}
                             onChangeText={text => setLyrics(text)} />
                     </View>
                 </View>
 
-            </ScrollView>
-        </View>
+            </ScrollView >
+            {isupLoad && <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                backgroundColor:'rgba(255, 255, 255, 0.6)',
+
+            }}>
+                <ActivityIndicator size="large" color="blue" />
+            </View>}
+        </View >
 
     )
 
@@ -367,7 +515,66 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: colors.primary,
         // backgroundColor: colors.black
-
-
     },
+    PickerView:
+    {
+        display: 'flex',
+        // alignItems:'flex-start',
+        // alignContent: 'center',
+        width: '100%',
+        height: 38,
+        // borderRadius: 20,
+        // borderColor: colors.primary,
+        // borderWidth: 1,
+        backgroundColor: '0xffffff',
+        // justifyContent: 'center',
+        // alignItems:'flex-start'
+    },
+    PickerButton:
+    {
+        width: '100%',
+        height: '100%',
+        alignSelf: 'flex-start',
+        backgroundColor: 'rgba(255, 255, 255,0.1)',
+        borderRadius: 20,
+        borderColor: colors.primary,
+        borderWidth: 1,
+    },
+    PickerButtonText: {
+        textAlign: 'left',
+        color: colors.primary
+    },
+    pickerItem: {
+        fontSize: 16,
+        color: colors.UnNavagate
+    },
+    dropdownStyle: {
+        // backgroundColor: colors.primary
+        borderRadius: 20,
+    },
+    centeredView:
+    {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22
+    },
+    modalView:
+    {
+        margin: 20,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 20,
+        width: '90%',
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 5
+    }
+
 })

@@ -57,5 +57,7 @@ export default {
     frame902: require('../assets/images/frame-902.png'),
     blackEyeOpen: require('../assets/images/black-eye-open.png'),
     blackEyeClose: require('../assets/images/black-eye-close.png'),
-    blackEditProfile: require('../assets/images/black-edit-profile.png')
+    blackEditProfile: require('../assets/images/black-edit-profile.png'),
+    dropdown: require('../assets/images/dropdown.png'),
+    schedule: require('../assets/images/Schedule.png'),
 }
