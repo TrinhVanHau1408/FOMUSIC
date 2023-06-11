@@ -12,7 +12,8 @@ import {
   signInWithRedirect,
   GoogleAuthProvider,
   sendEmailVerification,
-  signOut
+  signOut,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import {
   getDatabase,
@@ -69,6 +70,7 @@ export {
   signInWithRedirect,
   sendEmailVerification,
   signOut,
+  sendPasswordResetEmail,
   firebaseStorage,
   firebaseStorageRef,
   orderByChild, equalTo, once,value,query,limitToLast, limitToFirst, orderByValue

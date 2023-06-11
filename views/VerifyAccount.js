@@ -7,7 +7,7 @@ import MyButton from '../components/misc/MyButton';
 import TitleText from '../components/forgotPassword.js/TitleText';
 export default function VerifyAccount({navigation}) {
     const handleNavigatorNewPassword = () => {
-        navigation.navigate('NewPassword');
+        navigation.navigate('Login');
     }
 
     const goBack = () => {
@@ -19,10 +19,11 @@ export default function VerifyAccount({navigation}) {
                 <HeaderSign title={'Verify your account'} goBack={goBack} />
             </View>
             <View style={styles.contentContainer}>
-                <TitleText text={'We just sent a six-digit code to your Email Enter the code below confirm your account'} />
-                <MyInput icon={icons.lock} placeholder={'Activation code'} />
+                <TitleText text={'We just sent a link to your Email, Check your mail please!'} />
+                <TitleText text={'After reset your password, you can login as usual!'} />
+                {/* <MyInput icon={icons.lock} placeholder={'Activation code'} /> */}
                 <View style={{ marginTop: 36 }}>
-                    <MyButton title={'Active'}  handleNavigator={handleNavigatorNewPassword}/>
+                    <MyButton title={'I checked my email!'}  handleNavigator={handleNavigatorNewPassword}/>
                 </View>
             </View>
         </ScrollView>
