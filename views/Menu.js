@@ -14,7 +14,7 @@ import { logOut } from '../redux/slices/authSlice';
 import { getArtistByUserId } from '../redux/slices/artistSlice'
 
 
-export default function Menu({ navigation }) {
+export default function Menu({ navigation, route }) {
     // const navigate = useNavigation();
     const dispatch = useDispatch();
     const { loading, error } = useSelector((state) => state.auth);
@@ -35,7 +35,7 @@ export default function Menu({ navigation }) {
     }
     const handleNavigatorUpload = () => {
         if (artist) {
-            navigation.navigate('Upload')
+            navigation.navigate('Upload', { previousScreen: route.name })
         }
         else {
             Alert.alert("Bạn không phải là nghệ sĩ")

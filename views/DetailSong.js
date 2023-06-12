@@ -23,7 +23,7 @@ export default function DetailSong({ navigation, route }) {
                         Tên bài hát
                     </Text>
                     <View style={styles.textView}>
-                        <Text style={styles.textContent}>{detailSong.name}</Text>
+                        <Text style={styles.textContent}>{detailSong.title}</Text>
                     </View>
                 </View>
                 <View>

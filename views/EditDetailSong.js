@@ -11,12 +11,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import SelectDropdown from 'react-native-select-dropdown'
 import { getAlbum } from '../redux/slices/albumSlice';
 import DatePicker from 'react-native-modern-datepicker'
+import { readDataFirebaseWithChildCondition } from '../firebase/controllerDB';
 
 
 // ToastAndroid.show('Successful', ToastAndroid.SHORT);
 const alltype = ["Bolero", "Rap", "Nhạc Trẻ", "Nhạc Đỏ", "Nhạc EDM", "Nhạc Trịnh"]
 export default function EditDetailSong({ navigation, route }) {
-    const { id, songdetails } = route.params
+    const { previousScreen, id, songdetails } = route.params
     // console.log(id, songdetails)
     const { artist } = useSelector((state) => state.artist)
     const { album } = useSelector((state) => state.album)
@@ -26,12 +27,14 @@ export default function EditDetailSong({ navigation, route }) {
     const [open, setOpen] = useState(false)
     const [allAlbums, setAllAlbum] = useState([])
     const [isupLoad, setIsupLoad] = useState(false)
+    const [allkeys, setAllKeys] = useState([])
 
+    const [keyAlbum, setKeyAlbum] = useState(songdetails.albumId)
     const [imageName, setImageName] = useState()
     const [imageUrl, setImageUrl] = useState(songdetails.artwork)
     const [mp3Url, setMp3Url] = useState(songdetails.url)
-    const [mp3Name, setMp3Name] = useState(songdetails.name)
-    const [nameSong, setNameSong] = useState(songdetails.name)
+    const [mp3Name, setMp3Name] = useState(songdetails.title)
+    const [nameSong, setNameSong] = useState(songdetails.title)
     const [nameAuthor, setNameAuthor] = useState(songdetails.nameAuthor)
     const [nameSinger, setNameSinger] = useState(songdetails.artist)
     const [typeSong, setTypeSong] = useState(songdetails.genre)
@@ -46,6 +49,23 @@ export default function EditDetailSong({ navigation, route }) {
         // upoad lên firebase
         setIsupLoad(true)
         try {
+
+            if (nameSong != songdetails.title) {
+                try {
+                    const rep = await readDataFirebaseWithChildCondition('songs', 'title', nameSong)
+                    if (rep) {
+                        ToastAndroid.show(`Failed: ${nameSong} is existed`, ToastAndroid.SHORT);
+                        setIsupLoad(false)
+                        return
+                    }
+                }
+                catch (err) {
+                    ToastAndroid.show(`Failed`, ToastAndroid.SHORT);
+                    setIsupLoad(false)
+                    return
+                }
+            }
+
             let urlFirebaseImage = songdetails.artwork
             if (imageUrl != songdetails.artwork) {
 
@@ -73,19 +93,28 @@ export default function EditDetailSong({ navigation, route }) {
                     genre: typeSong,
                     genreId: "genre1",
                     lyrics: lyrics,
-                    name: nameSong,
+                    title: nameSong,
                     releaseAt: dayProduce,
                     url: urlFirebaseMp3,
                     reactHeart: {},
                     modifyAt: serverTimestamp(),
                     nameAuthor: nameAuthor,
-                    nameExport: nameExport
+                    nameExport: nameExport,
+                    albumId: keyAlbum,
                 }
 
                 try {
                     const rep = await writeDataFirebase('songs', dataUpload, id)
                     if (rep) {
-                        ToastAndroid.show(`Successful`, ToastAndroid.SHORT);
+                        const rep2 = await writeDataFirebase(`albums/${keyAlbum}/songIds`, "", id)
+                        if (rep2) {
+                            ToastAndroid.show(`Successful`, ToastAndroid.SHORT);
+
+                            navigation.navigate(previousScreen, { state: id })
+                        }
+                        else {
+                            ToastAndroid.show(`Failed`, ToastAndroid.SHORT)
+                        }
                     } else {
                         ToastAndroid.show(`Failed`, ToastAndroid.SHORT);
                     }
@@ -164,16 +193,31 @@ export default function EditDetailSong({ navigation, route }) {
 
     useEffect(() => {
         if (album) {
-            const data = Object.entries(album).map(([key, value]) => {
-                // console.log(key, value)
-                return value.name
+            var data_name = []
+            var data_key = []
+            // var index = null
+            Object.entries(album).map(([key, value]) => {
+                data_name = [...data_name, value.name]
+                data_key = [...data_key, key]
             })
-            setAllAlbum(data)
+            setAllAlbum(data_name)
+            setAllKeys(data_key)
+
             setAlbumName(songdetails.albumName)
-            // console.log(data)
+            // setKeyAlbum(data_key[0])
         }
 
     }, [album])
+
+    // useEffect(()=>{
+    //     const readAllSongs = async()=>{
+    //         const rep = await readDataFirebaseWithChildCondition("songs","title", "Lộn xộn 3")
+    //         console.log(rep)
+    //     }
+    //     readAllSongs()
+    // })
+
+    // console.log()
 
     // console.log(date)
     const handleChangeDate = (propDate) => {
@@ -282,9 +326,10 @@ export default function EditDetailSong({ navigation, route }) {
                             data={allAlbums}
                             defaultValue={albumName}
                             // defaultIndex={0}
-                            value={albumName}
+                            // value={albumName}
                             onSelect={(selectedItem, index) => {
                                 setAlbumName(selectedItem)
+                                setKeyAlbum(allkeys[index])
                             }}
                             buttonTextAfterSelection={(selectedItem, index) => {
                                 // text represented after item is selected
