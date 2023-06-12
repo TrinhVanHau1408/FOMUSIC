@@ -111,6 +111,13 @@ export default function PopupCreateNewPlaylist({ isVisiblePopup, isCreatNewPlayl
         }
 
     }
+
+    const handleOpressOut = () => {
+        setIsVisiblePopup(false);
+        setNamNewPlaylist("");
+        setDescriptionNewPlaylist("");
+        setImgUrlNewPlaylist("");
+    }
     return (
         <Modal
             animationType="slide"
@@ -120,7 +127,7 @@ export default function PopupCreateNewPlaylist({ isVisiblePopup, isCreatNewPlayl
         >
 
             <TouchableWithoutFeedback
-                onPressOut={() => setIsVisiblePopup(false)}>
+                onPressOut={handleOpressOut}>
                 <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <View style={[styles.container]}>
                         <View style={{ marginTop: 5, marginLeft: 15, marginRight: 15 }}>
@@ -144,7 +151,7 @@ export default function PopupCreateNewPlaylist({ isVisiblePopup, isCreatNewPlayl
                         </View>
                         <View style={{ marginLeft: 35, marginRight: 35 }}>
                             <TouchableOpacity style={{
-                                backgroundColor: 'rgba(0, 0, 255,0.6)',
+                                // backgroundColor: 'rgba(0, 0, 255,0.6)',
                                 borderRadius: 20, display: 'flex', justifyContent: 'center',
                                 flexDirection: 'row',
                                 alignItems: 'center',
@@ -153,16 +160,30 @@ export default function PopupCreateNewPlaylist({ isVisiblePopup, isCreatNewPlayl
                             }}
                                 onPress={hanleUploadImg}
                             >
-                                {
-                                    (imgUrlNewPlaylist != "") && <Image source={{ uri: imgUrlNewPlaylist }} style={{ height: 40, width: 40, marginRight: 20 }} />
-                                }
-                                <Text style={{ fontSize: 17, color: 'white', fontWeight: 'bold' }}>{imgNameNewPlaylist ? imgNameNewPlaylist : "Hình ảnh"}</Text>
+                                <View style={{display: 'flex', justifyContent: 'center', position: 'relative'}}>
+                                    {
+                                        <Image source={imgUrlNewPlaylist ? { uri: imgUrlNewPlaylist } : icons.cameraAddPhoto} style={imgUrlNewPlaylist ? { height: 150, width: 150, borderRadius: 20 } : { height: 60, width: 60 }} />
+                                    }
+                                    {
+                                        imgUrlNewPlaylist && <View style={{height: 150, width: 150, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                            <Image source={icons.cameraEdit} style={{ height: 60, width: 60,  }} />
+                                        </View>
+
+                                    }
+                                </View>
+                                {/* <Text style={{ fontSize: 17, color: 'white', fontWeight: 'bold' }}>{imgNameNewPlaylist ? imgNameNewPlaylist : "Hình ảnh"}</Text> */}
                             </TouchableOpacity>
                         </View>
 
-                        <View >
-                            <MyButton title="Tạo playlist" handleButton={handleCreateNewPlaylist} />
-                            <MyButton title="Chọn thêm nhạc" handleButton={handleMovePickSong} />
+                        <View style={styles.optionContainer}>
+                            {/* <MyButton title="Tạo playlist" handleButton={handleCreateNewPlaylist} />
+                            <MyButton title="Chọn thêm nhạc" handleButton={handleMovePickSong} /> */}
+                            <TouchableOpacity style={styles.optionCreateNew} onPress={handleCreateNewPlaylist} >
+                                <Text style={styles.textYes}>Tạo mới</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionAddSong} onPress={handleMovePickSong} >
+                                <Text style={styles.textNo}>Thêm nhạc</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={{ flex: 1, height: 10 }}></View>
                     </View>
@@ -190,5 +211,48 @@ const styles = StyleSheet.create({
         margin: 20,
         display: 'flex',
         flexDirection: 'row'
-    }
+    },
+    optionContainer:
+    {
+        display: 'flex',
+        flexDirection: 'row',
+        width: 300,
+        alignSelf: 'center',
+        marginTop: 20,
+        justifyContent: 'space-between',
+        // backgroundColor: colors.primary
+
+    },
+    optionCreateNew:
+    {
+        paddingHorizontal: 15,
+        borderRadius: 30,
+        backgroundColor: colors.primary,
+
+    },
+    optionAddSong:
+    {
+        paddingHorizontal: 15,
+        borderRadius: 30,
+        borderWidth: 1,
+        borderColor: colors.primary,
+    },
+    textYes:
+    {
+        fontFamily: 'Baloo',
+        fontWeight: 'bold',
+        fontSize: 18,
+        lineHeight: 45,
+        alignSelf: 'center',
+        color: '#ffffff',
+    },
+    textNo:
+    {
+        fontFamily: 'Baloo',
+        fontWeight: 'bold',
+        fontSize: 18,
+        lineHeight: 45,
+        alignSelf: 'center',
+        color: colors.primary,
+    },
 });
