@@ -211,10 +211,28 @@ export default function EditDetailSong({ navigation }) {
         <View style={styles.container}>
             <HeaderApp goBack={() => { navigation.goBack() }} handleNavigator={onlickUpload} iconLeft={icons.arrowBack} iconRight={icons.save} />
 
-            <ScrollView style={styles.containerContent}>
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.containerContent}>
                 <View>
-                    <TouchableOpacity onPress={selectFileImage}>
-                        <Image source={imageUrl ? { uri: imageUrl } : images.defaultAvt} style={styles.imgSong} />
+                    <TouchableOpacity style={{
+                                // backgroundColor: 'rgba(0, 0, 255,0.6)',
+                                borderRadius: 20, display: 'flex', justifyContent: 'center',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                padding: 10,
+
+                            }} onPress={selectFileImage}>
+                       
+                        <View style={{display: 'flex', justifyContent: 'center', position: 'relative'}}>
+                                    {
+                                        <Image source={imageUrl ? { uri: imageUrl } : icons.cameraAddPhoto} style={imageUrl ? { height: 150, width: 150, borderRadius: 20 } : { height: 60, width: 60 }} />
+                                    }
+                                    {
+                                        imageUrl && <View style={{height: 150, width: 150, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                            <Image source={icons.cameraEdit} style={{ height: 60, width: 60,  }} />
+                                        </View>
+
+                                    }
+                                </View>
                     </TouchableOpacity>
                 </View>
                 <View>
@@ -406,12 +424,12 @@ export default function EditDetailSong({ navigation }) {
                                 borderColor: colors.primary,
                                 borderWidth: 1,
                                 backgroundColor: '0xffffff',
-                                paddingLeft: 20,
+                                // paddingLeft: 20,
                                 paddingTop: 5,
                                 justifyContent: 'space-between'
                             }
                         }>
-                            <Text style={[styles.textContent, { paddingTop: 2 }]}>{mp3Name}</Text>
+                            <Text style={[styles.textContent, { paddingTop: 2 }]}>{mp3Name?mp3Name:'Chọn nhạc'}</Text>
                             <Image source={icons.upload} style={{ height: 25, marginRight: 10 }} />
                         </View>
                     </TouchableOpacity>
@@ -423,6 +441,8 @@ export default function EditDetailSong({ navigation }) {
                     <View style={styles.longtextView}>
                         <TextInput style={styles.textContent}
                             value={lyrics}
+                            multiline={true}
+                            numberOfLines={4}
                             placeholder={"Nhập lời bài hát"}
                             onChangeText={text => setLyrics(text)} />
                     </View>
@@ -479,7 +499,7 @@ const styles = StyleSheet.create({
         // alignItems:'flex-start',
         alignContent: 'center',
         width: '100%',
-        height: 38,
+        height: 40,
         borderRadius: 20,
         borderColor: colors.primary,
         borderWidth: 1,
