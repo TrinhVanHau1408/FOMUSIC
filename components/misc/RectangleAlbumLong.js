@@ -6,7 +6,7 @@ export default function RectangleAlbumLong(props) {
     return (
         <View style={[styles.container, (isPlaylist && type===2) && styles.container1]}>
             <TouchableOpacity onPress={() => handleNavigator(id)} onLongPress={() => handleLongPress(id)}>
-                <Image source={img ?{uri : img}  : images.demo} style={[styles.sizeImg1, type===2? styles.imgBorderNoColor : styles.img]} />
+                <Image source={img ?{uri : img} : images.demo} style={[styles.sizeImg1, type===2? styles.imgBorderNoColor : styles.img]} />
                 <Text style={[styles.textName, isPlaylist && styles.textNormal, isDetailPlaylist && styles.marginTop]}>{name}</Text>
             </TouchableOpacity>
         </View>

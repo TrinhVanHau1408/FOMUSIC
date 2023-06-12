@@ -75,7 +75,7 @@ const filterSongs = [
         "url": "https://firebasestorage.googleapis.com/v0/b/fomusicapp-12403.appspot.com/o/images%2FThinhSuy.jpeg?alt=media&token=c242b17e-9992-4ac4-bbb2-bb7548c8b579"
     }
 ]
-export default function PopupAddSong({ playlist, infoImg, setMySongPlaylist, isVisiblePopup, setIsVisiblePopup, handleGoBackPopup }) {
+export default function PopupAddSong({ playlist, title, infoImg, setMySongPlaylist, isVisiblePopup, setIsVisiblePopup, handleGoBackPopup }) {
 
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user)
@@ -192,132 +192,138 @@ export default function PopupAddSong({ playlist, infoImg, setMySongPlaylist, isV
     }
 
 
-const addSongInPlaylist = async () => {
-    const objSongIdPicks = songIdPicks.reduce(function (acc, value) {
-        acc[value] = "";
-        return acc;
-    }, {});
+    const addSongInPlaylist = async () => {
+        const objSongIdPicks = songIdPicks.reduce(function (acc, value) {
+            acc[value] = "";
+            return acc;
+        }, {});
 
-    const dataSongs = { ...playlist.songs, ...objSongIdPicks }
-    console.log('songIdPicks handleAdd 134', dataSongs)
+        const dataSongs = { ...playlist.songs, ...objSongIdPicks }
+        console.log('songIdPicks handleAdd 134', dataSongs)
 
-    try {
-        const resAddSong = await writeDataFirebase(`playlists/${key}`, dataSongs, 'songs')
+        try {
+            const resAddSong = await writeDataFirebase(`playlists/${key}`, dataSongs, 'songs')
 
-        if (resAddSong) {
+            if (resAddSong) {
 
-            console.log("handle add song")
-            let indexPlaylist = -1;
+                console.log("handle add song")
+                let indexPlaylist = -1;
 
-            const updatedDataArray = playlists.map((obj, index) => {
-                // console.log("obj", obj)
-                if (obj.key === key) {
-                    indexPlaylist = index;
-                    return {
-                        ...obj,
-                        songs: dataSongs
-                    };
-                }
-                return obj;
-            });
-            console.log("handle add song")
+                const updatedDataArray = playlists.map((obj, index) => {
+                    // console.log("obj", obj)
+                    if (obj.key === key) {
+                        indexPlaylist = index;
+                        return {
+                            ...obj,
+                            songs: dataSongs
+                        };
+                    }
+                    return obj;
+                });
+                console.log("handle add song")
 
-            console.log('dispatch(setPlayLists', updatedDataArray[indexPlaylist])
+                console.log('dispatch(setPlayLists', updatedDataArray[indexPlaylist])
 
-            setMySongPlaylist(updatedDataArray[indexPlaylist])
-            dispatch(setPlayLists(updatedDataArray))
-            ToastAndroid.show('Successful', ToastAndroid.SHORT);
-            setIsVisiblePopup(false)
+                setMySongPlaylist(updatedDataArray[indexPlaylist])
+                dispatch(setPlayLists(updatedDataArray))
+                ToastAndroid.show('Successful', ToastAndroid.SHORT);
+                setIsVisiblePopup(false)
+            }
+            else {
+                ToastAndroid.show('Failed', ToastAndroid.SHORT);
+            }
         }
-        else {
+        catch (error) {
+            console.log(error)
             ToastAndroid.show('Failed', ToastAndroid.SHORT);
         }
     }
-    catch (error) {
-        console.log(error)
-        ToastAndroid.show('Failed', ToastAndroid.SHORT);
-    }
-}
 
-const handleCreateNewPlaylist = async () => {
-    // Xử lý ảnh
-    // Nếu có chọn ảnh
+    const handleCreateNewPlaylist = async () => {
+        // Xử lý ảnh
+        // Nếu có chọn ảnh
 
-    console.log("key:, ", key)
-    if (key === undefined) {
-        createNewPlaylistWithSong();
-    } else {
-        addSongInPlaylist();
+        console.log("key:, ", key)
+        if (key === undefined) {
+            createNewPlaylistWithSong();
+        } else {
+            addSongInPlaylist();
+        }
+
+
     }
 
+    return (
 
-}
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isVisiblePopup}
 
-return (
+        >
 
-    <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isVisiblePopup}
-
-    >
-
-        <TouchableWithoutFeedback
-            onPressOut={() => setIsVisiblePopup(false)}>
-            <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 15, marginRight: 15 }}>
-                <View style={styles.container}>
-                    <View style={{ marginLeft: 15 }}>
-                        {handleGoBackPopup && <TouchableOpacity onPress={handleGoBackPopup}>
-                            <Image source={icons.arrowBack} />
-                        </TouchableOpacity>}
-                        <View>
-                            <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>Demo</Text>
+            <TouchableWithoutFeedback
+                onPressOut={() => setIsVisiblePopup(false)}>
+                <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 15, marginRight: 15 }}>
+                    <View style={styles.container}>
+                        <View style={{ marginLeft: 15 }}>
+                            {handleGoBackPopup && <TouchableOpacity onPress={handleGoBackPopup}>
+                                <Image source={icons.arrowBack} />
+                            </TouchableOpacity>}
+                            <View>
+                                <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>{playlist.name}</Text>
+                            </View>
+                            {/* <View ><Text style={{ textAlign: 'center' }}>Mô</Text></View> */}
                         </View>
-                        <View ><Text style={{ textAlign: 'center' }}>Mô</Text></View>
-                    </View>
-                    <View style={{ marginTop: 5 }}>
-                        <MyInput placeholder={"Search"} icon={icons.search} setState={setInputSearch} valueState={inputSearch} />
-                    </View>
+                        <View style={{ marginTop: 5 }}>
+                            <MyInput placeholder={"Search"} icon={icons.search} setState={setInputSearch} valueState={inputSearch} />
+                        </View>
 
-                    {filterSong ?
-                        <FlatList
-                            style={{ marginTop: 28, marginBottom: 15, height: 275 }}
-                            data={filterSong}
-                            renderItem={({ item, index }) => {
-                                if (item) {
-                                    return (<MyAdd
-                                        songId={item.key}
-                                        songName={item.name}
-                                        songImg={item.artwork}
-                                        artistName={item.artist}
-                                        songIdPicks={songIdPicks}
-                                        handleAdd={handlePickSong}
-                                    />)
-                                }
-                            }}
-                            keyExtractor={(item, index) => index}
-                            showsVerticalScrollIndicator={false}
-                        /> :
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator size="large" color="blue" />
-                        </View>}
+                        {filterSong ?
+                            <FlatList
+                                style={{ marginTop: 28, marginBottom: 15, height: 275 }}
+                                data={filterSong}
+                                renderItem={({ item, index }) => {
+                                    if (item) {
+                                        return (<MyAdd
+                                            songId={item.key}
+                                            songName={item.name}
+                                            songImg={item.artwork}
+                                            artistName={item.artist}
+                                            songIdPicks={songIdPicks}
+                                            handleAdd={handlePickSong}
+                                        />)
+                                    }
+                                }}
+                                keyExtractor={(item, index) => index}
+                                showsVerticalScrollIndicator={false}
+                            /> :
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <ActivityIndicator size="large" color="blue" />
+                            </View>}
 
-                    {/* <View style={{ height: 50, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}> */}
-                    {/* <TouchableOpacity style={{ padding: 10, backgroundColor: colors.primary, borderRadius: 10 }}>
+                        {/* <View style={{ height: 50, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}> */}
+                        {/* <TouchableOpacity style={{ padding: 10, backgroundColor: colors.primary, borderRadius: 10 }}>
                                 <Text style={{ textAlign: 'center', fontSize: 20, color: 'white' }}>title</Text>
                             </TouchableOpacity> */}
 
-                    <MyButton title={'Tạo playlist'} handleButton={handleCreateNewPlaylist} />
-                    {/* </View> */}
-                    <View style={{ flex: 1, height: 15 }}></View>
+                        {/* <MyButton title={'Tạo playlist'} handleButton={handleCreateNewPlaylist} /> */}
+                        <View style={styles.optionContainer}>
+                        <TouchableOpacity style={styles.optionButton} onPress={handleCreateNewPlaylist} >
+                            <Text style={styles.textButton}>{title}</Text>
+                        </TouchableOpacity>
+                        </View>
+                        
+                        {/* </View> */}
+                        <View style={{ flex: 1, height: 15 }}></View>
+                    </View>
                 </View>
-            </View>
 
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
 
-    </Modal>
+        </Modal>
 
-)
+    )
 }
 
 const styles = StyleSheet.create({
@@ -336,5 +342,30 @@ const styles = StyleSheet.create({
         margin: 20,
         display: 'flex',
         flexDirection: 'row'
-    }
+    },optionContainer: 
+    {
+        display: 'flex',
+        justifyContent: 'center',
+        
+        alignSelf:'center',
+        marginTop: 20,
+        justifyContent: 'space-between',
+        // backgroundColor: colors.primary
+
+    },
+    optionButton:
+    {
+        paddingHorizontal: 15,
+        borderRadius: 30,
+        backgroundColor: colors.primary,
+
+    }, textButton:
+    {
+        fontFamily: 'Baloo',
+        fontWeight: 'bold',
+        fontSize: 18,
+        lineHeight: 45,
+        alignSelf: 'center',
+        color: '#ffffff',
+    },
 });

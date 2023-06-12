@@ -13,14 +13,14 @@ const getUrl = async (path) => {
 
 const uploadFileStorage = async (pathFireBase, file) => {
     try {
-        const fileRef = await firebaseStorageRef(firebaseStorage, pathFireBase)
+        const fileRef = firebaseStorageRef(firebaseStorage, pathFireBase)
         const rep = await uploadBytes(fileRef, file)
         const url = await getDownloadURL(fileRef)
         return url
     }
     catch (error) {
         console.log("ERROR", error)
-        return false
+        return null
     }
 
 }

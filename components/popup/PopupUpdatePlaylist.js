@@ -1,15 +1,17 @@
 import { View, Text, Modal, TouchableWithoutFeedback, FlatList, StyleSheet, Image, TouchableOpacity, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { colors, icons } from '../../constants'
+import { pick, types, isCancel } from 'react-native-document-picker'
+import { colors, icons, images } from '../../constants'
 import MyInput from '../misc/MyInput'
 import MyButton from '../misc/MyButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { serverTimestamp } from 'firebase/database';
-import { deleteDataFirebase, updateDataPlaylistsFirebase } from '../../firebase/controllerDB';
+import { updateDataFirebase, } from '../../firebase/controllerDB';
 import { getAllPlaylistByUserId } from '../../redux/slices/playlistsSlice';
+import { uploadFileStorage } from '../../firebase/controllerStorage'
 export default function PopupUpdatePlaylist({ isVisiblePopup, setIsVisiblePopup, playlistSeclected }) {
     const dispatch = useDispatch();
-    const {user} = useSelector((state) => state.user)
+    const { user } = useSelector((state) => state.user)
     const { playlists } = useSelector((state) => state.playlists)
     const { key, name, description, imageUrl } = playlistSeclected;
     const [namePlayist, setNamePlaylist] = useState('');
@@ -17,7 +19,7 @@ export default function PopupUpdatePlaylist({ isVisiblePopup, setIsVisiblePopup,
     const [imgUrl, setImgeUrl] = useState('')
     const [imgUrlNewPlaylist, setImgUrlNewPlaylist] = useState('');
     const [imgNameNewPlaylist, setImgNameNewPlaylist] = useState('')
-
+    // console.log('playlistSeclected', playlistSeclected)
     useEffect(() => {
 
         if (playlistSeclected) {
@@ -25,32 +27,48 @@ export default function PopupUpdatePlaylist({ isVisiblePopup, setIsVisiblePopup,
             setDescriptionPlaylist(description);
             setImgeUrl(imageUrl);
         }
-    }, [playlistSeclected])
+    }, [playlists, playlistSeclected])
 
 
     const handleUpdatePlaylist = async () => {
-        const checkNameExist = playlists.find(({ name }) => name === namePlayist)
+
+        let checkNameExist = null
+
+        if (namePlayist !== name) {
+            checkNameExist = playlists.find(({ name }) => name === namePlayist)
+        }
+
         if (namePlayist != '') {
             console.log('checkNameExist', checkNameExist)
             if (checkNameExist == undefined) {
 
-                if (imgUrlNewPlaylist) {
-                    const result = await fetch(imageUrl)
+                let urlFireBase = '';
+
+                if (imgUrlNewPlaylist != '') {
+                    const result = await fetch(imgUrlNewPlaylist)
                     const blob = await result.blob()
-                    const urlFireBase = await uploadFileStorage(`images/${imgNameNewPlaylist}`, blob)
+                    console.log('uploadFileStorageimgNameNewPlaylis', imgNameNewPlaylist)
+                    urlFireBase = await uploadFileStorage(`images/${imgNameNewPlaylist}`, blob)
+                    console.log('urlFireBase', urlFireBase)
                     setImgeUrl(urlFireBase);
-                   
+                    
+
+
                 }
 
-                let updatePlaylist;
-                if (imageUrl) {
+
+                if (urlFireBase != '') {
+                    console.log('imgUrl != imageUrl &&  imgUrl', imgUrl)
                     updatePlaylist = {
                         name: namePlayist,
                         description: descriptionPlaylist,
-                        imageUrl: imgUrl,
+                        imageUrl: urlFireBase,
                         modifyAt: serverTimestamp(),
                     }
+
+                    // console.log('updatePlaylist', updatePlaylist)
                 } else {
+                    console.log('else imgUrl != imageUrl &&  imgUrl')
                     updatePlaylist = {
                         name: namePlayist,
                         description: descriptionPlaylist,
@@ -58,11 +76,11 @@ export default function PopupUpdatePlaylist({ isVisiblePopup, setIsVisiblePopup,
                     }
                 }
 
-                const responeUpdatePlaylist = await updateDataPlaylistsFirebase(`playlists/${key}`, updatePlaylist);
+                const responeUpdatePlaylist = await updateDataFirebase(`playlists/${key}`, updatePlaylist);
+
                 if (responeUpdatePlaylist) {
-                    dispatch(getAllPlaylistByUserId({userId: user.uid}))
-                }
-                if (responeUpdatePlaylist) {
+                    // console.log('updatePlaylist', updatePlaylist)
+                    dispatch(getAllPlaylistByUserId({ userId: user.uid }))
                     ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
                     setIsVisiblePopup(false);
 
@@ -88,6 +106,7 @@ export default function PopupUpdatePlaylist({ isVisiblePopup, setIsVisiblePopup,
 
             setImgNameNewPlaylist(res[0].name)
             setImgUrlNewPlaylist(res[0].uri)
+            console.log('res[0].name: ', res[0].name + " " + res[0].uri)
             ToastAndroid.show('Upload image successfully', ToastAndroid.SHORT);
         } catch (err) {
             if (isCancel(err)) {
@@ -99,14 +118,14 @@ export default function PopupUpdatePlaylist({ isVisiblePopup, setIsVisiblePopup,
         }
     }
 
-    const handleDeltePlaylist = async () => {
-        try {
-            const resDeletePalylist = deleteDataFirebase(`playlist/${key}`)
-            ToastAndroid.show(`Xóa thành công ${name}`, ToastAndroid.SHORT);
-        } catch (e) {
-            ToastAndroid.show(`Xóa không thành công ${name}`, ToastAndroid.SHORT);
-        }
-    }
+    // const handleDeltePlaylist = async () => {
+    //     try {
+    //         const resDeletePalylist = deleteDataFirebase(`playlist/${key}`)
+    //         ToastAndroid.show(`Xóa thành công ${name}`, ToastAndroid.SHORT);
+    //     } catch (e) {
+    //         ToastAndroid.show(`Xóa không thành công ${name}`, ToastAndroid.SHORT);
+    //     }
+    // }
     return (
         <Modal
             animationType="slide"
@@ -139,9 +158,18 @@ export default function PopupUpdatePlaylist({ isVisiblePopup, setIsVisiblePopup,
                             }}
                                 onPress={hanleUploadImg}
                             >
-                                {
-                                    imgUrl && <Image source={{ uri: imgUrl }} style={{ height: 100, width: 100, marginRight: 20, borderRadius: 10 }} />
-                                }
+
+                                <View style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                                    {
+                                        <Image source={imgUrlNewPlaylist ? { uri: imgUrlNewPlaylist } : (imgUrl ? { uri: imgUrl } : images.demo)} style={(imgUrlNewPlaylist || imgUrl) ? { height: 150, width: 150, borderRadius: 20 } : { height: 60, width: 60 }} />
+                                    }
+                                    {
+                                        (imgUrlNewPlaylist || imageUrl) && <View style={{ height: 150, width: 150, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={icons.cameraEdit} style={{ height: 60, width: 60, }} />
+                                        </View>
+
+                                    }
+                                </View>
                             </TouchableOpacity>
                         </View>
                         <View style={{ display: 'flex', justifyContent: 'center', marginTop: 5 }}>

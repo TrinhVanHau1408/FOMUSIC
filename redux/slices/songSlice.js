@@ -11,11 +11,22 @@ import {
     orderByChild
 } from '../../firebase/connectDB';
 import { parse } from 'react-native-svg';
-import { readDataFirebaseWithChildCondition } from '../../firebase/controllerDB';
+import { readDataFirebase, readDataFirebaseWithChildCondition } from '../../firebase/controllerDB';
+import { convertObjectToArray } from '../../utilities/Object';
 
 
 // const getAllSong = createAsyncThunk('song/getAllSong', async ({}))
-
+export const getAllSong = createAsyncThunk('song/getAllSong', 
+    async(_, {dispatch}) => {
+        try {
+            const resSong = await readDataFirebase('songs');
+            console.log("convertObjectToArray(resSong)", convertObjectToArray(resSong))
+            dispatch(setSong(convertObjectToArray(resSong)))
+        } catch (error) {
+            console.log("Get all song error: ", error)
+        }
+    }
+)
 
 export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ songId, userId }, { rejectWithValue }) => {
     // path: songs/songId/reactHeart/userId =>> nếu tồn tại thì xóa bỏ nếu chứa thì thêm vào
