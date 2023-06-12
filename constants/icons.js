@@ -57,5 +57,7 @@ export default {
     frame902: require('../assets/images/frame-902.png'),
     blackEyeOpen: require('../assets/images/black-eye-open.png'),
     blackEyeClose: require('../assets/images/black-eye-close.png'),
-    blackEditProfile: require('../assets/images/black-edit-profile.png')
+    blackEditProfile: require('../assets/images/black-edit-profile.png'),
+    cameraAddPhoto: require('../assets/images/camera-add-photo.png'),
+    cameraEdit: require('../assets/images/camera-edit.png'),
 }
