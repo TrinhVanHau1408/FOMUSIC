@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import HeaderApp from '../components/header/HeaderApp'
 import MyFollowing from '../components/following/MyFollowing'
 import { icons, images } from '../constants'
+import { useSelector } from 'react-redux'
 
 const music = [
   {
@@ -66,6 +67,7 @@ const music = [
 ]
 export default function Following({navigation}) {
  
+  const {follows} = useSelector((state) => state.user)
   const goBack = () => {
     navigation.goBack();
   }
@@ -74,13 +76,13 @@ export default function Following({navigation}) {
       <HeaderApp title='Following' iconLeft={icons.arrowBack} goBack={goBack} />
       <View style={{marginTop: 31}}>
         <FlatList
-          data={music}
+          data={follows}
           renderItem={({ item }) =>
             <MyFollowing
-              id={item.id}
-              userName={item.artist}
-              userImg={item.songImg}
-              isFollowing={item.isFollowing}
+              id={item.key}
+              userName={item.name}
+              userImg={item.photoUrl}
+              
               follower= {item.follower}
               following= {item.following} />}
           keyExtractor={(item, index) => index}
