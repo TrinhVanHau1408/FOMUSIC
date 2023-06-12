@@ -1,10 +1,13 @@
 import { View, Text, TextInput, StyleSheet, Image, FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderApp from '../components/header/HeaderApp'
 import { icons, colors, images } from '../constants'
 import TitleAlbum from '../components/misc/TitleAlbum'
 import RectangleImg from '../components/search/RectangleImg'
 import SquareImg from '../components/search/SquareImg'
+import { useDispatch } from 'react-redux'
+import { getAllAritist } from '../redux/slices/artistSlice'
+import { getAllSong } from '../redux/slices/songSlice'
 const music = [
   {
   title: 'Lovely',
@@ -66,15 +69,33 @@ const music = [
 }
 ]
 export default function Search({navigation}) {
+
+  const dispatch = useDispatch();
+  const [keySearch, setKeySearch] = useState('');
+  useEffect(()=> {
+    dispatch(getAllAritist());
+    dispatch(getAllSong());
+  }, [])
+
+
+
   const goBack = () => {
     navigation.goBack();
+  }
+
+  const handleChangInputSearch = (inputSearch) => {
+    console.log(inputSearch)
   }
   return (
     <View>
       <HeaderApp title={'Search'} iconLeft={icons.arrowBack} goBack={goBack} />
       <View style={styles.InputTextContainer}>
         <Image source={icons.search} style={styles.Icon} />
-        <TextInput placeholder={'Demo'} style={styles.InputText} />
+        <TextInput 
+          placeholder={'Demo'} style={styles.InputText} 
+          value={keySearch}
+          onChangeText={handleChangInputSearch}
+          />
       </View>
       <View style={{ marginLeft: 24 }}>
         <TitleAlbum type={3} name={'Tìm kiếm gần đây'} />

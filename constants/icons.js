@@ -60,4 +60,6 @@ export default {
     blackEditProfile: require('../assets/images/black-edit-profile.png'),
     dropdown: require('../assets/images/dropdown.png'),
     schedule: require('../assets/images/Schedule.png'),
+    cameraAddPhoto: require('../assets/images/camera-add-photo.png'),
+    cameraEdit: require('../assets/images/camera-edit.png'),
 }
