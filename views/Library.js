@@ -422,7 +422,7 @@ export default function Library({ navigation }) {
                 handleNavigatorAllFollowing={handleNavigatorFollowing} />
               <FlatList
                 // Chua them data!
-                data={follows && follows}
+                data={follows && follows.filter(({active}) => active == true)}
                 renderItem={({ item }) =>
                   <CircleAlbum
                     id={item.key}

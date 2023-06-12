@@ -34,16 +34,17 @@ export const getAllArtistFollowByUserId = createAsyncThunk('user/getAllArtistFol
 
             const artists = [];
             for (let follow of arrayFollow) {
-                if (follow.active == true) {
+                
                     const resArtist = await readDataFirebase(`artists/${follow.key}`);
                     const artist = {
                         key: follow.key,
+                        active: follow.active,
                         ...resArtist
                     }
 
                     // console.log(artist)
                     artists.push(artist);
-                }
+                
             }
 
             dispatch(setFollowArtist(artists))
@@ -57,6 +58,7 @@ export const getAllArtistFollowByUserId = createAsyncThunk('user/getAllArtistFol
 export const followingArtistByUserId = createAsyncThunk('user/followingArtistByUserId',
     async ({ userId, artistId, active, timestamp }, { }) => {
         try {
+            console.log('followingArtistByUserId:', active)
             await updateDataFirebase(`follows/${userId}/${artistId}`, {active: active,timestamp:  timestamp})
             console.log(`Đã thêm thông tin "follows" cho nghệ sĩ ${artistId}`);
         } catch (error) {

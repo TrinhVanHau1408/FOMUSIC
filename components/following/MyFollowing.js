@@ -1,23 +1,32 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet,ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { colors, icons, images } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux';
 import { followingArtistByUserId, getAllArtistFollowByUserId } from '../../redux/slices/userSlice';
 import { serverTimestamp } from 'firebase/database';
-export default function MyFollowing({ id, userName, userImg, follower, following }) {
+export default function MyFollowing({artist, id, userName, userImg, follower, isFollow, following, handleNavigatorArtist }) {
     // console.log('isFollowing', isFollowing)
-    const [isFollow, setIsFollow] = useState(id === id);
+    // const [isFollow, setIsFollow] = useState(id === id);
     const {user} = useSelector((state) => state.user)
     const dispatch = useDispatch()
     // console.log("isFollowing",isFollowing)
-
+    const [isFollowing, setIsFollowing] = useState(isFollow);
     const handleToggleFollowing = () => {
-        dispatch(followingArtistByUserId({userId: user.uid, artistId: id, active: false, timestamp: serverTimestamp() }));
+        if (!isFollowing) {
+            ToastAndroid.show(`Bạn đã theo dõi ${userName}`, ToastAndroid.SHORT);
+        } else {
+            ToastAndroid.show(`Bạn đã hủy theo dõi ${userName}`, ToastAndroid.SHORT);
+        }
+        setIsFollowing(!isFollowing)
+        dispatch(followingArtistByUserId({userId: user.uid, artistId: id, active: !isFollowing, timestamp: serverTimestamp() }));
         dispatch(getAllArtistFollowByUserId({userId: user.uid}))
-
+      
+        
+        
     }
     return (
         <View style={styles.container}>
+            <TouchableOpacity onPress={() =>handleNavigatorArtist(artist)}>
             <View style={styles.info}>
                 <View style={styles.img}>
                     <Image source={userImg? {uri: userImg} : images.demo}
@@ -40,9 +49,10 @@ export default function MyFollowing({ id, userName, userImg, follower, following
                     </View>
                 </View>
             </View>
-            <View style={[styles.button, isFollow ? styles.buttonClick : styles.buttonUnClick]}>
-                <TouchableOpacity onPress={handleToggleFollowing}>
-                    <Text style={id ? styles.textClick : styles.textUnClick}>{id ? 'Following' : 'Follow'}</Text>
+            </TouchableOpacity>
+            <View style={[styles.button, isFollowing ? styles.buttonClick : styles.buttonUnClick]}>
+                <TouchableOpacity onPress={handleToggleFollowing} >
+                    <Text style={isFollowing ? styles.textClick : styles.textUnClick}>{isFollowing ? 'Following' : 'Follow'}</Text>
                 </TouchableOpacity>
             </View>
         </View>
