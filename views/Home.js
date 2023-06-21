@@ -16,6 +16,7 @@ import { addRankingSongListen, getRankingCurrentWeek } from '../redux/slices/ran
 import { getAllPlaylistByUserId } from '../redux/slices/playlistsSlice';
 import { getAllAritist, getArtistByUserId } from '../redux/slices/artistSlice';
 import { getAllArtistFollowByUserId, getArtistFollowByUserId, getArtistFollowByUserUid } from '../redux/slices/userSlice';
+import { addTracks, playTrackBySongId, setTracks, setupPlayMusic } from '../redux/slices/playerSlice';
 const music = [
     {
         name: 'Lovely',
@@ -94,34 +95,23 @@ export default function Home({ navigation }) {
         setIdSong(id);
 
     }
+
+    // console.log(historySongs)
     const handleNavigatorPlaying = (id, songs) => {
 
-
-        // dispatch(setTracks(songs));
-        // dispatch(setupPlayMusic());
-
-        // console.log(ranking)
-
-        // dispatch(getFollowedArtists({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}))
-        // dispatch(getArtistFollowByUserUid());
-        // readDataFirebaseWithChildCondition('songs', 'name', 'baihat1')
-
-        // if (!loading && error == null) {
-        // dispatch(getArtistByUserId({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
-        dispatch(getAllArtistFollowByUserId({ userId: '4QoEok3ghdXH7DmJJzomMyjeryT2' }))
-        // dispatch(getAllAritist());
-        // dispatch(getAllSong());
-
-        //     console.log("fillter playlist: ", playlists && filterObject(playlists,'name','Demo'));
-        // }
-        // console.log("fillter playlist: ", playlists && filterObject(playlists,'name','Demo'));
-        // dispatch(getRankingCurrentWeek());
-        // dispatch(getAllPlaylistByUserId({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}))
-        // navigation.navigate('Playing');
+        
+        
+        dispatch(addTracks({songs, songCurrentId: id}));
+        // dispatch(playTrackBySongId({songId: id }))
+        navigation.navigate('Playing');
 
     }
+   const  handleNavigatorPlaying1 = () => {
+    navigation.navigate('Playing');
 
-    console.log('artist', artist)
+   }
+
+    // console.log('artist', artist)
     const handleSelect = (option) => {
         setSelectedItem(option.label);
     };
@@ -133,6 +123,9 @@ export default function Home({ navigation }) {
             dispatch(getAllArtistFollowByUserId({ userId: userId }))
         }
     }, [user])
+    useEffect(() => {
+        dispatch(setupPlayMusic());
+    }, [])
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -189,10 +182,11 @@ export default function Home({ navigation }) {
                             name={'RECENTLY PLAYED'} />
                         <FlatList
                             data={historySongs && historySongs}
+                            style={{marginBottom: 50}}
                             renderItem={({ item }) =>
                                 <SquareAlbum
                                     id={item.id}
-                                    name={item.name}
+                                    name={item.title}
                                     artwork={item.artwork}
                                     songs={historySongs}
                                     // handleLayout={handleLayout}
@@ -205,7 +199,7 @@ export default function Home({ navigation }) {
                     </View>
                 </View>
             </ScrollView>
-            {(playBackState != null && playBackState != 'idle') && <ControlMusic song={music.find(({ id }) => id === idSong)} handleNavigator={handleNavigatorPlaying} />}
+            {(playBackState != null && playBackState != 'idle') && <ControlMusic handleNavigator={handleNavigatorPlaying1} />}
         </View>
 
     )

@@ -46,14 +46,16 @@ export const getAllAlbumByAlbumIds = createAsyncThunk('artist/getAllAlbumByArtis
 export const getPopularRelease = createAsyncThunk('artist/getPopularRelease',
     async ({ songIds }, { dispatch }) => {
 
-        const dataPopular = []
+        
     try {
+        const dataPopular = []
         for (let songId of songIds) {
             const resSong = await readDataFirebase(`songs/${songId}`);
             dataPopular.push({ key: songId, ...resSong });
+
         }
 
-
+        console.log('dataPopular', dataPopular)
         dispatch(setPopularRelease(dataPopular));
     } catch (error) {
         return null;

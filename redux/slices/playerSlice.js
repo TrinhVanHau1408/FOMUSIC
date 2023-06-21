@@ -4,7 +4,7 @@ import TrackPlayer, {RepeatMode, State, Capability} from 'react-native-track-pla
 
 export const setupPlayMusic = createAsyncThunk(
     'player/setupPlayMusic',
-    async(_, {getState}) => {
+    async(_, {dispatch, getState}) => {
 
         // console.log("player/setupPlayMusic");
         try {
@@ -24,14 +24,14 @@ export const setupPlayMusic = createAsyncThunk(
                   Capability.SkipToPrevious,
                   Capability.SkipToNext,]
             });
-            if (getState().player.tracks != null) {
-              await TrackPlayer.add(getState().player.tracks);
-              // const track = getState().player.tracks;
-              console.log('track',await TrackPlayer.getQueue())
-              // await TrackPlayer.prepare(track,0, true);
-             
-              await TrackPlayer.play();
-            }
+            // if (getState().player.tracks != null) {
+            //   await TrackPlayer.add(getState().player.tracks);
+            //   // const track = getState().player.tracks;
+            //   console.log('track',await TrackPlayer.getQueue())
+            //   // await TrackPlayer.prepare(track,0, true);
+            //   // dispatch(playTrackBySongId({songId}))
+            //   await TrackPlayer.play();
+            // }
            
         }
         catch (e) {
@@ -41,13 +41,47 @@ export const setupPlayMusic = createAsyncThunk(
 )
 
 
+export const playTrackBySongId = createAsyncThunk('player/playTrackBySongId',
+    async({songId}) => {
+      // const track = await TrackPlayer.getTrack(songId);
+      // await TrackPlayer.skip(track.id);
+      // await TrackPlayer.play();
+      // const currentQueue = await TrackPlayer.getQueue();
+      console.log('queue',songId )
+      const currentQueue = await TrackPlayer.getQueue();
+      if (currentQueue) {
+        console.log('playTrackBySongId currentQueue',currentQueue )
+      } else {
+        console.log('playTrackBySongId currentQueue chưa' )
+      }
+      
+    }
+)
 export const addTracks = createAsyncThunk(
     'player/addTracks',
-    async(_, {getState}) => {
-        console.log("player/addTracks: ", getState().player.tracks);
-        await TrackPlayer.add(getState().player.tracks);
-      
-       
+    async({songs, songCurrentId}, {getState, dispatch}) => {
+        // console.log("player/addTracks: ", getState().player.tracks);
+        // await TrackPlayer.add(getState().player.tracks);
+        // await TrackPlayer.play();
+        await TrackPlayer.reset();
+        if (songs != null) {
+          dispatch(setTracks(songs))
+          await TrackPlayer.add(songs);
+          // const track = getState().player.tracks;
+          // console.log('track',await TrackPlayer.getQueue())
+          const currentTrack = await TrackPlayer.getQueue();
+          await TrackPlayer.play();
+          const indexPlay = currentTrack.findIndex(({id, key}) => id ?id == songCurrentId: key ==songCurrentId);
+          
+          await TrackPlayer.skip(indexPlay);
+          await TrackPlayer.play();
+          const currentPlay = await TrackPlayer.getTrack(queueIndex);
+          console.log('currentPlay',currentPlay)
+          // dispatch(setCurrentPlay(currentPlay))
+          
+          console.log('indexPlay',indexPlay + " " + songCurrentId)
+          
+        }
     }
 )
 ;
@@ -188,6 +222,7 @@ const playerSlice = createSlice({
         tracks: null,
         repeatMode: 'off',
         isHeart: false,
+        currentPlay: null
     },
     reducers: {
         setPlaybackState: (state, action) => {
@@ -205,12 +240,17 @@ const playerSlice = createSlice({
         },
         setHeart: (state, action) => {
           state.isHeart = action.payload;
+          // console.log("getCurrentHeartPlaying",action.payload)
+        },
+        setCurrentPlay: (state, action) => {
+          state.currentPlay = action.payload
           console.log("getCurrentHeartPlaying",action.payload)
         }
     },
     extraReducers: (builder) => {
       builder.addCase(changeRepeatMode.fulfilled,(state, action) => {
         state.repeatMode = action.payload;
+        console.log("getCurrentHeart",action.payload)
       })
      
     }
@@ -223,7 +263,7 @@ export const {
     setProgress,
     setTracks,
     setRepeatMode,
-    setHeart
+    setHeart, setCurrentPlay
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

@@ -121,7 +121,7 @@ export default function Search({ navigation }) {
       inputSearch = inputSearch.toLowerCase();
       // console.log('resSearchSong: ', allSong)
       // console.log('resSearchArtist: ', allArtist)
-      const resSearchSong = allSong.filter(({ name }) => (name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(inputSearch)));
+      const resSearchSong = allSong.filter(({ title }) => (title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(inputSearch)));
       const resSearchArtist = allArtist.filter(({ name }) => (name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(inputSearch)));
       // console.log('resSearchSong: ', resSearchSong)
       console.log('resSearchArtist: ', resSearchArtist)

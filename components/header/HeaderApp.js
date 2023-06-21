@@ -5,6 +5,7 @@ import { icons, colors } from '../../constants'
 const HeaderApp = (props) => {
 
   const { title, iconLeft, iconRight, goBack, handleNavigator } = props;
+  console.log('iconRight', iconRight)
   return (
     <View style={(iconLeft && iconRight) ? styles.container2 : (iconLeft ? styles.container3 : styles.container1)}>
       {iconLeft && <TouchableOpacity onPress={goBack}>

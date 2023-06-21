@@ -102,6 +102,7 @@ const following = "124"
 
 export default function Profile({navigation}) {
 
+    const { playlists } = useSelector((state) => state.playlists);
     const {user} = useSelector((state) => state.user);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -145,7 +146,7 @@ export default function Profile({navigation}) {
                 <View style={{ marginLeft: 17.5, alignSelf: 'center' }}>
                     <Text style={{ fontSize: 24, fontWeight: 'bold', color: colors.black, marginBottom: 6 }}>
                         {/* {user && user.displayName} */}
-                        User Name
+                        {user&&user.displayName}
                     </Text>
                     <Text style={{}}>Follower {follower}</Text>
                         <Text>Following {following}</Text>
@@ -157,10 +158,10 @@ export default function Profile({navigation}) {
             <View style={{ marginLeft: 24 }}>
                 <TitleAlbum type={3} name={'Your playlists'} />
                 <FlatList
-                    data={dataAlbum}
+                    data={playlists && [...playlists].reverse()}
                     renderItem={({ item }) => {
                         return (<View style={{ marginRight: 24 }}>
-                            <RectangleAlbum id={item.id} name={item.name} img={item.img} />
+                            <RectangleAlbum id={item.id} name={item.name} artwork={item.imageUrl} />
                         </View>)
                     }}
                     keyExtractor={(item, index) => index}

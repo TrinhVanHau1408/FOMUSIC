@@ -205,11 +205,12 @@ export default function DetailPlaylist({ navigation, route }) {
         renderItem={({ item, index }) =>
           <MyLike
             id={item.key}
-            songName={item.name}
+            songName={item.title}
             songImg={item.artwork}
             artistName={item.artist}
             isLike={item.isLiked}
             index={index}
+            songs = {[...mySongs].reverse()}
           
             handleLongClick={handleLongPressOneSong}
           />}

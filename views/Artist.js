@@ -17,8 +17,8 @@ export default function Artist({ navigation, route }) {
   const { follows, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   // const dataArtist = music.find((artist) => artist.id == id);
-  console.log("follows.find(({artistId}) => artistId === artist.key)", follows.find(({artistId}) => artistId === artist.key))
-  const [isFollow, setIsFollow] = useState(follows.find(({key, active}) => key === artist.key && active ==true )?true:false);
+  // console.log("follows.find(({artistId}) => artistId === artist.key)", follows.find(({artistId}) => artistId === artist.key))
+  const [isFollow, setIsFollow] = useState((follows &&follows.find(({key, active}) => key === artist.key && active ==true ))?true:false);
   const handleButton = () => {
     Alert.alert('Test', 'Library button');
   }
@@ -46,7 +46,7 @@ export default function Artist({ navigation, route }) {
   }, [artist])
 
   useEffect(() => {
-    if (albums && albums.songIds) {
+    if (albums) {
       const songIds = [];
       // for (let songId in albums[albums.length - 1].songIds) {
       console.log('songId', albums[albums.length - 1].songIds)
@@ -56,7 +56,7 @@ export default function Artist({ navigation, route }) {
 
       dispatch(getPopularRelease({ songIds: songIds }))
     }
-  }, [albums])
+  }, [albums, artist])
 
   
   const goBack = () => {
@@ -102,7 +102,7 @@ export default function Artist({ navigation, route }) {
           <FlatList
             data={albums && albums}
             renderItem={({ item }) =>
-              <SquareAlbum id={item.key} name={item.name} img={item.imgUrl} handleButton={handleButton} />}
+              <SquareAlbum id={item.key} name={item.name} artwork={item.imgUrl} handleButton={handleButton} />}
             keyExtractor={(item, index) => index}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -113,7 +113,7 @@ export default function Artist({ navigation, route }) {
           <FlatList
             data={popularRelease && popularRelease}
             renderItem={({ item }) =>
-              <SquareAlbum id={item.key} name={item.name} img={item.artwork} handleButton={handleButton} />}
+              <SquareAlbum id={item.key} name={item.title} artwork={item.artwork} handleButton={handleButton} />}
             keyExtractor={(item, index) => index}
             horizontal
             showsHorizontalScrollIndicator={false}
