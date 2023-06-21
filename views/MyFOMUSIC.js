@@ -157,7 +157,7 @@ export default function MyFOMUSIC({ navigation }) {
                     </View>
                 }
             </View>
-            {isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} />}
+            {/* {isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} />} */}
             {isVisibleMenuSingleSong && <Edit handleNavigator={() => setIsVisibleMenuSingleSong(false)} edit={MenuSingleSong} height={380} />}
             {isVisibleMenuSingle && <Edit handleNavigator={() => setIsVisibleMenuSingle(false)} edit={MenuSingle} height={170} />}
             {isDeleteSong && <DeleteSong id={idSongSelected} songName={objsongsArtist[idSongSelected].name} setIsVisibleMenuSingleSong={setIsVisibleMenuSingleSong} setIsDeleteSong={setIsDeleteSong} />}

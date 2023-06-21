@@ -93,18 +93,7 @@ export const getHistorySong = createAsyncThunk('song/getHistorySong',
             // console.log(`song id ${snapshotSong.key} + ${snapshotSong.val()} `)
             let song = {
                 id: snapshotSong.key,
-                albumName: snapshotSong.val().albumName,
-                artistId: snapshotSong.val().artistId,
-                artist: snapshotSong.val().artist,
-                url: snapshotSong.val().url,
-                duration: snapshotSong.val().duration,
-                genreId: snapshotSong.val().genreId,
-                genre: snapshotSong.val().genre,
-                artwork: snapshotSong.val().artwork,
-                lyrics: snapshotSong.val().lyrics,
-                name: snapshotSong.val().name,
-                reactHeart: snapshotSong.val().reactHeart,
-                releaseAt: snapshotSong.val().releaseAt,
+                ...snapshotSong.val()
             }
             // console.log(`song id ${snapshotSong.key} + ${snapshotSong.val().name} + ${snapshotSong.val().artwork}`)
         

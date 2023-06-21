@@ -1,29 +1,54 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Image, Alert, Dimensions } from "react-native";
 import { icons, images } from '../../constants'
+import { useDispatch, useSelector } from "react-redux";
+import { playNextTrack, playPreviousTrack, setCurrentPlay, togglePlayback } from "../../redux/slices/playerSlice";
+import TrackPlayer, {
+    State,
+    usePlaybackState,
+    useProgress,
+    Event,
+    useTrackPlayerEvents
+} from 'react-native-track-player'
 const heigtScreen = Dimensions.get('window').height;
 
 export default function ControlMusic({ song, handleNavigator }) {
 
-    
+    const {currentPlay} = useSelector((state) => state.player);
+    const dispatch = useDispatch();
     // Alert.alert('Control',songName + ' '+ songImg + ' ' + artistName)
-    const handleSkipPrevious = () => Alert.alert('Test button', 'Skip previous');
-    const handlePause = () => Alert.alert('Test button', 'Pause');
-    const handleSkipNext = () => Alert.alert('Test button', 'Skip next');
+    const handleSkipPrevious = () =>  dispatch(playPreviousTrack());
+    const handlePause = () => dispatch(togglePlayback());
+    const handleSkipNext = () => dispatch(playNextTrack());
+
+    useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
+        console.log('PlaybackTrackChanged')
+        if (event.type === Event.PlaybackTrackChanged && event.nextTrack != null) {
+            const track = await TrackPlayer.getTrack(event.nextTrack);
+            const { title, artwork, artist, lyrics } = track || {};
+            // const currentQueue = await TrackPlayer.getQueue();
+
+           dispatch(setCurrentPlay(track));
+
+
+           
+            // dispatch(setHeart(true));
+        }
+    });
     return (
         // <View>
         <View style={styles.container}>
             <View style={styles.controlMusic}>
                <TouchableOpacity onPress={handleNavigator}>
                <View style={{ overflow: 'hidden' }}>
-                    <Image style={styles.imgMusic} source={images.demo} />
+                    <Image style={styles.imgMusic} source={(currentPlay &&currentPlay.artwork)? {uri:currentPlay.artwork}: images.demo} />
                 </View>
                </TouchableOpacity>
                 <View style={styles.info}>
-                    <Text style={styles.infoNameMusic}>song title</Text>
+                    <Text style={styles.infoNameMusic}>{currentPlay && currentPlay.title}</Text>
                     <Text
                         style={styles.infoNameArtist}
-                    >Aritist song</Text>
+                    >{ currentPlay && currentPlay.artist}</Text>
                 </View>
                 
 

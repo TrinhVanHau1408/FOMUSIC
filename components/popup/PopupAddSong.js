@@ -109,8 +109,8 @@ export default function PopupAddSong({ playlist, title, infoImg, setMySongPlayli
         inputSearch = inputSearch.toLowerCase();
         // Lọc theo tên bài hát or tên nghệ sĩ
         //  // normalize("NFD").replace(/[\u0300-\u036f]/g, "") => convert thành chữ không chứa các dấu
-        const filter = allSong.filter(({ name, artist }) => (
-            name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(inputSearch)
+        const filter = allSong.filter(({ title, artist }) => (
+            title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(inputSearch)
             || artist.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(inputSearch)
         ))
         // console.log('filterSong: ', filterSong)
@@ -287,7 +287,7 @@ export default function PopupAddSong({ playlist, title, infoImg, setMySongPlayli
                                     if (item) {
                                         return (<MyAdd
                                             songId={item.key}
-                                            songName={item.name}
+                                            songName={item.title}
                                             songImg={item.artwork}
                                             artistName={item.artist}
                                             songIdPicks={songIdPicks}

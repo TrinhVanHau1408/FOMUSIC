@@ -43,7 +43,7 @@ export default function Login({ navigation }) {
     }
     
   }
-
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
