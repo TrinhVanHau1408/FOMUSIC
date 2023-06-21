@@ -4,19 +4,21 @@ import { colors, icons, images } from "../constants";
 import { useState, useEffect } from 'react';
 import { pick, types, isCancel } from 'react-native-document-picker'
 import { uploadFileStorage } from '../firebase/controllerStorage';
-import { readDataFirebase, writeDataFirebase } from '../firebase/controllerDB';
+import { readDataFirebase, writeDataFirebase, writeDataFirebaseResponseKeys } from '../firebase/controllerDB';
 import { serverTimestamp } from 'firebase/database'
 import { useDispatch, useSelector } from 'react-redux'
 // import { Picker } from '@react-native-picker/picker';
 import SelectDropdown from 'react-native-select-dropdown'
 import { getAlbum } from '../redux/slices/albumSlice';
 import DatePicker from 'react-native-modern-datepicker'
-
+import { da, el } from 'date-fns/locale';
+import { readDataFirebaseWithChildCondition } from '../firebase/controllerDB';
 
 // ToastAndroid.show('Successful', ToastAndroid.SHORT);
 const alltype = ["Bolero", "Rap", "Nhạc Trẻ", "Nhạc Đỏ", "Nhạc EDM", "Nhạc Trịnh"]
 
-export default function EditDetailSong({ navigation }) {
+export default function EditDetailSong({ navigation, route }) {
+    // console.log(route);
     const { artist } = useSelector((state) => state.artist)
     const { album } = useSelector((state) => state.album)
     const dispatch = useDispatch()
@@ -26,7 +28,9 @@ export default function EditDetailSong({ navigation }) {
     const [open, setOpen] = useState(false)
     const [allAlbums, setAllAlbum] = useState([])
     const [isupLoad, setIsupLoad] = useState(false)
+    const [allkeys, setAllKeys] = useState([])
 
+    const [keyAlbum, setKeyAlbum] = useState()
     const [imageName, setImageName] = useState()
     const [imageUrl, setImageUrl] = useState()
     const [mp3Url, setMp3Url] = useState()
@@ -83,6 +87,21 @@ export default function EditDetailSong({ navigation }) {
 
         // upoad lên firebase
         setIsupLoad(true)
+
+        try {
+            const rep = await readDataFirebaseWithChildCondition('songs', 'title', nameSong)
+            if (rep) {
+                ToastAndroid.show(`Failed: ${nameSong} is existed`, ToastAndroid.SHORT);
+                setIsupLoad(false)
+                return
+            }
+        }
+        catch (err) {
+            ToastAndroid.show(`Failed`, ToastAndroid.SHORT);
+            setIsupLoad(false)
+            return
+        }
+
         try {
             let urlFirebaseImage = "https://firebasestorage.googleapis.com/v0/b/fomusicapp-12403.appspot.com/o/images%2FdefaultAvt.jpg?alt=media&token=bdbe9c78-be0b-41c7-afa1-d0ebbd193ba9&_gl=1*1fyo95k*_ga*MzgxMzQ1MzAyLjE2ODI1NjYwMjQ.*_ga_CW55HF8NVT*MTY4NjM3NzEyMi40Mi4xLjE2ODYzNzcyMjEuMC4wLjA."
             if (imageUrl) {
@@ -107,19 +126,36 @@ export default function EditDetailSong({ navigation }) {
                     genre: typeSong,
                     genreId: "genre1",
                     lyrics: lyrics,
-                    name: nameSong,
+                    title: nameSong,
                     releaseAt: dayProduce,
                     url: urlFirebaseMp3,
                     reactHeart: {},
                     modifyAt: serverTimestamp(),
                     nameAuthor: nameAuthor,
-                    nameExport: nameExport
+                    nameExport: nameExport,
+                    albumId: keyAlbum,
                 }
 
                 try {
                     const rep = await writeDataFirebase('songs', dataUpload)
+
                     if (rep) {
-                        ToastAndroid.show(`Successful`, ToastAndroid.SHORT);
+                        // console.log(rep)
+                        const Songid = String(rep).split('/').pop()
+                        // console.log(Songid)
+                        const rep2 = await writeDataFirebase(`albums/${keyAlbum}/songIds`, "", Songid)
+                        if (rep2) {
+                            ToastAndroid.show(`Successful`, ToastAndroid.SHORT);
+                            // const onReturn = route.params?.onReturn;
+                            // if (onReturn) {
+                            //     onReturn();
+                            // }
+                            navigation.navigate(route.params.previousScreen, { state: Songid })
+                        }
+                        else {
+                            ToastAndroid.show(`Failed`, ToastAndroid.SHORT);
+                        }
+
                     } else {
                         ToastAndroid.show(`Failed`, ToastAndroid.SHORT);
                     }
@@ -140,6 +176,12 @@ export default function EditDetailSong({ navigation }) {
         setIsupLoad(false)
 
     }
+    // if(route) {
+
+    //     // onReturn()
+    //     console.log(route.params)
+    //     console.log("Thái")
+    // }
 
     // This is function select file .mp3 on local
     const selectFileMp3 = async () => {
@@ -191,16 +233,26 @@ export default function EditDetailSong({ navigation }) {
 
     useEffect(() => {
         if (album) {
-            const data = Object.entries(album).map(([key, value]) => {
-                // console.log(key, value)
-                return value.name
+            var data_name = []
+            var data_key = []
+            Object.entries(album).map(([key, value]) => {
+                data_name = [...data_name, value.name]
+                data_key = [...data_key, key]
             })
-            setAllAlbum(data)
-            setAlbumName(data[0])
-            // console.log(data)
+
+            data_name = [...data_name, "[THÊM ALBUM]"]
+            data_key = [...data_key, "[THÊM ALBUM]"]
+
+            setAllAlbum(data_name)
+            setAllKeys(data_key)
+
+            setAlbumName(data_name[0] != "[THÊM ALBUM]" ? data_name[0] : null)
+            setKeyAlbum(data_key[0] != "[THÊM ALBUM]" ? data_name[0] : null)
         }
 
     }, [album])
+
+    // console.log(keyAlbum)
 
     // console.log(date)
     const handleChangeDate = (propDate) => {
@@ -214,25 +266,25 @@ export default function EditDetailSong({ navigation }) {
             <ScrollView showsVerticalScrollIndicator={false} style={styles.containerContent}>
                 <View>
                     <TouchableOpacity style={{
-                                // backgroundColor: 'rgba(0, 0, 255,0.6)',
-                                borderRadius: 20, display: 'flex', justifyContent: 'center',
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                padding: 10,
+                        // backgroundColor: 'rgba(0, 0, 255,0.6)',
+                        borderRadius: 20, display: 'flex', justifyContent: 'center',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: 10,
 
-                            }} onPress={selectFileImage}>
-                       
-                        <View style={{display: 'flex', justifyContent: 'center', position: 'relative'}}>
-                                    {
-                                        <Image source={imageUrl ? { uri: imageUrl } : icons.cameraAddPhoto} style={imageUrl ? { height: 150, width: 150, borderRadius: 20 } : { height: 60, width: 60 }} />
-                                    }
-                                    {
-                                        imageUrl && <View style={{height: 150, width: 150, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                            <Image source={icons.cameraEdit} style={{ height: 60, width: 60,  }} />
-                                        </View>
+                    }} onPress={selectFileImage}>
 
-                                    }
+                        <View style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                            {
+                                <Image source={imageUrl ? { uri: imageUrl } : icons.cameraAddPhoto} style={imageUrl ? { height: 150, width: 150, borderRadius: 20 } : { height: 60, width: 60 }} />
+                            }
+                            {
+                                imageUrl && <View style={{ height: 150, width: 150, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Image source={icons.cameraEdit} style={{ height: 60, width: 60, }} />
                                 </View>
+
+                            }
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View>
@@ -290,17 +342,17 @@ export default function EditDetailSong({ navigation }) {
                         <SelectDropdown
                             data={alltype}
                             defaultValue={typeSong}
-                            defaultIndex={0}
-                            value={typeSong}
                             onSelect={(selectedItem, index) => {
                                 setTypeSong(selectedItem)
                             }}
                             buttonTextAfterSelection={(selectedItem, index) => {
+                                // console.log(selectedItem)
                                 // text represented after item is selected
                                 // if data array is an array of objects then return selectedItem.property to render after item is selected
                                 return selectedItem
                             }}
                             rowTextForSelection={(item, index) => {
+                                // console.log(item)
                                 // text represented for each item in dropdown
                                 // if data array is an array of objects then return item.property to represent item in dropdown
                                 return item
@@ -309,6 +361,7 @@ export default function EditDetailSong({ navigation }) {
                             buttonTextStyle={styles.PickerButtonText}
                             dropdownStyle={styles.dropdownStyle}
                             renderDropdownIcon={renderIcon}
+
                         />
 
                     </View>
@@ -323,13 +376,26 @@ export default function EditDetailSong({ navigation }) {
                             placeholder={"Nhập tên Album"}
                             value={albumName}
                             onChangeText={text => setAlbumName(text)} /> */}
+                        {/* <Picker
+                            selectedValue={typeSong}
+                            style={styles.Picker}
+                            onValueChange={(itemValue, itemIndex) => setTypeSong(itemValue)}
+                        >
+                            <Picker.Item style={styles.pickerItem} label="Rap" value="Rap" />
+                            <Picker.Item style={styles.pickerItem} label="Bolero" value="Boloro" />
+
+                        </Picker> */}
                         <SelectDropdown
                             data={allAlbums}
                             defaultValue={albumName}
-                            defaultIndex={0}
-                            value={albumName}
                             onSelect={(selectedItem, index) => {
-                                setAlbumName(selectedItem)
+                                if (selectedItem == "[THÊM ALBUM]") {
+
+                                }
+                                else {
+                                    setAlbumName(selectedItem)
+                                    setKeyAlbum(allkeys[index])
+                                }
                             }}
                             buttonTextAfterSelection={(selectedItem, index) => {
                                 // text represented after item is selected
@@ -337,6 +403,7 @@ export default function EditDetailSong({ navigation }) {
                                 return selectedItem
                             }}
                             rowTextForSelection={(item, index) => {
+                                // console.log(item)
                                 // text represented for each item in dropdown
                                 // if data array is an array of objects then return item.property to represent item in dropdown
                                 return item
@@ -354,10 +421,6 @@ export default function EditDetailSong({ navigation }) {
                         Ngày phát hành
                     </Text>
                     <View style={styles.textView}>
-                        {/* <TextInput style={styles.textContent}
-                            value={dayProduce}
-                            placeholder={"Nhập ngày phát hành"}
-                            onChangeText={text => setDayProduce(text)} /> */}
                         <TouchableOpacity onPress={() => setOpen(true)}
                             style={{
                                 width: '100%', height: '100%',
@@ -429,7 +492,7 @@ export default function EditDetailSong({ navigation }) {
                                 justifyContent: 'space-between'
                             }
                         }>
-                            <Text style={[styles.textContent, { paddingTop: 2 }]}>{mp3Name?mp3Name:'Chọn nhạc'}</Text>
+                            <Text style={[styles.textContent, { paddingTop: 2 }]}>{mp3Name ? mp3Name : 'Chọn nhạc'}</Text>
                             <Image source={icons.upload} style={{ height: 25, marginRight: 10 }} />
                         </View>
                     </TouchableOpacity>
@@ -455,7 +518,7 @@ export default function EditDetailSong({ navigation }) {
                 position: 'absolute',
                 width: '100%',
                 height: '100%',
-                backgroundColor:'rgba(255, 255, 255, 0.6)',
+                backgroundColor: 'rgba(255, 255, 255, 0.6)',
 
             }}>
                 <ActivityIndicator size="large" color="blue" />

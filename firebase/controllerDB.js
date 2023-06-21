@@ -66,9 +66,10 @@ const writeDataFirebase = async (path, data, id) => {
       return true;
     }
     else {
-      await push(firebaseDatabaseRef(firebaseDatabase, path), data)
+      const rep = await push(firebaseDatabaseRef(firebaseDatabase, path), data)
       console.log("save data firebase successfully")
-      return true;
+      // console.log(rep)
+      return rep;
     }
   }
   catch (err) {
@@ -131,5 +132,5 @@ export {
   deleteDataFirebase,
   updateDataPlaylistsFirebase,
   readDataFirebaseWithChildCondition,
-  updateDataFirebase
+  updateDataFirebase,
 }

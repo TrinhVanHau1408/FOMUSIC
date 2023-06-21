@@ -8,7 +8,7 @@ import { readDataFirebaseWithChildCondition } from '../firebase/controllerDB';
 import Edit from '../components/misc/Edit';
 import DeleteSong from './DeleteSong';
 
-export default function MyFOMUSIC({ navigation }) {
+export default function MyFOMUSIC({ navigation, route }) {
     const [idSong, setIdSong] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
     const [isVisibleMenuSingleSong, setIsVisibleMenuSingleSong] = useState(false);
@@ -18,14 +18,18 @@ export default function MyFOMUSIC({ navigation }) {
     const [songsArtist, setSongsArtist] = useState() // here is array contains the songs of artist
     const [idSongSelected, setIdSongSelected] = useState() // here is id select to do something
 
+    const [isReturnChild, setIsReturnChild] = useState(false) // 
+
+    // this is signal of event screen child goback
     // This is function processing when handle menu of My FoMusic
     // ----------------------------------------------------------------
+
     const MenuSingle = [
         {
             title: "Đăng bài hát",
             icon: icons.listAdd,
             handle: () => {
-                navigation.navigate('Upload')
+                navigation.navigate('Upload', { previousScreen: route.name })
             }
         },
         {
@@ -40,7 +44,7 @@ export default function MyFOMUSIC({ navigation }) {
         navigation.navigate('DetailSong', { detailSong: objsongsArtist[idSongSelected] })
     }
     const handleNavigatorEditDetaillSong = () => {
-        navigation.navigate('EditDetailSong', { songdetails: objsongsArtist[idSongSelected], id: idSongSelected })
+        navigation.navigate('EditDetailSong', { songdetails: objsongsArtist[idSongSelected], id: idSongSelected, previousScreen: route.name })
     }
     const handleNavigatorDeleteSong = () => {
         setIsDeleteSong(true)
@@ -111,7 +115,7 @@ export default function MyFOMUSIC({ navigation }) {
             if (rep) {
                 const data = Object.entries(rep).map(([key, value]) => {
                     return {
-                        title: value.name,
+                        title: value.title,
                         artist: value.artist,
                         songImg: value.artwork,
                         id: key,
@@ -127,7 +131,7 @@ export default function MyFOMUSIC({ navigation }) {
         }
         getSongsArtist()
 
-    }, [isDeleteSong, isVisibleMenuSingleSong, isVisibleMenuSingle])
+    }, [isDeleteSong, isVisibleMenuSingleSong, isVisibleMenuSingle, route.params])
 
     return (
         <View style={{ flex: 1 }}>
@@ -160,7 +164,7 @@ export default function MyFOMUSIC({ navigation }) {
             {isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} />}
             {isVisibleMenuSingleSong && <Edit handleNavigator={() => setIsVisibleMenuSingleSong(false)} edit={MenuSingleSong} height={380} />}
             {isVisibleMenuSingle && <Edit handleNavigator={() => setIsVisibleMenuSingle(false)} edit={MenuSingle} height={170} />}
-            {isDeleteSong && <DeleteSong id={idSongSelected} songName={objsongsArtist[idSongSelected].name} setIsVisibleMenuSingleSong={setIsVisibleMenuSingleSong} setIsDeleteSong={setIsDeleteSong} />}
+            {isDeleteSong && <DeleteSong id={idSongSelected} song={objsongsArtist[idSongSelected]} setIsVisibleMenuSingleSong={setIsVisibleMenuSingleSong} setIsDeleteSong={setIsDeleteSong} />}
         </View>
     )
 }

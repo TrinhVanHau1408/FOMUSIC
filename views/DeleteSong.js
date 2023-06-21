@@ -6,13 +6,14 @@ export default function DeleteSong({
     setIsVisibleMenuSingleSong,
     setIsDeleteSong,
     id,
-    songName
+    song
 }) {
     const onDeleteSong = async () => {
 
         try {
             const rep = await deleteDataFirebase(`songs/${id}`)
             if (rep) {
+                const rep2 = await deleteDataFirebase(`albums/${song.albumId}/songIds/${id}`)
                 ToastAndroid.show(`Successful`, ToastAndroid.SHORT);
 
             }
@@ -48,7 +49,7 @@ export default function DeleteSong({
                 borderRadius: 20,
             }}>
                 <Text style={(styles.textwithMarginTop)}>Bạn có chắc xoá bài hát</Text>
-                <Text style={styles.text}>{songName}</Text>
+                <Text style={styles.text}>{song.name}</Text>
                 <View style={styles.optionContainer}>
                     <TouchableOpacity style={styles.optionYes} onPress={onDeleteSong} >
                         <Text style={styles.textYes}>Yes</Text>
