@@ -79,6 +79,7 @@ const SearchStack = () => (
       headerShown: false
     }}>
     <Stack.Screen name='SearchStack' component={Search} />
+    <Stack.Screen name='Artist' component={Artist} />
   </Stack.Navigator>
 )
 

@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, FlatList, Alert } from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import HeaderApp from '../components/header/HeaderApp'
 import MyFollowing from '../components/following/MyFollowing'
 import { icons, images } from '../constants'
@@ -68,23 +68,37 @@ const music = [
 export default function Following({navigation}) {
  
   const {follows} = useSelector((state) => state.user)
+  const [filterActiveFollow, setFilterActiveFollow] = useState(null);
+  console.log('follows', follows)
   const goBack = () => {
     navigation.goBack();
+  }
+
+
+  useEffect(() => {
+    const filterActiveFollow = follows.filter(({active}) => active == true)
+    setFilterActiveFollow(filterActiveFollow);
+  }, [])
+
+  const handleNavigatorArtist = (artist) => {
+    navigation.navigate('Artist', { artist });
   }
   return (
     <View>
       <HeaderApp title='Following' iconLeft={icons.arrowBack} goBack={goBack} />
       <View style={{marginTop: 31}}>
         <FlatList
-          data={follows}
+          data={filterActiveFollow}
           renderItem={({ item }) =>
             <MyFollowing
               id={item.key}
               userName={item.name}
               userImg={item.photoUrl}
-              
+              artist={item}
+              isFollow = {item.active}
               follower= {item.follower}
-              following= {item.following} />}
+              following= {item.following} 
+              handleNavigatorArtist ={handleNavigatorArtist}/>}
           keyExtractor={(item, index) => index}
           
           showsVerticalScrollIndicator={false}

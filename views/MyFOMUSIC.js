@@ -152,7 +152,8 @@ export default function MyFOMUSIC({ navigation }) {
                         showsVerticalScrollIndicator={false}
                     /> :
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator size="large" color="blue" />
+                        {/* <ActivityIndicator size="large" color="blue" /> */}
+                        <Text>Chưa có bài hát nào được đăng</Text>
                     </View>
                 }
             </View>

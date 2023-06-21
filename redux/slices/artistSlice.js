@@ -82,6 +82,7 @@ const artistSlice = createSlice({
         setPopularRelease: (state, action) => {
             state.popularRelease = action.payload;
         },
+      
     },
     extraReducers: (builder) => {
         // getUserUid
