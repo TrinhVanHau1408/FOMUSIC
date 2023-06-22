@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {firebaseDatabaseRef, get, child, firebaseDatabase } from '../../firebase/connectDB';
+import { firebaseDatabaseRef, get, child, firebaseDatabase } from '../../firebase/connectDB';
+import { readDataFirebase, updateDataFirebase } from '../../firebase/controllerDB';
+import { convertObjectToArray } from '../../utilities/Object';
 
-export const getUserUid = createAsyncThunk('user/getUserUid', async({userUid},{ rejectWithValue })=> {
+export const getUserUid = createAsyncThunk('user/getUserUid', async ({ userUid }, { rejectWithValue }) => {
     try {
-        console.log('useruid createAsyncThunk' , userUid)
+        console.log('useruid createAsyncThunk', userUid)
         const dbRef = firebaseDatabaseRef(firebaseDatabase);
         const responeSnapshot = await get(child(dbRef, `users/${userUid}`));
         const user = {
@@ -16,21 +18,70 @@ export const getUserUid = createAsyncThunk('user/getUserUid', async({userUid},{ 
         }
         return user;
     } catch (error) {
-        console.log('error' , error.message)
+        console.log('error', error.message)
         return rejectWithValue(error.message);
     }
 })
 
+
+export const getAllArtistFollowByUserId = createAsyncThunk('user/getAllArtistFollowByUserId',
+    async ({ userId }, { dispatch }) => {
+        try {
+            const resFollowArtist = await readDataFirebase(`follows/${userId}`);
+
+            console.log('resFollowArtist', convertObjectToArray(resFollowArtist))
+            const arrayFollow = convertObjectToArray(resFollowArtist);
+
+            const artists = [];
+            for (let follow of arrayFollow) {
+                
+                    const resArtist = await readDataFirebase(`artists/${follow.key}`);
+                    const artist = {
+                        key: follow.key,
+                        active: follow.active,
+                        ...resArtist
+                    }
+
+                    // console.log(artist)
+                    artists.push(artist);
+                
+            }
+
+            dispatch(setFollowArtist(artists))
+
+        } catch {
+            dispatch(setFollowArtist(null))
+        }
+    }
+)
+
+export const followingArtistByUserId = createAsyncThunk('user/followingArtistByUserId',
+    async ({ userId, artistId, active, timestamp }, { }) => {
+        try {
+            console.log('followingArtistByUserId:', active)
+            await updateDataFirebase(`follows/${userId}/${artistId}`, {active: active,timestamp:  timestamp})
+            console.log(`Đã thêm thông tin "follows" cho nghệ sĩ ${artistId}`);
+        } catch (error) {
+            console.error(`Lỗi khi thêm thông tin "follows" cho nghệ sĩ ${artistId}:`, error);
+        }
+    }
+)
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         user: null,
+        follows: null,
         loading: false,
         error: null,
-      },
+    },
     reducers: {
         setUser: (state, action) => {
             state.user = action.payload;
+        },
+        setFollowArtist: (state, action) => {
+            state.follows = action.payload;
+
+
         }
     },
     extraReducers: (builder) => {
@@ -51,5 +102,5 @@ const userSlice = createSlice({
         })
     }
 })
-export const { setUser } = userSlice.actions;
+export const { setUser, setFollowArtist } = userSlice.actions;
 export default userSlice.reducer;

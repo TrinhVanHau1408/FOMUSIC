@@ -12,8 +12,12 @@ import userReducer from './slices/userSlice';
 import authReducer from './slices/authSlice';
 import playerReducer from './slices/playerSlice';
 import songReducer from './slices/songSlice';
-import playlistsReducer from './slices/playlistsSlice';
 import rankingReducer from './slices/rankingSlice';
+import userHistoryReducer from './slices/historySlice';
+import playlistsReducer from './slices/playlistsSlice';
+import artistSlice from './slices/artistSlice';
+import albumSlice from './slices/albumSlice';  
+
 
 // const rootReducer = combineReducers({
 //   auth: authReducer,
@@ -29,7 +33,9 @@ const store = configureStore({
     song: songReducer,
     playlists: playlistsReducer,
     ranking: rankingReducer,
-
+    userHistory: userHistoryReducer,
+    artist: artistSlice,
+    album: albumSlice,
   }
 ,
   middleware: (getDefaultMiddleware) =>

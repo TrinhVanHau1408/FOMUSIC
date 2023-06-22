@@ -21,7 +21,8 @@ import {
     setupPlayMusic, 
     togglePlayback,
     getCurrentHeartPlaying, 
-    setHeart} from '../redux/slices/playerSlice';
+    setHeart,
+    setCurrentPlay} from '../redux/slices/playerSlice';
 import {reactHeartSong} from '../redux/slices/songSlice';
 import PlayingMore from './PlayingMore';
 const tracks = [
@@ -86,7 +87,7 @@ const setUpOpenApp = async () => {
 }
 const Playing = ({ navigation }) => {
 
-    const { repeatMode, isHeart } = useSelector((state) => state.player);
+    const { repeatMode, isHeart, currentPlay } = useSelector((state) => state.player);
     const { songs } = useSelector((state) => state.song);
     const [song, setSong] = useState({});
     const [toggleMore, setToggleMore] = useState(false);
@@ -94,6 +95,7 @@ const Playing = ({ navigation }) => {
     const playBackState = usePlaybackState();
     const progress = useProgress();
     const goBack = () => {
+        navigation.goBack()
         setToggleMore(false);
     }
 
@@ -107,29 +109,34 @@ const Playing = ({ navigation }) => {
       }, [dispatch])
     
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        dispatch(settracks(tracks));
-        dispatch(setupPlayMusic());
-        // addEventListeners();
-        console.log("fff", repeatMode)
-        console.log("setup: ", playBackState)
-        if (playBackState == "idle") {
-            setUpOpenApp();
-        }
-    }, [])
+    //     // dispatch(settracks(tracks));
+    //     // dispatch(setupPlayMusic());
+    //     // addEventListeners();
+    //     // console.log("fff", repeatMode)
+    //     // console.log("setup: ", playBackState)
+    //     if (playBackState == "idle") {
+    //         setUpOpenApp();
+    //     }
+    // }, [])
+
     useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
+        console.log('PlaybackTrackChanged')
         if (event.type === Event.PlaybackTrackChanged && event.nextTrack != null) {
             const track = await TrackPlayer.getTrack(event.nextTrack);
-            const { title, artwork, artist } = track || {};
-            console.log("artwork ", artwork);
+            const { title, artwork, artist, lyrics } = track || {};
+            // const currentQueue = await TrackPlayer.getQueue();
 
-            setSong({
-                title,
+           dispatch(setCurrentPlay(track));
+
+
+           
+
+            console.log( 'aaa', {title,
                 artist,
-                artwork
-            })
-
+                artwork,
+                lyrics})
             dispatch(setHeart(true));
         }
     });
@@ -151,13 +158,13 @@ const Playing = ({ navigation }) => {
             {/* ImageSong */}
             <View style={styles.contentContainer}>
 
-                <Image style={styles.ImageSong} source={(song && song.artwork) ? { uri: song.artwork } : images.demo} />
+                <Image style={styles.ImageSong} source={(currentPlay && currentPlay.artwork) ? { uri: currentPlay.artwork } : images.demo} />
 
                 <Text style={styles.TextSong}>
-                    {song && song.title}
+                    {currentPlay && currentPlay.title}
                 </Text>
                 <Text style={styles.TextArtist}>
-                    {song && song.artist}
+                    {currentPlay && currentPlay.artist}
                 </Text>
             </View>
 
@@ -232,7 +239,7 @@ const Playing = ({ navigation }) => {
                             {/* <View style={{ height: 3, width: 40, backgroundColor: "#FFFFFF" }}></View> */}
                             <View style={{ flex: 1 }}>
                                 <Text style={styles.TextLyrics}>
-                                    Lyrics
+                                    {song&&song.lyrics}
                                 </Text>
                             </View>
                         </View>
@@ -388,7 +395,7 @@ const styles = StyleSheet.create({
         // fontStyle: normal,
         fontWeight: 500,
         fontSize: 14,
-        lineHeight: 17,
+        lineHeight: 15,
         /* identical to box height */
 
         textAlign: 'center',

@@ -5,6 +5,7 @@ import { icons, colors } from '../../constants'
 const HeaderApp = (props) => {
 
   const { title, iconLeft, iconRight, goBack, handleNavigator } = props;
+  console.log('iconRight', iconRight)
   return (
     <View style={(iconLeft && iconRight) ? styles.container2 : (iconLeft ? styles.container3 : styles.container1)}>
       {iconLeft && <TouchableOpacity onPress={goBack}>
@@ -12,7 +13,7 @@ const HeaderApp = (props) => {
       </TouchableOpacity>}
       <Text style={[styles.title, (iconLeft || iconRight) ? styles.color2 : styles.color1]}>{title}</Text>
       {iconRight && <TouchableOpacity onPress={handleNavigator}>
-        <Image source={iconRight} style={{ /* tintColor: colors.primary */ }} />
+        <Image source={iconRight} style={{height: 42, width: 42 }} />
       </TouchableOpacity>}
     </View>
   )

@@ -2,15 +2,15 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { findStartOfWeek } from '../../utilities/Date';
 import { readDataFirebase, writeDataFirebase } from '../../firebase/controllerDB';
 import { firebaseDatabase, firebaseDatabaseRef, firebaseUpdate, onAuthStateChanged } from '../../firebase/connectDB';
-import { orderByChild, limitToLast, limitToFirst,orderByValue, onValue,query, get } from '../../firebase/connectDB';
+import { orderByChild, limitToLast, limitToFirst, orderByValue, onValue, query, get, child } from '../../firebase/connectDB';
 
 export const getRankingCurrentWeek = createAsyncThunk('ranking/getRankingCurrentWeek',
     async (_, { dispatch }) => {
 
-        console.log("getRankingCurrentWeek")
+        // console.log("getRankingCurrentWeek")
         const currentDate = new Date()
         const timestampStartOfWeek = findStartOfWeek(currentDate);
-        console.log(timestampStartOfWeek)
+        // console.log(timestampStartOfWeek)
         // const rankingData = await readDataFirebase(`ranking/${timestampStartOfWeek}`);
 
         // const databaseRef = firebaseDatabaseRef(firebaseDatabase, `ranking/${timestampStartOfWeek}`);
@@ -20,20 +20,54 @@ export const getRankingCurrentWeek = createAsyncThunk('ranking/getRankingCurrent
         // const sortedQuery = limitToFirst(query, 2); // Lấy 10 kết quả đầu tiên
         const rankingQuery = query(rankingRef, orderByChild('listen'), limitToLast(5));
 
-        onValue(rankingQuery, (snapshot) => {
+        onValue(rankingQuery, async (snapshot) => {
             const data = snapshot.val();
-            // Chuyển đổi dữ liệu thành một mảng
-            const dataArray = Object.entries(data).map(([key, value]) => ({key, ...value }));
-  
-            // Sắp xếp mảng theo trường "listen" giảm dần
-            const sortedArray = dataArray.sort((a, b) => b.listen - a.listen);
-            // Xử lý dữ liệu tại đây
-            dispatch(setRanking(sortedArray));
-          });
+            // console.log('data', data)
+            let rankingData = [];
+            if (data != null) {
+                // Chuyển đổi dữ liệu thành một mảng
+                const dataArray = Object.entries(data).map(([key, value]) => ({ key, ...value }));
 
-        // const res = await get(rankingQuery);
-        // console.log(res.val())
-        // dispatch(setRanking(sortedQuery));
+                // Sắp xếp mảng theo trường "listen" giảm dần
+                const sortedArray = dataArray.sort((a, b) => b.listen - a.listen);
+
+                const dbRef = firebaseDatabaseRef(firebaseDatabase);
+                for (let rank of sortedArray) {
+                    // console.log(rank)
+                    let songId = rank.key;
+                   
+                    const snapshotSong = await get(child(dbRef, `songs/${songId}`));
+             
+                    // const song = {
+                    //     id: snapshotSong.key,
+                    //     albumName: snapshotSong.val().albumName,
+                    //     artistId: snapshotSong.val().artistId,
+                    //     artist: snapshotSong.val().artist,
+                    //     url: snapshotSong.val().url,
+                    //     duration: snapshotSong.val().duration,
+                    //     genreId: snapshotSong.val().genreId,
+                    //     genre: snapshotSong.val().genre,
+                    //     artwork: snapshotSong.val().artwork,
+                    //     lyrics: snapshotSong.val().lyrics,
+                    //     title: snapshotSong.val().name,
+                    //     reactHeart: snapshotSong.val().reactHeart,
+                    //     releaseAt: snapshotSong.val().releaseAt,
+                      
+                    // }
+
+                    const song = {
+                        id: snapshotSong.key,
+                        ...snapshotSong.val()
+                      
+                    }
+
+                    rankingData.push(song);
+                }
+                
+            }
+            // console.log("rankingData",rankingData);
+            dispatch(setRanking(rankingData));
+        });
     }
 )
 
@@ -77,7 +111,6 @@ export const rankingSlice = createSlice({
     reducers: {
         setRanking: (state, action) => {
             state.ranking = action.payload;
-            console.log(action.payload)
         }
     }
 })

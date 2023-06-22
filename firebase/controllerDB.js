@@ -6,36 +6,40 @@ import {
   firebaseDatabaseSet,
   get,
   child,
-  onValue,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
   serverTimestamp,
-  provider,
-  signInWithRedirect,
-  sendEmailVerification,
-  signOut,orderByChild, equalTo, query
+  orderByChild, equalTo, query, firebaseDataUpdate
 } from "./connectDB"
 import { remove, push, update, set } from 'firebase/database'
 
 
 const readDataFirebaseWithChildCondition = async (parentNode, nameCodition, valueCodition) => {
 
-  console.log(`Parent node: ${parentNode}, nameCodition: ${nameCodition}, valueCodition: ${valueCodition}`);
-  try {
+
+  // try {
+  // console.log(`Parent node: ${parentNode}, nameCodition: ${nameCodition}, valueCodition: ${valueCodition}`);
+
     const parentRef = firebaseDatabaseRef(firebaseDatabase, parentNode);
 
     const queryRef = query(parentRef, orderByChild(nameCodition), equalTo(valueCodition));
   
-    const snapshot = await get(queryRef);
-    // console.log(snapshot)
-    if (snapshot.exists()) return snapshot.val();
+    try {
+      const snapshot = await get(queryRef);
+      return snapshot.val();
 
-    else return null
+    } catch (error) {
+      console.log("Lỗi khi truy vấn dữ liệu:", error);
+      return null;
+    }
+  //   // const snapshot = await get(parentRef, orderByChild(nameCodition), equalTo(valueCodition));
+  //   const snapshot = await get(queryRef);
+  //   console.log("readDataFirebaseWithChildCondition",snapshot)
+  //   if (snapshot.exists()) return snapshot.val();
 
-  } catch {
-    return null;
-  }
+  //   else return null
+
+  // } catch {
+  //   return null;
+  // }
 }
 
 const readDataFirebase = async (path) => {
@@ -62,9 +66,10 @@ const writeDataFirebase = async (path, data, id) => {
       return true;
     }
     else {
-      await push(firebaseDatabaseRef(firebaseDatabase, path), data)
+      const rep = await push(firebaseDatabaseRef(firebaseDatabase, path), data)
       console.log("save data firebase successfully")
-      return true;
+      // console.log(rep)
+      return rep;
     }
   }
   catch (err) {
@@ -87,9 +92,18 @@ const deleteDataFirebase = async (path) => {
   }
 }
 
+const updateDataFirebase = async (path, data) => {
+  try {
+    const updateRef = firebaseDatabaseRef(firebaseDatabase, path);
+    await firebaseDataUpdate(updateRef, data);
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
 const updateDataPlaylistsFirebase = async (path, data) => {
   try {
-    const dbRef = await firebaseDatabaseRef(firebaseDatabase, path)
+    const dbRef = firebaseDatabaseRef(firebaseDatabase, path)
     const data_previous = await get(dbRef)
     const data_update =
     {
@@ -117,5 +131,6 @@ export {
   writeDataFirebase,
   deleteDataFirebase,
   updateDataPlaylistsFirebase,
-  readDataFirebaseWithChildCondition
+  readDataFirebaseWithChildCondition,
+  updateDataFirebase,
 }

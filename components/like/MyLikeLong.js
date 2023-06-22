@@ -1,12 +1,18 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
-export default function MyLikeLong({ id, idSongSelected, songName, songImg, artistName, isLike, index, handleLayout, setIdSong, handleLongClick }) {
+import { addTracks } from '../../redux/slices/playerSlice';
+import { useDispatch } from 'react-redux';
+export default function MyLikeLong({songs, id, idSongSelected, songName, songImg, artistName, isLike, index, handleLayout, setIdSong, handleLongClick }) {
     const [isLiked, setIsIsLiked] = useState(isLike);
+    const dispatch = useDispatch();
+    const handelPlay = ( ) => {
+        dispatch(addTracks({songs, songCurrentId: id}));
+    }
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={() => handleLayout(id)}
+                onPress={handelPlay}
                 style={styles.info}
                 onLongPress={() => handleLongClick(id)}
             >
@@ -15,7 +21,7 @@ export default function MyLikeLong({ id, idSongSelected, songName, songImg, arti
                         <Text>{index + 1}</Text>}
                 </View>
                 <View style={styles.imgContainer}>
-                    <Image source={songImg} style={styles.img} />
+                    <Image source={songImg? {uri: songImg}: images.demo} style={styles.img} />
                 </View>
                 <View style={styles.content}>
                     <Text style={styles.songName}>{songName}</Text>
@@ -42,7 +48,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 22,
         marginVertical: 12,
 
-        // backgroundColor: colors.primary
+       
     },
     stt: {
         marginRight: 22,
@@ -83,6 +89,7 @@ const styles = StyleSheet.create({
     songName: {
         fontWeight: 'bold',
         fontSize: 17,
+        lineHeight: 20
     },
     artistName: {
         fontSize: 12,

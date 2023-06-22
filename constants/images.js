@@ -18,5 +18,6 @@ export default {
     playlistSVT: require('../assets/images/playlist-svt.jpg'),
     playlistsvt2: require('../assets/images/playlist-svt2.png'),
     playlistTwice: require('../assets/images/playlist-twice.jpg'),
-    playlistFlower: require('../assets/images/playlist-flower.jpg')
+    playlistFlower: require('../assets/images/playlist-flower.jpg'),
+    all: require('../assets/images/cricleAll.png')
 }
