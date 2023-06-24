@@ -10,10 +10,13 @@ import { images, icons, colors } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { usePlaybackState } from 'react-native-track-player';
-import { getHistorySong } from '../redux/slices/songSlice';
+import { getAllSong, getHistorySong } from '../redux/slices/songSlice';
 import { addRankingSongListen, getRankingCurrentWeek } from '../redux/slices/rankingSlice';
 
 import { getAllPlaylistByUserId } from '../redux/slices/playlistsSlice';
+import { getAllAritist, getArtistByUserId } from '../redux/slices/artistSlice';
+import { getAllArtistFollowByUserId, getArtistFollowByUserId, getArtistFollowByUserUid } from '../redux/slices/userSlice';
+import { addTracks, playTrackBySongId, setTracks, setupPlayMusic } from '../redux/slices/playerSlice';
 const music = [
     {
         name: 'Lovely',
@@ -80,10 +83,11 @@ const music = [
 export default function Home({ navigation }) {
     const playBackState = usePlaybackState();
     const dispatch = useDispatch();
-    const {user, loading, error} = useSelector((state) => state.user)
-    const {historySongs} = useSelector((state) => state.song)
-    const {playlists} = useSelector((state) => state.playlists)
-    const {ranking} = useSelector((state) => state.ranking)
+    const { user, loading, error } = useSelector((state) => state.user)
+    const { artist } = useSelector((state) => state.artist)
+    const { historySongs } = useSelector((state) => state.song)
+    const { playlists } = useSelector((state) => state.playlists)
+    const { ranking } = useSelector((state) => state.ranking)
     const [isVisible, setIsVisible] = useState(false);
     const [idSong, setIdSong] = useState(0);
     const handleLayout = (id) => {
@@ -91,35 +95,36 @@ export default function Home({ navigation }) {
         setIdSong(id);
 
     }
+
+    // console.log(historySongs)
     const handleNavigatorPlaying = (id, songs) => {
+
         
+        
+        dispatch(addTracks({songs, songCurrentId: id}));
+        // dispatch(playTrackBySongId({songId: id }))
+        navigation.navigate('Playing');
 
-            // dispatch(setTracks(songs));
-            // dispatch(setupPlayMusic());
-            
-            // console.log(ranking)
-       
-            // dispatch(getFollowedArtists({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}))
-            // dispatch(getArtistFollowByUserUid());
-            // readDataFirebaseWithChildCondition('songs', 'name', 'baihat1')
-       
-        // if (!loading && error == null) {
-            dispatch(getAllPlaylistByUserId({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
-
-        //     console.log("fillter playlist: ", playlists && filterObject(playlists,'name','Demo'));
-        // }
-        // console.log("fillter playlist: ", playlists && filterObject(playlists,'name','Demo'));
-        // dispatch(getRankingCurrentWeek());
-        // dispatch(getAllPlaylistByUserId({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}))
-        // navigation.navigate('Playing');
-       
     }
+   const  handleNavigatorPlaying1 = () => {
+    navigation.navigate('Playing');
 
-  
+   }
 
-    useEffect(()=>{
-        dispatch(getHistorySong({userId: '4QoEok3ghdXH7DmJJzomMyjeryT2'}));
-        dispatch(getRankingCurrentWeek());
+    // console.log('artist', artist)
+    const handleSelect = (option) => {
+        setSelectedItem(option.label);
+    };
+    useEffect(() => {
+        if (user) {
+            const userId = user.uid;
+            dispatch(getHistorySong({ userId: userId }));
+            dispatch(getRankingCurrentWeek());
+            dispatch(getAllArtistFollowByUserId({ userId: userId }))
+        }
+    }, [user])
+    useEffect(() => {
+        dispatch(setupPlayMusic());
     }, [])
     return (
         <View style={styles.container}>
@@ -130,7 +135,7 @@ export default function Home({ navigation }) {
                     <HeaderApp title={'Home'} />
                 </TouchableOpacity>
                 <View>
-                    <Image source={icons.musicNote1} style={{ position: 'absolute', top: -55, left: -15,  resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
+                    <Image source={icons.musicNote1} style={{ position: 'absolute', top: -55, left: -15, resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
                     <Image source={icons.musicNote2} style={{ position: 'absolute', top: -55, right: -7, resizeMode: 'stretch', tintColor: colors.primary, opacity: 0.5 }} />
                 </View>
                 <View>
@@ -147,41 +152,46 @@ export default function Home({ navigation }) {
                     <BoxTranfer />
                 </View>
 
+                <View>
+
+                </View>
+
                 <View style={{ marginLeft: 20 }}>
                     <View >
-                        <TitleAlbum 
+                        <TitleAlbum
                             type={2}
                             name={'TOP CHARTS'} />
                         <FlatList
-                            data={ranking&&ranking}
+                            data={ranking && ranking}
                             renderItem={({ item }) =>
                                 <SquareAlbum
                                     id={item.id}
                                     name={item.title}
                                     artwork={item.artwork}
-                                    songs = {ranking}
-                                    handleNavigator={handleNavigatorPlaying}/>}
+                                    songs={ranking}
+                                    handleNavigator={handleNavigatorPlaying} />}
                             keyExtractor={(item, index) => index}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                         />
                     </View>
-
-                    <View style={(playBackState != null && playBackState != 'idle')&&styles.marginBottomControl}>
-                        <TitleAlbum 
+                
+                    <View style={(playBackState != null && playBackState != 'idle') && styles.marginBottomControl}>
+                        <TitleAlbum
                             type={3}
                             name={'RECENTLY PLAYED'} />
                         <FlatList
-                            data={historySongs&&historySongs}
+                            data={historySongs && historySongs}
+                            style={{marginBottom: 50}}
                             renderItem={({ item }) =>
                                 <SquareAlbum
                                     id={item.id}
-                                    name={item.name}
+                                    name={item.title}
                                     artwork={item.artwork}
-                                    songs = {historySongs}
+                                    songs={historySongs}
                                     // handleLayout={handleLayout}
                                     handleNavigator={handleNavigatorPlaying}
-                                     />}
+                                />}
                             keyExtractor={(item, index) => index}
                             horizontal
                             showsHorizontalScrollIndicator={false}
@@ -189,7 +199,7 @@ export default function Home({ navigation }) {
                     </View>
                 </View>
             </ScrollView>
-            {(playBackState != null && playBackState != 'idle') && <ControlMusic song={music.find(({ id }) => id === idSong)} handleNavigator={handleNavigatorPlaying} />}
+            {(playBackState != null && playBackState != 'idle') && <ControlMusic handleNavigator={handleNavigatorPlaying1} />}
         </View>
 
     )

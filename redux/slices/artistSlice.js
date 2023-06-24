@@ -1,75 +1,73 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { readDataFirebase, readDataFirebaseWithChildCondition } from '../../firebase/controllerDB';
-import { firebaseDatabaseRef, firebaseDatabase, get, orderByChild, equalTo, query } from '../../firebase/connectDB';
-export const getArtistByUserId = createAsyncThunk('artist/getArtistByUserId', async ({ userId }, {dispatch, rejectWithValue }) => {
+import { convertObjectToArray } from '../../utilities/Object';
+
+
+export const getAllAritist = createAsyncThunk('artist/getAllAritist', 
+    async (_, {dispatch}) => {
+        try {
+            const resArtist = await readDataFirebase('artists');
+            console.log('convertObjectToArray(resArtist))', convertObjectToArray(resArtist));
+            dispatch(setArtist(convertObjectToArray(resArtist)));
+        } catch (error) {
+           console.log("get all artist error: ", error)
+        }
+    }
+)
+export const getArtistByUserId = createAsyncThunk('artist/getArtistByUserId', async ({ userId }, { dispatch, rejectWithValue }) => {
     try {
         const resArtist = await readDataFirebase(`artists/${userId}`);
         dispatch(setArtist(resArtist));
     } catch (error) {
         dispatch(setArtist(null));
-      
+
     }
 })
 
 
-// Truy vấn tất cả các nghệ sĩ đã theo dõi
-// export const getFollowedArtists = createAsyncThunk('artist/getFollowedArtists',
-//     async ({ userId }, { dispatch, rejectWithValue }) => {
-//         console.log("getFollowedArtists");
+export const getAllAlbumByAlbumIds = createAsyncThunk('artist/getAllAlbumByArtistId',
+    async ({ albumIds }, { dispatch }) => {
+        try {
+            const dataAlbum = []
 
-//         // const artistsRef = firebaseDatabaseRef(firebaseDatabase, 'artists');
-//         // console.log(`follows/${userId}`)
-//         // const queryRef = query(artistsRef, orderByChild(userId+'/active'), equalTo(""));
+            for (let albumId of albumIds) {
+                const resAlbum = await readDataFirebase(`albums/${albumId}`);
+                dataAlbum.push({ key: albumId, ...resAlbum });
+            }
 
-//         // try {
-//         //   const snapshot = await get(queryRef);
-//         //   const artists = snapshot.val();
-//         //   console.log("artists",artists);
-//         // } catch (error) {
-//         //   console.log("Lỗi khi truy vấn dữ liệu:", error);
-//         //   return null;
-//         // }
 
-//         // const as =await readDataFirebase('artists');
-//         // console.log(as)
+            dispatch(setAlbum(dataAlbum));
+        } catch (error) {
+            return null;
+        }
+    }
+)
 
-//         const artistsRef = firebaseDatabaseRef(firebaseDatabase, 'artists');
+export const getPopularRelease = createAsyncThunk('artist/getPopularRelease',
+    async ({ songIds }, { dispatch }) => {
 
-//         // Tạo query với orderByChild và equalTo
-//         const followsQuery = query(
-//             firebaseDatabaseRef(artistsRef, "follows"),
-//             orderByChild('active'),
-//             equalTo(false)
-//         );
+        
+    try {
+        const dataPopular = []
+        for (let songId of songIds) {
+            const resSong = await readDataFirebase(`songs/${songId}`);
+            dataPopular.push({ key: songId, ...resSong });
 
-//         // Truy vấn dữ liệu
-//         get(followsQuery)
-//             .then((snapshot) => {
-//                 console.log(snapshot)
-//                 if (snapshot.exists()) {
-                  
-//                     snapshot.forEach((childSnapshot) => {
-//                         const followId = childSnapshot.key;
-//                         const followData = childSnapshot.val();
+        }
 
-//                         // Xử lý dữ liệu theo ý muốn
-//                         console.log(`Follow: ${followId}, Active: ${followData.active}`);
-//                     });
-//                 }
-//             })
-//             .catch((error) => {
-//                 console.error(error);
-//             });
-
-//     }
-// )
-
+        console.log('dataPopular', dataPopular)
+        dispatch(setPopularRelease(dataPopular));
+    } catch (error) {
+        return null;
+    }
+})
 
 const artistSlice = createSlice({
     name: 'artist',
     initialState: {
         artist: null,
-        followedArtist: null,
+        albums: null,
+        popularRelease: null,
         loading: false,
         error: null,
     },
@@ -79,7 +77,14 @@ const artistSlice = createSlice({
         },
         setFollowedArtist: (state, action) => {
             state.followedArtist = action.payload;
-        }
+        },
+        setAlbum: (state, action) => {
+            state.albums = action.payload;
+        },
+        setPopularRelease: (state, action) => {
+            state.popularRelease = action.payload;
+        },
+      
     },
     extraReducers: (builder) => {
         // getUserUid
@@ -99,5 +104,5 @@ const artistSlice = createSlice({
         // })
     }
 })
-export const { setArtist, setFollowedArtist } = artistSlice.actions;
+export const { setArtist, setFollowedArtist, setAlbum, setPopularRelease } = artistSlice.actions;
 export default artistSlice.reducer;

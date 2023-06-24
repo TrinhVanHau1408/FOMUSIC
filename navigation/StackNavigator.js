@@ -34,6 +34,7 @@ import DetailSong from "../views/DetailSong";
 import EditDetailSong from "../views/EditDetailSong";
 import DeleteSong from "../views/DeleteSong";
 import UpLoad from "../views/UpLoad";
+import Playing from "../views/PlayingFullLyric";
 
 
 
@@ -50,6 +51,7 @@ const HomeStack = () => (
     }}>
     <Stack.Screen name='HomeStack' component={Home} />
     <Stack.Screen name='BXH' component={Home3} />
+    <Stack.Screen name='Play' component={Playing} />
   </Stack.Navigator>
 )
 
@@ -79,6 +81,7 @@ const SearchStack = () => (
       headerShown: false
     }}>
     <Stack.Screen name='SearchStack' component={Search} />
+    <Stack.Screen name='Artist' component={Artist} />
   </Stack.Navigator>
 )
 

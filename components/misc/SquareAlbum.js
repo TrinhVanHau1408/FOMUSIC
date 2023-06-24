@@ -3,12 +3,12 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, images } from '../../constants';
 export default function SquareAlbum(props) {
 
-    const { id, name, artwork, handleNavigator, isAlbum, handleLayout } = props
+    const { songs,id, name, artwork, handleNavigator, isAlbum, handleLayout } = props
     // console.log('artwork img square album', artwork)
     
     return (
         <View style={[styles.container,isAlbum&&styles.marginx2]}>
-            <TouchableOpacity onPress={()=>handleNavigator(id)}>
+            <TouchableOpacity onPress={()=>handleNavigator(id, songs)}>
                 <Image source={artwork ? {uri: artwork} : images.demo} style={styles.img} />
                 <Text style={styles.textName}>{name}</Text>
             </TouchableOpacity>

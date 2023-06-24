@@ -1,5 +1,5 @@
 import { View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 // import { useNavigation } from '@react-navigation/native';
 
 import { StackActions } from '@react-navigation/native';
@@ -11,10 +11,16 @@ import { removeDataAsyncStorage } from '../utilities/AsyncStorage'
 import { setUser } from '../redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../redux/slices/authSlice';
-export default function Menu({navigation}) {
+import { getArtistByUserId } from '../redux/slices/artistSlice'
+
+
+export default function Menu({ navigation, route }) {
     // const navigate = useNavigation();
     const dispatch = useDispatch();
-    const {loading, error} = useSelector((state) => state.auth);
+    const { loading, error } = useSelector((state) => state.auth);
+    const { user } = useSelector((state) => state.user)
+    const { artist } = useSelector((state) => state.artist)
+
     const handleNavigatorSetting = () => {
         navigation.navigate('Setting');
     }
@@ -28,7 +34,12 @@ export default function Menu({navigation}) {
         navigation.navigate('Profile');
     }
     const handleNavigatorUpload = () => {
-        navigation.navigate('Upload');
+        if (artist) {
+            navigation.navigate('Upload', { previousScreen: route.name })
+        }
+        else {
+            Alert.alert("Bạn không phải là nghệ sĩ")
+        }
     }
 
     async function logout() {
@@ -63,8 +74,18 @@ export default function Menu({navigation}) {
             logout();
         }
 
-        
+
     }
+    useEffect(() => {
+        if (user) {
+            dispatch(getArtistByUserId({ userId: user.uid }))
+        }
+        else {
+            Alert.alert("Bạn chưa đăng nhập")
+        }
+
+    }, [])
+
     return (
         <View style={{
             flex: 1,

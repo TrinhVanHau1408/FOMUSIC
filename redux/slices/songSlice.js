@@ -11,11 +11,22 @@ import {
     orderByChild
 } from '../../firebase/connectDB';
 import { parse } from 'react-native-svg';
-import { readDataFirebaseWithChildCondition } from '../../firebase/controllerDB';
+import { readDataFirebase, readDataFirebaseWithChildCondition } from '../../firebase/controllerDB';
+import { convertObjectToArray } from '../../utilities/Object';
 
 
 // const getAllSong = createAsyncThunk('song/getAllSong', async ({}))
-
+export const getAllSong = createAsyncThunk('song/getAllSong', 
+    async(_, {dispatch}) => {
+        try {
+            const resSong = await readDataFirebase('songs');
+            console.log("convertObjectToArray(resSong)", convertObjectToArray(resSong))
+            dispatch(setSong(convertObjectToArray(resSong)))
+        } catch (error) {
+            console.log("Get all song error: ", error)
+        }
+    }
+)
 
 export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ songId, userId }, { rejectWithValue }) => {
     // path: songs/songId/reactHeart/userId =>> nếu tồn tại thì xóa bỏ nếu chứa thì thêm vào
@@ -82,18 +93,7 @@ export const getHistorySong = createAsyncThunk('song/getHistorySong',
             // console.log(`song id ${snapshotSong.key} + ${snapshotSong.val()} `)
             let song = {
                 id: snapshotSong.key,
-                albumName: snapshotSong.val().albumName,
-                artistId: snapshotSong.val().artistId,
-                artist: snapshotSong.val().artist,
-                url: snapshotSong.val().url,
-                duration: snapshotSong.val().duration,
-                genreId: snapshotSong.val().genreId,
-                genre: snapshotSong.val().genre,
-                artwork: snapshotSong.val().artwork,
-                lyrics: snapshotSong.val().lyrics,
-                name: snapshotSong.val().name,
-                reactHeart: snapshotSong.val().reactHeart,
-                releaseAt: snapshotSong.val().releaseAt,
+                ...snapshotSong.val()
             }
             // console.log(`song id ${snapshotSong.key} + ${snapshotSong.val().name} + ${snapshotSong.val().artwork}`)
         

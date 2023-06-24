@@ -40,8 +40,8 @@ export default {
     search: require('../assets/images/search.png'),
     menu: require('../assets/images/menu.png'),
     library: require('../assets/images/library.png'),
-    option: require('../assets/images/option.png'),
-    follow: require('../assets/images/follow.png'),
+    option: require('../assets/images/more.svg'),
+    follow: require('../assets/images/follow.svg'),
     arrowBackBlack: require('../assets/images/arrow-back-black.png'),
     iconGoToPlaylist: require('../assets/images/Icon.png'),
     loopBlack: require('../assets/images/loop_black.png'),
@@ -57,5 +57,10 @@ export default {
     frame902: require('../assets/images/frame-902.png'),
     blackEyeOpen: require('../assets/images/black-eye-open.png'),
     blackEyeClose: require('../assets/images/black-eye-close.png'),
-    blackEditProfile: require('../assets/images/black-edit-profile.png')
+    blackEditProfile: require('../assets/images/black-edit-profile.png'),
+    dropdown: require('../assets/images/dropdown.png'),
+    schedule: require('../assets/images/Schedule.png'),
+    cameraAddPhoto: require('../assets/images/camera-add-photo.png'),
+    cameraEdit: require('../assets/images/camera-edit.png'),
+    followed: require('../assets/images/followed.svg'),
 }

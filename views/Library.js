@@ -13,7 +13,7 @@ import { getAllPlaylistByUserId, getPlayLists } from '../redux/slices/playlistsS
 
 import { getAlbum } from '../redux/slices/albumSlice';
 import { getHistorySong } from '../redux/slices/songSlice';
-import { getUserUid,getArtistFollowByUserUid } from '../redux/slices/userSlice';
+import { getUserUid, getArtistFollowByUserUid } from '../redux/slices/userSlice';
 import { filterObject } from '../utilities/Object';
 import PopupCreateNewPlaylist from '../components/popup/PopupCreateNewPlaylist';
 import PopupAddSong from '../components/popup/PopupAddSong';
@@ -142,11 +142,11 @@ export default function Library({ navigation }) {
   // const [details, setDetails] = useState(userHistory[id])
   // const [music, setMusic] = useState()
   // const [idSong, setIdSong] = useState(0);
-  const {user} = useSelector((state) => state.user);
+  const { user, follows } = useSelector((state) => state.user);
   const { userHistory } = useSelector((state) => state.userHistory);
   const historySongs = useSelector(state => state.song.historySongs);
-  const {playlists} = useSelector((state) => state.playlists);
-  const followedArtist  = useSelector((state) => state.followedArtist);
+  const { playlists } = useSelector((state) => state.playlists);
+  const followedArtist = useSelector((state) => state.followedArtist);
   const album = useSelector((state) => state.album.album);
 
   const [imgUrlNewPlaylist, setImgUrlNewPlaylist] = useState('');
@@ -155,14 +155,14 @@ export default function Library({ navigation }) {
   const [isVisiblePopupCreateNewPlaylist, setIsVisiblePopupCreateNewPlaylist] = useState(false)
   const [isVisiblePopupAddSong, setIsVisiblePopupAddSong] = useState(false);
   // ------------------------------History-------------------------------------------
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (user != null) {
-      dispatch(getHistorySong({userId: user.uid}));
+      dispatch(getHistorySong({ userId: user.uid }));
     }
-  },[dispatch, user])
+  }, [dispatch, user])
 
   // console.log('history result: ', historySongs)
   //---------------------------------- Artist--------------------------------------------
@@ -175,33 +175,33 @@ export default function Library({ navigation }) {
   //   getdata()
   // }, [dispatch, userId])
 
-  useEffect(() => {
-    // const data = []
-    // for (key in followedArtist) {
-    //   // if (playlists[key].userId == user.user.uid) {
-    //     data.push({
-    //       name: followedArtist[key].name,
-    //       imageUrl: followedArtist[key].photoUrl,
-    //       id: key
-    //     })
-    //   // }
-    // }
-    // setArrayFollowArtist(data)
+  // useEffect(() => {
+  //   // const data = []
+  //   // for (key in followedArtist) {
+  //   //   // if (playlists[key].userId == user.user.uid) {
+  //   //     data.push({
+  //   //       name: followedArtist[key].name,
+  //   //       imageUrl: followedArtist[key].photoUrl,
+  //   //       id: key
+  //   //     })
+  //   //   // }
+  //   // }
+  //   // setArrayFollowArtist(data)
 
-    dispatch(getArtistFollowByUserUid());
+  //   dispatch(getArtistFollowByUserUid());
 
 
-  }, [])
+  // }, [])
 
 
   // console.log("ARTIST dang follow: ", followedArtist)
 
   // ------------------------------Playlist------------------------------------
-  
+
   useEffect(() => {
-     if (user != null) {
-      dispatch(getAllPlaylistByUserId({userId: user.uid}))
-     }
+    if (user != null) {
+      dispatch(getAllPlaylistByUserId({ userId: user.uid }))
+    }
   }, [user])
 
   // useEffect(() => {
@@ -221,7 +221,7 @@ export default function Library({ navigation }) {
   // console.log('playlist moi tao ne: ', playlists)
 
 
-  
+
 
 
   // --------------------------------- ALBUM----------------------------------------------
@@ -253,15 +253,15 @@ export default function Library({ navigation }) {
   const handleButton = () => {
     Alert.alert('Test', 'Library button');
   }
-  const handleNavigatorArtist = (id) => {
-    navigation.navigate('Artist', { id: id });
-  }
+  // const handleNavigatorArtist = (id) => {
+  //   navigation.navigate('Artist', { id: id });
+  // }
 
-  const handleNavigatorPlaylist = (id, ) => {
+  const handleNavigatorPlaylist = (id,) => {
 
     // const playlist = filterObject(playlists, 'key', id);
     // console.log(id, playlist)
-    navigation.navigate('Playlist', {playlists});
+    navigation.navigate('Playlist', { playlists });
   }
 
   const handleNavigatorAlbum = (id) => {
@@ -275,7 +275,7 @@ export default function Library({ navigation }) {
   const handleNavigatorLikes = () => {
     navigation.navigate('Like');
   }
-  
+
 
   const handleOpenPopuCreatnNePlaylist = () => {
     setIsVisiblePopupCreateNewPlaylist(true)
@@ -300,7 +300,10 @@ export default function Library({ navigation }) {
     setIsVisiblePopupCreateNewPlaylist(false);
     setIsVisiblePopupAddSong(true);
   }
- 
+
+  const handleNavigatorArtist = (artist) => {
+    navigation.navigate('Artist', { artist });
+  }
   return (
     <SafeAreaView style={{ flex: 1, }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -350,7 +353,7 @@ export default function Library({ navigation }) {
                     <CircleAlbum
                       id={item.id}
                       name={item.name}
-                      artwork={ item.artwork }
+                      artwork={item.artwork}
                       handleNavigator={handleNavigatorArtist} />}
                   keyExtractor={(item, index) => index}
                   horizontal
@@ -361,27 +364,27 @@ export default function Library({ navigation }) {
           </View>
 
           {/* ----------------------------------PLAYLIST----------------------------------------------  */}
-          
+
           <View>
-                <TitleAlbum
-                  type={4}
-                  name={'Playlist'} />
-               {playlists ?  <FlatList
-                  data={playlists}
-                  renderItem={({ item, index }) =>
-                    <RectangleAlbum
-                      id={item.key}
-                      name={item.name}
-                      artwork={ item.imageUrl }
-                      type={2}
-                      isPlaylist={true}
-                      handleNavigator={handleNavigatorPlaylist} />}
-                  keyExtractor={(item, index) => index}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                />: <TouchableOpacity onPress={handleOpenPopuCreatnNePlaylist}><Text>Ddd</Text></TouchableOpacity>}
-            
-            
+            <TitleAlbum
+              type={4}
+              name={'Playlist'} />
+            {playlists ? <FlatList
+              data={[...playlists].reverse()}
+              renderItem={({ item, index }) =>
+                <RectangleAlbum
+                  id={item.key}
+                  name={item.name}
+                  artwork={item.imageUrl}
+                  type={2}
+                  isPlaylist={true}
+                  handleNavigator={handleNavigatorPlaylist} />}
+              keyExtractor={(item, index) => index}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            /> : <TouchableOpacity onPress={handleOpenPopuCreatnNePlaylist}><Text>Ddd</Text></TouchableOpacity>}
+
+
           </View>
 
           {/* ------------------------------ALBUM------------------------------ */}
@@ -408,24 +411,30 @@ export default function Library({ navigation }) {
           </View>
 
           {/* ------------------------------FOLLOWING------------------------------ */}
-          {/* <View>
+          <View>
             <TitleAlbum
               type={4}
               name={'Following'} />
-            <FlatList
-            // Chua them data!
-              data={}
-              renderItem={({ item }) =>
-                <CircleAlbum
-                  id={item.id}
-                  name={item.title}
-                  img={item.songImg}
-                  handleNavigator={handleNavigatorFollowing} />}
-              keyExtractor={(item, index) => index}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
-          </View> */}
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <CircleAlbum
+
+                img={images.all}
+                handleNavigatorAllFollowing={handleNavigatorFollowing} />
+              <FlatList
+                // Chua them data!
+                data={follows && follows.filter(({active}) => active == true)}
+                renderItem={({ item }) =>
+                  <CircleAlbum
+                    id={item.key}
+                    name={item.name}
+                    img={item.photoUrl}
+                    handleNavigatorArtist={handleNavigatorArtist} />}
+                keyExtractor={(item, index) => index}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
+          </View>
 
           {/* ------------------------------LIKE------------------------------ */}
           {/* <View>
@@ -448,18 +457,19 @@ export default function Library({ navigation }) {
 
           <View style={{ flex: 1, height: 50 }}></View>
           <PopupCreateNewPlaylist
-          isVisiblePopup={isVisiblePopupCreateNewPlaylist}
-          setIsVisiblePopup={setIsVisiblePopupCreateNewPlaylist}
-          handleMoveToPopupAddSong={handleOpenPopupAddSong_setInfoNewPlaylist}
-           />
+            isVisiblePopup={isVisiblePopupCreateNewPlaylist}
+            setIsVisiblePopup={setIsVisiblePopupCreateNewPlaylist}
+            handleMoveToPopupAddSong={handleOpenPopupAddSong_setInfoNewPlaylist}
+          />
 
-{/* playlist, infoImg, isVisiblePopup, setIsVisiblePopup, handleGoBackPopup */}
-           <PopupAddSong 
-           playlist={infoNewPlaylist} 
-           infoImg={{imgUrlNewPlaylist, imgNameNewPlaylist}}
-           isVisiblePopup={isVisiblePopupAddSong}
-           setIsVisiblePopup={setIsVisiblePopupAddSong}
-           />
+          {/* playlist, infoImg, isVisiblePopup, setIsVisiblePopup, handleGoBackPopup */}
+          <PopupAddSong
+            playlist={infoNewPlaylist}
+            title={'Thêm nhạc'}
+            infoImg={{ imgUrlNewPlaylist, imgNameNewPlaylist }}
+            isVisiblePopup={isVisiblePopupAddSong}
+            setIsVisiblePopup={setIsVisiblePopupAddSong}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -7,7 +7,7 @@ import {
   get,
   child,
   serverTimestamp,
-  orderByChild, equalTo, query
+  orderByChild, equalTo, query, firebaseDataUpdate
 } from "./connectDB"
 import { remove, push, update, set } from 'firebase/database'
 
@@ -66,9 +66,10 @@ const writeDataFirebase = async (path, data, id) => {
       return true;
     }
     else {
-      await push(firebaseDatabaseRef(firebaseDatabase, path), data)
+      const rep = await push(firebaseDatabaseRef(firebaseDatabase, path), data)
       console.log("save data firebase successfully")
-      return true;
+      // console.log(rep)
+      return rep;
     }
   }
   catch (err) {
@@ -91,9 +92,18 @@ const deleteDataFirebase = async (path) => {
   }
 }
 
+const updateDataFirebase = async (path, data) => {
+  try {
+    const updateRef = firebaseDatabaseRef(firebaseDatabase, path);
+    await firebaseDataUpdate(updateRef, data);
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
 const updateDataPlaylistsFirebase = async (path, data) => {
   try {
-    const dbRef = await firebaseDatabaseRef(firebaseDatabase, path)
+    const dbRef = firebaseDatabaseRef(firebaseDatabase, path)
     const data_previous = await get(dbRef)
     const data_update =
     {
@@ -121,5 +131,6 @@ export {
   writeDataFirebase,
   deleteDataFirebase,
   updateDataPlaylistsFirebase,
-  readDataFirebaseWithChildCondition
+  readDataFirebaseWithChildCondition,
+  updateDataFirebase,
 }

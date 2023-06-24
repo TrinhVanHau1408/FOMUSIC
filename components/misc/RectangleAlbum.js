@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 2,
         borderColor: colors.primary,
-        resizeMode: 'stretch',
+        resizeMode: "cover",
     },
     imgBorderNoColor:
     {
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     sizeImg1: {
         width: 315,
         height: 177,
+      
     },
     sizeImg2: {
         width: 315,

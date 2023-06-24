@@ -205,11 +205,12 @@ export default function DetailPlaylist({ navigation, route }) {
         renderItem={({ item, index }) =>
           <MyLike
             id={item.key}
-            songName={item.name}
+            songName={item.title}
             songImg={item.artwork}
             artistName={item.artist}
             isLike={item.isLiked}
             index={index}
+            songs = {[...mySongs].reverse()}
           
             handleLongClick={handleLongPressOneSong}
           />}
@@ -222,24 +223,13 @@ export default function DetailPlaylist({ navigation, route }) {
         </View>
       }
 
-
-      {/* <View style={{ flex: 1, height: 100 }}></View> */}
-
-      {/* { isVisible && <ControlMusic song={music.find(({ id }) => id === idSong)} /> }
-  { isVisibleEdit && <Edit handleNavigator={handleLayoutEdit} height={null} edit={sigleEdit} /> }
-  { isVisibleLongEdit && <Edit handleNavigator={handleLayoutLongEdit} height={null} edit={sigleLongEdit} /> }
-  { isAddmusic && <RequestAddSongs title={"Xong"} handlePopup={handlePopupAdd} handleRequestNext={handleAddMySong} /> }
-
-  {/* Để làm sao */ }
-      {/* {isDelete && <DeleteSongPlaylists title={"Xong"} songed={currPlaylist.songs} handleNavigator={handleOutlineDelete} handleRequestNext={handleDeleteMySong} />} */}
-      {/* isDeleteMySong && <DeleteSong idPlaylist={currPlaylist.key} setCurrPlaylist={setCurrPlaylist} currPlaylist={currPlaylist} idSong={songIdSelected} title={'mySongs'} handlePopup={handlePopupDeleteMySong} height={null} /> */}
-
       <PopupMenu
         menu={menuCLickIcon}
         isVisiblePopup={isVisiblePopupMenuIcon}
         setIsVisiblePopup={setIsVisiblePopupMenuIcon} />
       <PopupAddSong
         playlist={currPlaylist}
+        title={'Thêm nhạc'}
         isVisiblePopup={isVisiblePopupAddSong}
         setMySongPlaylist= {setCurrPlaylist}
         setIsVisiblePopup={setIsVisiblePopupAddSong}

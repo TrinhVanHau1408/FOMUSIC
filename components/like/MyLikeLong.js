@@ -1,13 +1,18 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors, icons, images } from '../../constants'
-export default function MyLikeLong({ id, idSongSelected, songName, songImg, artistName, isLike, index, handleLayout, setIdSong, handleLongClick }) {
+import { addTracks } from '../../redux/slices/playerSlice';
+import { useDispatch } from 'react-redux';
+export default function MyLikeLong({songs, id, idSongSelected, songName, songImg, artistName, isLike, index, handleLayout, setIdSong, handleLongClick }) {
     const [isLiked, setIsIsLiked] = useState(isLike);
-  
+    const dispatch = useDispatch();
+    const handelPlay = ( ) => {
+        dispatch(addTracks({songs, songCurrentId: id}));
+    }
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={() => handleLayout(id)}
+                onPress={handelPlay}
                 style={styles.info}
                 onLongPress={() => handleLongClick(id)}
             >
