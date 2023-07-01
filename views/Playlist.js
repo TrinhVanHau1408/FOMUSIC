@@ -153,7 +153,7 @@ export default function Playlist({ navigation, route }) {
       <HeaderApp
         title={'Playlist'}
         iconLeft={icons.arrowBack}
-        iconRight={icons.option}
+        iconRight={icons.more}
         goBack={goBack}
         handleNavigator={handleOpenMenuIcon} />
       <View style={styles.container}>

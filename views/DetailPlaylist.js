@@ -190,7 +190,7 @@ export default function DetailPlaylist({ navigation, route }) {
   return (
     <View style={{ flex: 1 }}>
 
-      <HeaderApp title={currPlaylist.name} iconLeft={icons.arrowBack} iconRight={icons.option} goBack={goBack} handleNavigator={handleOpenPopupMenuIcon} />
+      <HeaderApp title={currPlaylist.name} iconLeft={icons.arrowBack} iconRight={icons.more} goBack={goBack} handleNavigator={handleOpenPopupMenuIcon} />
       <View style={{
         display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 25,
       }}>

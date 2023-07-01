@@ -84,6 +84,7 @@ export default function Home({ navigation }) {
     const playBackState = usePlaybackState();
     const dispatch = useDispatch();
     const { user, loading, error } = useSelector((state) => state.user)
+    const { currentPlay } = useSelector((state) => state.player)
     const { artist } = useSelector((state) => state.artist)
     const { historySongs } = useSelector((state) => state.song)
     const { playlists } = useSelector((state) => state.playlists)
@@ -107,7 +108,7 @@ export default function Home({ navigation }) {
 
     }
     const handleNavigatorPlaying1 = () => {
-        navigation.navigate('Playing', { songId: id });
+        navigation.navigate('Playing', {songId: currentPlay.key});
 
     }
 

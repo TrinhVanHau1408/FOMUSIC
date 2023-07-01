@@ -135,7 +135,7 @@ export default function MyFOMUSIC({ navigation, route }) {
 
     return (
         <View style={{ flex: 1 }}>
-            <HeaderApp title='My FOMusic' iconLeft={icons.arrowBack} goBack={goBack} iconRight={icons.option} handleNavigator={handleMenuOfMyFoMusic} />
+            <HeaderApp title='My FOMusic' iconLeft={icons.arrowBack} goBack={goBack} iconRight={icons.more} handleNavigator={handleMenuOfMyFoMusic} />
             <View style={{ marginTop: 28 }}>
                 {songsArtist ?
                     <FlatList

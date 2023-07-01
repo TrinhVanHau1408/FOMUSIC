@@ -32,7 +32,7 @@ export default function MySongWithOptionMenu({ id, idSongSelected, songName, son
 
             <View style={styles.button}>
                 <TouchableOpacity onPress={() => handleNavigator(id)}>
-                    <Image source={icons.option} />
+                    <Image source={icons.more} style={{height: 24, width: 24}}/>
 
                 </TouchableOpacity>
                 {/* <Button onPress={handleNavigator}>
