@@ -99,17 +99,17 @@ export default function Home({ navigation }) {
     // console.log(historySongs)
     const handleNavigatorPlaying = (id, songs) => {
 
-        
-        
-        dispatch(addTracks({songs, songCurrentId: id}));
+
+
+        dispatch(addTracks({ songs, songCurrentId: id }));
         // dispatch(playTrackBySongId({songId: id }))
-        navigation.navigate('Playing');
+        navigation.navigate('Playing', { songId: id });
 
     }
-   const  handleNavigatorPlaying1 = () => {
-    navigation.navigate('Playing');
+    const handleNavigatorPlaying1 = () => {
+        navigation.navigate('Playing', { songId: id });
 
-   }
+    }
 
     // console.log('artist', artist)
     const handleSelect = (option) => {
@@ -175,14 +175,14 @@ export default function Home({ navigation }) {
                             showsHorizontalScrollIndicator={false}
                         />
                     </View>
-                
+
                     <View style={(playBackState != null && playBackState != 'idle') && styles.marginBottomControl}>
                         <TitleAlbum
                             type={3}
                             name={'RECENTLY PLAYED'} />
                         <FlatList
                             data={historySongs && historySongs}
-                            style={{marginBottom: 50}}
+                            style={{ marginBottom: 50 }}
                             renderItem={({ item }) =>
                                 <SquareAlbum
                                     id={item.id}

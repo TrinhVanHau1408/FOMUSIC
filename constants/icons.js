@@ -13,7 +13,7 @@ export default {
     heart1: require('../assets/images/heart1.png'),
     unHeart: require('../assets/images/heart1.png'),
     lock: require('../assets/images/lock.png'),
-    logOut: require('../assets/images/log-out-1.png'), 
+    logOut: require('../assets/images/log-out-1.png'),
     loop1: require('../assets/images/loop1.png'),
     loopAll: require('../assets/images/loop_all.png'),
     reapeat: require('../assets/images/reapeat_1.png'),
@@ -63,4 +63,6 @@ export default {
     cameraAddPhoto: require('../assets/images/camera-add-photo.png'),
     cameraEdit: require('../assets/images/camera-edit.png'),
     followed: require('../assets/images/followed.svg'),
+    send: require('../assets/images/EmailSend.png'),
+    more_horizontal: require('../assets/images/more-horizontal.png'),
 }

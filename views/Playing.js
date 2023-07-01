@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import TrackPlayer, {
     State,
@@ -11,19 +11,21 @@ import TrackPlayer, {
 import Slider from '@react-native-community/slider';
 import { colors, icons, images } from '../constants';
 import HeaderApp from '../components/header/HeaderApp';
+import Comments from '../components/comment/Comments';
 
-import { 
-    addTracks, 
-    changeRepeatMode, 
-    playNextTrack, 
-    playPreviousTrack, 
-    settracks, 
-    setupPlayMusic, 
+import {
+    addTracks,
+    changeRepeatMode,
+    playNextTrack,
+    playPreviousTrack,
+    settracks,
+    setupPlayMusic,
     togglePlayback,
-    getCurrentHeartPlaying, 
+    getCurrentHeartPlaying,
     setHeart,
-    setCurrentPlay} from '../redux/slices/playerSlice';
-import {reactHeartSong} from '../redux/slices/songSlice';
+    setCurrentPlay
+} from '../redux/slices/playerSlice';
+import { reactHeartSong } from '../redux/slices/songSlice';
 import PlayingMore from './PlayingMore';
 const tracks = [
     {
@@ -68,7 +70,7 @@ const setUpOpenApp = async () => {
             const getTrackCurrent = await TrackPlayer.getTrack(currentTrackIndex);
 
             if (getTrackCurrent != null) {
-                const { 
+                const {
                     title,
                     artist,
                     artwork } = getTrackCurrent;
@@ -85,11 +87,14 @@ const setUpOpenApp = async () => {
     }
 
 }
-const Playing = ({ navigation }) => {
+const Playing = ({ navigation, route }) => {
+
+    const { songId } = route.params
 
     const { repeatMode, isHeart, currentPlay } = useSelector((state) => state.player);
     const { songs } = useSelector((state) => state.song);
     const [song, setSong] = useState({});
+    const [isComment, setIsComment] = useState(false)
     const [toggleMore, setToggleMore] = useState(false);
     const dispatch = useDispatch();
     const playBackState = usePlaybackState();
@@ -106,9 +111,9 @@ const Playing = ({ navigation }) => {
 
     React.useEffect(() => {
         dispatch(getCurrentHeartPlaying())
-      }, [dispatch])
-    
+    }, [dispatch])
 
+    // console.log(songId)
     // useEffect(() => {
 
     //     // dispatch(settracks(tracks));
@@ -128,18 +133,21 @@ const Playing = ({ navigation }) => {
             const { title, artwork, artist, lyrics } = track || {};
             // const currentQueue = await TrackPlayer.getQueue();
 
-           dispatch(setCurrentPlay(track));
+            dispatch(setCurrentPlay(track));
 
 
-           
 
-            console.log( 'aaa', {title,
+
+            console.log('aaa', {
+                title,
                 artist,
                 artwork,
-                lyrics})
+                lyrics
+            })
             dispatch(setHeart(true));
         }
     });
+    // console.log("Thái", currentPlay)
 
     // const addEventListeners = () => {
     //     TrackPlayer.addEventListener('playback-queue-ended', playNextTrack());
@@ -221,11 +229,11 @@ const Playing = ({ navigation }) => {
                             source={repeatMode == 'track' ? icons.loop1 : icons.loopAll}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => dispatch(reactHeartSong({songId:'song1', userId:'userId'}))}>
+                    <TouchableOpacity onPress={() => dispatch(reactHeartSong({ songId: 'song1', userId: 'userId' }))}>
                         <Image
-                            source={isHeart?icons.heart:icons.unHeart}
+                            source={isHeart ? icons.heart : icons.unHeart}
                         />
-                        
+
                     </TouchableOpacity>
                 </View>
             </View>
@@ -239,7 +247,7 @@ const Playing = ({ navigation }) => {
                             {/* <View style={{ height: 3, width: 40, backgroundColor: "#FFFFFF" }}></View> */}
                             <View style={{ flex: 1 }}>
                                 <Text style={styles.TextLyrics}>
-                                    {song&&song.lyrics}
+                                    {song && song.lyrics}
                                 </Text>
                             </View>
                         </View>
@@ -247,9 +255,18 @@ const Playing = ({ navigation }) => {
                 </View>
             </View>
 
-            {toggleMore && <View style={{ position: 'absolute', height: '100%', width: '100%'}}>
-                <PlayingMore setToggleMore={setToggleMore}/>
+            {toggleMore && <View style={{ position: 'absolute', height: '100%', width: '100%' }}>
+                <PlayingMore setToggleMore={setToggleMore} setComments={setIsComment} />
             </View>}
+
+            {/* comment */}
+
+            {isComment && <Modal animationType='slide'
+                transparent={true}
+                visible={isComment}>
+                <Comments setIsComment={setIsComment} songId={songId}/>
+            </Modal>
+            }
         </View>
     )
 }
@@ -421,6 +438,30 @@ const styles = StyleSheet.create({
         height: 28,
         width: 28,
         tintColor: colors.black,
+    },
+    centeredView:
+    {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22
+    },
+    modalView:
+    {
+        margin: 20,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 20,
+        width: '90%',
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 5
     }
 
 
