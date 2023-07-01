@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // import { auth, signInWithEmailAndPassword, firebaseDatabaseRef, get, child, firebaseDatabase } from '../firebase/connectDB';
-import { auth, sendPasswordResetEmail, signInWithEmailAndPassword } from '../../firebase/connectDB';
+import { auth, fetchSignInMethodsForEmail, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, verifyPasswordResetCode } from '../../firebase/connectDB';
 import {saveDataAsyncStorage} from '../../utilities/AsyncStorage';
 // import { sendPasswordResetEmail } from 'firebase/auth';
 export const logIn = createAsyncThunk('auth/logIn', async ({email, password}, { rejectWithValue }) => {
@@ -46,7 +46,8 @@ export const logOut = createAsyncThunk('auth/logout', async({},{ rejectWithValue
 })
 export const forgotPassword = createAsyncThunk('auth/forgotPassword', async({email},{ rejectWithValue } ) => {
     try {
-        const respone = await sendPasswordResetEmail(auth, email);
+        const user = fetchSignInMethodsForEmail(auth, email);
+        const respone = await sendEmailVerification(user);
         console.log(respone);
         return true;
         

@@ -22,7 +22,7 @@ export default function MyLike({ id,idSongSelected, songName, songImg, artistNam
                     <Text>{id}</Text>}
                 </View>
                 <View style={styles.imgContainer}>
-                    <Image source={songImg} style={styles.img} />
+                    <Image source={{ uri: songImg}} style={styles.img} />
                 </View>
                 <View style={styles.content}>
                     <Text style={styles.songName}>{songName}</Text>

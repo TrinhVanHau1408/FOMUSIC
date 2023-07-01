@@ -12,11 +12,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllPlaylistByUserId, getPlayLists } from '../redux/slices/playlistsSlice'
 
 import { getAlbum } from '../redux/slices/albumSlice';
-import { getHistorySong } from '../redux/slices/songSlice';
+import { getHistorySong, reactHeartSong } from '../redux/slices/songSlice';
 import { getUserUid, getArtistFollowByUserUid } from '../redux/slices/userSlice';
 import { filterObject } from '../utilities/Object';
 import PopupCreateNewPlaylist from '../components/popup/PopupCreateNewPlaylist';
 import PopupAddSong from '../components/popup/PopupAddSong';
+import { getAllAritist, getAllAritistByUserId, getArtistByUserId } from '../redux/slices/artistSlice';
+import { addTracks } from '../redux/slices/playerSlice';
 
 // const musics = [
 //   {
@@ -146,8 +148,8 @@ export default function Library({ navigation }) {
   const { userHistory } = useSelector((state) => state.userHistory);
   const historySongs = useSelector(state => state.song.historySongs);
   const { playlists } = useSelector((state) => state.playlists);
-  const followedArtist = useSelector((state) => state.followedArtist);
-  const album = useSelector((state) => state.album.album);
+  const { artist }  = useSelector((state) => state.artist);
+  const { album } = useSelector((state) => state.album);
 
   const [imgUrlNewPlaylist, setImgUrlNewPlaylist] = useState('');
   const [imgNameNewPlaylist, setImgNameNewPlaylist] = useState('');
@@ -167,34 +169,7 @@ export default function Library({ navigation }) {
   // console.log('history result: ', historySongs)
   //---------------------------------- Artist--------------------------------------------
 
-  // queryFollowedArtists(userId)
-  // useEffect(() => {
-  //   const getdata = async () => {
-  //     dispatch(queryFollowedArtists({userId}))
-  //   }
-  //   getdata()
-  // }, [dispatch, userId])
-
-  // useEffect(() => {
-  //   // const data = []
-  //   // for (key in followedArtist) {
-  //   //   // if (playlists[key].userId == user.user.uid) {
-  //   //     data.push({
-  //   //       name: followedArtist[key].name,
-  //   //       imageUrl: followedArtist[key].photoUrl,
-  //   //       id: key
-  //   //     })
-  //   //   // }
-  //   // }
-  //   // setArrayFollowArtist(data)
-
-  //   dispatch(getArtistFollowByUserUid());
-
-
-  // }, [])
-
-
-  // console.log("ARTIST dang follow: ", followedArtist)
+  
 
   // ------------------------------Playlist------------------------------------
 
@@ -204,19 +179,7 @@ export default function Library({ navigation }) {
     }
   }, [user])
 
-  // useEffect(() => {
-  //   const data = []
-  //   for (key in playlists) {
-  //     // if (playlists[key].userId == user.user.uid) {
-  //       data.push({
-  //         name: playlists[key].name,
-  //         imageUrl: playlists[key].imageUrl,
-  //         id: key
-  //       })
-  //     // }
-  //   }
-  //   setArrayPlaylist(data)
-  // }, [playlists])
+  
 
   // console.log('playlist moi tao ne: ', playlists)
 
@@ -226,28 +189,11 @@ export default function Library({ navigation }) {
 
   // --------------------------------- ALBUM----------------------------------------------
 
-  // React.useEffect(() => {
-  //   const getdata = async () => {
-  //     dispatch(getAlbum())
-  //   }
-  //   getdata()
-  // }, [dispatch])
+  useEffect(() => {
+      dispatch(getAlbum())
+  }, [dispatch])
+
   // console.log("ALBUM: ", album)
-
-
-  // React.useEffect(() => {
-  //   const data = []
-  //   for (key in album) {
-  //     data.push({
-  //       name: album[key].name,
-  //       imgUrl: album[key].imgUrl,
-  //       id: key
-  //     })
-  //   }
-  //   setArrayAlbum(data)
-  // }, [album])
-
-
 
 
   const handleButton = () => {
@@ -257,6 +203,18 @@ export default function Library({ navigation }) {
   //   navigation.navigate('Artist', { id: id });
   // }
 
+  //-----------------------------------LIKES-------------------------------------------------
+
+  useEffect(() => {
+    dispatch(reactHeartSong())
+  }), [dispatch]
+
+
+
+  const handleNavigatorHistory = (id, songs) => {
+    dispatch(addTracks({songs, songCurrentId: id}));
+    navigation.navigate('Playing');
+  }
   const handleNavigatorPlaylist = (id,) => {
 
     // const playlist = filterObject(playlists, 'key', id);
@@ -328,8 +286,10 @@ export default function Library({ navigation }) {
                         id={item.id}
                         name={item.name}
                         artwork={item.artwork}
+                        songs={historySongs}
+                        handleNavigator={handleNavigatorHistory}
                       // img={item.songImg}
-                      // handleButton={handleButton}
+                      handleButton={handleButton}
                       />}
                     keyExtractor={(item, index) => index}
                     horizontal
@@ -341,27 +301,24 @@ export default function Library({ navigation }) {
           </View>
 
           {/* ---------------------------------ARTIST----------------------------------------------  */}
-          <View>
-            {arrayFollowArtist && (
-              <>
-                <TitleAlbum
-                  type={4}
-                  name={'Artists'} />
-                <FlatList
-                  data={arrayFollowArtist}
-                  renderItem={({ item, index }) =>
-                    <CircleAlbum
-                      id={item.id}
-                      name={item.name}
-                      artwork={item.artwork}
-                      handleNavigator={handleNavigatorArtist} />}
-                  keyExtractor={(item, index) => index}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                />
-              </>
-            )}
-          </View>
+          {/* <View>
+            <TitleAlbum
+              type={4}
+              name={'Artists'} />
+            {artist ?
+              (<FlatList
+                data={[...artist].reverse()}
+                renderItem={({ item, index }) =>
+                  <CircleAlbum
+                    id={item.id}
+                    name={item.name}
+                    img={item.photoUrl}
+                    handleNavigator={handleNavigatorArtist} />}
+                keyExtractor={(item, index) => index.toString()}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />) : null}
+          </View> */}
 
           {/* ----------------------------------PLAYLIST----------------------------------------------  */}
 
@@ -389,29 +346,26 @@ export default function Library({ navigation }) {
 
           {/* ------------------------------ALBUM------------------------------ */}
           <View>
-            {arrayAlbum && (
-              <>
-                <TitleAlbum
+            <TitleAlbum
                   type={4}
                   name={'Album'} />
+                {album? ( 
                 <FlatList
-                  data={arrayAlbum}
+                  data={album}
                   renderItem={({ item, index }) =>
                     <SquareAlbum
-                      id={item.id}
-                      name={item.title}
-                      artwork={{ uri: item.imgUrl }}
+                      id={item.key}
+                      name={item.name}
+                      artwork={item.imgUrl}
                       handleNavigator={handleNavigatorAlbum} />}
                   keyExtractor={(item, index) => index}
                   horizontal
                   showsHorizontalScrollIndicator={false}
-                />
-              </>
-            )}
+                />) : null}
           </View>
 
           {/* ------------------------------FOLLOWING------------------------------ */}
-          <View>
+          <View style={{marginBottom: 40}}>
             <TitleAlbum
               type={4}
               name={'Following'} />
@@ -422,7 +376,7 @@ export default function Library({ navigation }) {
                 handleNavigatorAllFollowing={handleNavigatorFollowing} />
               <FlatList
                 // Chua them data!
-                data={follows && follows.filter(({active}) => active == true)}
+                data={follows && follows.filter(({ active }) => active == true)}
                 renderItem={({ item }) =>
                   <CircleAlbum
                     id={item.key}
@@ -437,12 +391,12 @@ export default function Library({ navigation }) {
           </View>
 
           {/* ------------------------------LIKE------------------------------ */}
-          {/* <View>
+          <View>
             <TitleAlbum name={'Likes'} />
             <FlatList
             // Chua them data!
               style={{ marginBottom: 100 }}
-              data={}
+              data={music}
               renderItem={({ item }) =>
                 <SquareAlbum
                   id={item.id}
@@ -453,7 +407,7 @@ export default function Library({ navigation }) {
               horizontal
               showsHorizontalScrollIndicator={false}
             />
-          </View> */}
+          </View>
 
           <View style={{ flex: 1, height: 50 }}></View>
           <PopupCreateNewPlaylist
@@ -474,5 +428,6 @@ export default function Library({ navigation }) {
       </ScrollView>
     </SafeAreaView>
   )
+        
 };
 

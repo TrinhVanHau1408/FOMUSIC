@@ -21,6 +21,8 @@ import PopupDelele from '../components/popup/PopupDelele'
 
 export default function DetailPlaylist({ navigation, route }) {
   const { playlist } = route.params;
+  console.log('PLAYLIST PARAMS: ', playlist);
+
   const dispatch = useDispatch()
   const { playlists } = useSelector((state) => state.playlists)
   // const dataPlaylist = music.find((artist) => artist.id == id);
@@ -148,7 +150,8 @@ export default function DetailPlaylist({ navigation, route }) {
     const getSongs = async () => {
       const res = await readDataFirebase('songs')
       setSongs(res)
-      // console.log(res)
+      
+      console.log('PLAYLIST GET SONGS: ', res)
     }
     getSongs()
   }, [])
@@ -159,7 +162,7 @@ export default function DetailPlaylist({ navigation, route }) {
 
     const song = []
     for (const songId in songIds) {
-      // console.log(id); // In ra các khóa (keys)
+      // console.log('PLAYLIST SONG ID: ', id); // In ra các khóa (keys)
       const data = await readDataFirebase(`songs/${songId}`)
 
       song.push({ key: songId, ...data });
@@ -174,13 +177,13 @@ export default function DetailPlaylist({ navigation, route }) {
     // console.log(playlist);
     //  if (playlist) console.log(playlist.songs);
 
-    console.log('songs add', currPlaylist.songs);
+    // console.log('songs add', currPlaylist.songs);
     getAllSongByPlaylist();
 
   }, [currPlaylist.songs, currPlaylist])
 
-
- 
+  console.log('CURR PLAYLIST: ', currPlaylist)
+  console.log('PLAYLIST SONG: ', mySongs)
   
  
 
@@ -211,7 +214,6 @@ export default function DetailPlaylist({ navigation, route }) {
             isLike={item.isLiked}
             index={index}
             songs = {[...mySongs].reverse()}
-          
             handleLongClick={handleLongPressOneSong}
           />}
           

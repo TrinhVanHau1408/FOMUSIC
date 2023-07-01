@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import HeaderSign from '../components/header/HeaderSign';
@@ -8,8 +7,11 @@ import MyButton from '../components/misc/MyButton';
 import TitleText from '../components/forgotPassword.js/TitleText';
 import { useDispatch } from 'react-redux';
 import { forgotPassword } from '../redux/slices/authSlice';
+import { firebaseDatabase } from '../firebase/connectDB';
 export default function ForgotPassword({navigation}) {
   const dispatch = useDispatch();
+
+  console.log(firebaseDatabase)
   
   const handleNavigatorVerify = () => {
     dispatch(forgotPassword({email}));
