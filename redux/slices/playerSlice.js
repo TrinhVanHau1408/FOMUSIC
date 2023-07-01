@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import TrackPlayer, {RepeatMode, State, Capability} from 'react-native-track-player';
+import { addRankingSongListen } from './rankingSlice';
 
 
 export const setupPlayMusic = createAsyncThunk(
@@ -74,9 +75,14 @@ export const addTracks = createAsyncThunk(
           const indexPlay = currentTrack.findIndex(({id, key}) => id ?id == songCurrentId: key ==songCurrentId);
           
           await TrackPlayer.skip(indexPlay);
+          //
+          //
+          // Nhớ bật lại
+          //
           await TrackPlayer.play();
-          const currentPlay = await TrackPlayer.getTrack(queueIndex);
+          const currentPlay = await TrackPlayer.getTrack(indexPlay);
           console.log('currentPlay',currentPlay)
+          dispatch(addRankingSongListen({songId: currentPlay.id&&currentPlay.key}))
           // dispatch(setCurrentPlay(currentPlay))
           
           console.log('indexPlay',indexPlay + " " + songCurrentId)
@@ -98,6 +104,7 @@ export const togglePlayback = createAsyncThunk(
             if (playBackState != State.Playing) {
               // console.log('TrackPlayer.play()');
                 await TrackPlayer.play();
+               
             } else {
                 await TrackPlayer.pause();
                
@@ -121,7 +128,9 @@ export const playPreviousTrack = createAsyncThunk(
         if (currentTrack > 0) {
           const preTrackIndex = currentTrack - 1;
           await TrackPlayer.skipToPrevious(preTrackIndex);
-          await TrackPlayer.play();
+          // 
+          // await TrackPlayer.play();
+          //  
         } else {
           const lastTrackIndex = queue.length - 1;
           await TrackPlayer.skipToNext(lastTrackIndex);
@@ -143,7 +152,9 @@ export const playPreviousTrack = createAsyncThunk(
         if (currentTrack < queue.length - 1) {
           const nextTrackIndex = currentTrack + 1;
           await TrackPlayer.skipToNext(nextTrackIndex);
-          await TrackPlayer.play();
+          // 
+          // await TrackPlayer.play();
+          // 
         } else {
           const firstTrackIndex = 0;
           await TrackPlayer.skipToNext(firstTrackIndex);
@@ -244,13 +255,13 @@ const playerSlice = createSlice({
         },
         setCurrentPlay: (state, action) => {
           state.currentPlay = action.payload
-          console.log("getCurrentHeartPlaying",action.payload)
+         
         }
     },
     extraReducers: (builder) => {
       builder.addCase(changeRepeatMode.fulfilled,(state, action) => {
         state.repeatMode = action.payload;
-        console.log("getCurrentHeart",action.payload)
+
       })
      
     }

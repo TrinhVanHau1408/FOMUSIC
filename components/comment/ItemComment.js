@@ -73,7 +73,11 @@ const ItemComment = ({ comment, SetSignal, signal, setIdRep }) => {
     const handleChange = () => {
         setIsMore(false)
         setIsSave(true)
+       
+       
     }
+
+    console.log('handleChange setIsSave', isSave)
     const handleSave = async () => {
 
         // console.log(comment.userId, user.uid )
@@ -97,12 +101,12 @@ const ItemComment = ({ comment, SetSignal, signal, setIdRep }) => {
         }
     }
 
-    useEffect(() => {
-        if (isSave) {
-            inputElement.current.focus()
-        }
+    // useEffect(() => {
+    //     if (isSave) {
+    //         inputElement.current.focus()
+    //     }
 
-    }, [isSave])
+    // }, [isSave])
 
     return (
         <View style={styles.commentContainer}>

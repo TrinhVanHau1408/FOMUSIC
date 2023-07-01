@@ -16,9 +16,10 @@ export default function ControlMusic({ song, handleNavigator }) {
 
     const {currentPlay} = useSelector((state) => state.player);
     const dispatch = useDispatch();
+    const playBackState = usePlaybackState();
     // Alert.alert('Control',songName + ' '+ songImg + ' ' + artistName)
     const handleSkipPrevious = () =>  dispatch(playPreviousTrack());
-    const handlePause = () => dispatch(togglePlayback());
+    const handlePause = () => dispatch(togglePlayback({playBackState}));
     const handleSkipNext = () => dispatch(playNextTrack());
 
     useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
@@ -63,7 +64,7 @@ export default function ControlMusic({ song, handleNavigator }) {
                         style={styles.controlIcon}
                         onPress={handlePause}
                     >
-                        <Image source={icons.pause} style={{ height: 60, width: 60, tintColor: '#FFFFFF' }} />
+                        <Image source={(playBackState != State.Playing)?icons.play:icons.pause} style={{ height: 60, width: 60, tintColor: '#FFFFFF' }} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={handleSkipNext}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal, TouchableWithoutFeedback, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import TrackPlayer, {
     State,
@@ -8,6 +8,7 @@ import TrackPlayer, {
     Event,
     useTrackPlayerEvents
 } from 'react-native-track-player'
+import RNFS from 'react-native-fs';
 import Slider from '@react-native-community/slider';
 import { colors, icons, images } from '../constants';
 import HeaderApp from '../components/header/HeaderApp';
@@ -27,32 +28,9 @@ import {
 } from '../redux/slices/playerSlice';
 import { reactHeartSong } from '../redux/slices/songSlice';
 import PlayingMore from './PlayingMore';
-const tracks = [
-    {
-        id: 'song1',
-        url: 'https://firebasestorage.googleapis.com/v0/b/fomusicapp-12403.appspot.com/o/CoAyCuaAnhAy-BaoAnh-9430793.mp3?alt=media&token=87f57b10-8516-4731-aae0-9639dc522d95',
-        title: 'Cô ấy của anh ấy',
-        artist: 'Bảo anh',
-        artwork: 'https://avatar-ex-swe.nixcdn.com/song/share/2023/05/08/c/d/3/9/1683532965535.jpg',
-        duration: 260.4
-    },
-    {
-        id: 'song2',
-        url: 'https://firebasestorage.googleapis.com/v0/b/fomusicapp-12403.appspot.com/o/NguMotMinh-HIEUTHUHAINegavKewtiie-8267763.mp3?alt=media&token=1a42c7e1-df87-49d1-aca6-24d67bcc61b8',
-        title: 'Ngủ một mình',
-        artist: 'HieuThuHai',
-        artwork: 'https://i.ytimg.com/vi/STjzkjnLlZ4/maxresdefault.jpg',
-        duration: 181
-    },
-    {
-        id: 'song3',
-        url: 'https://c1-ex-swe.nixcdn.com/NhacCuaTui2039/KhongBietNenVuiHayBuon-BaoAnhTao-9430785.mp3',
-        title: 'Không Biết nên vui hay buon',
-        artist: 'Bảo anh',
-        artwork: 'https://vtv1.mediacdn.vn/zoom/640_400/562122370168008704/2023/5/20/photo1684549884795-16845498850022120292642.jpg',
-        duration: 181
-    },
-]
+import { getDataAsyncStorage, removeDataAsyncStorage, saveDataAsyncStorage } from '../utilities/AsyncStorage';
+import { da } from 'date-fns/locale';
+import { addRankingSongListen } from '../redux/slices/rankingSlice';
 
 const timeString = (seconds) => {
     if (seconds < 0) {
@@ -92,10 +70,15 @@ const Playing = ({ navigation, route }) => {
     const { songId } = route.params
 
     const { repeatMode, isHeart, currentPlay } = useSelector((state) => state.player);
-    const { songs } = useSelector((state) => state.song);
+
     const [song, setSong] = useState({});
     const [isComment, setIsComment] = useState(false)
     const [toggleMore, setToggleMore] = useState(false);
+    const [isPoupLyrics, setIsPopupLyrics] = useState(false)
+    const [isDownloadAudio, setIsDownloadAudio] = useState(false);
+    const [isDownloadImg, setIsDownloadImg] = useState(false);
+    const [listDownLoad, setListDownLoad] = useState([]);
+    const [download, setDownload] = useState({});
     const dispatch = useDispatch();
     const playBackState = usePlaybackState();
     const progress = useProgress();
@@ -127,7 +110,7 @@ const Playing = ({ navigation, route }) => {
     // }, [])
 
     useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
-        console.log('PlaybackTrackChanged')
+        // console.log('PlaybackTrackChanged')
         if (event.type === Event.PlaybackTrackChanged && event.nextTrack != null) {
             const track = await TrackPlayer.getTrack(event.nextTrack);
             const { title, artwork, artist, lyrics } = track || {};
@@ -138,12 +121,7 @@ const Playing = ({ navigation, route }) => {
 
 
 
-            console.log('aaa', {
-                title,
-                artist,
-                artwork,
-                lyrics
-            })
+            // console.log('track', track)
             dispatch(setHeart(true));
         }
     });
@@ -153,18 +131,154 @@ const Playing = ({ navigation, route }) => {
     //     TrackPlayer.addEventListener('playback-queue-ended', playNextTrack());
     //   };
 
+    const downloadAudio = () => {
+        const audioUrl = currentPlay.url;
+        const folderPathAudio = Platform.OS === 'android' ? RNFS.ExternalDirectoryPath + '/Musics' : RNFS.DocumentDirectoryPath + '/Musics';
+        const audioFilePath = `${folderPathAudio}/${currentPlay.title.replace(' ', '_')}.mp3`;
+
+        RNFS.mkdir(folderPathAudio).then(() => {
+            RNFS.downloadFile({
+                fromUrl: audioUrl,
+                toFile: audioFilePath,
+                begin: (res) => {
+                    console.log('Download audioUrl has begun');
+                },
+                progress: (res) => {
+                    const percentage = (res.bytesWritten / res.contentLength) * 100;
+                    console.log(`Download audioUrl progress: ${percentage}%`);
+                },
+            })
+                .promise.then((res) => {
+                    setIsDownloadAudio(true);
+                    console.log('Download audioUrl complete');
+                    console.log(`File saved at: ${audioFilePath}`);
+                    setIsDownloadAudio(true);
+                    setDownload({...download, url: audioFilePath})
+                })
+                .catch((error) => {
+                    console.log('Download error:', error);
+                });
+        }).catch((error) => {
+            console.log('Failed to create directory:', error);
+        });
+    }
+
+    const downloadImg = () => {
+        const imgUrl = currentPlay.artwork; // URL of the file to be downloaded
+        const folderPathImg = Platform.OS === 'android' ? RNFS.ExternalDirectoryPath + '/Images' : RNFS.DocumentDirectoryPath + '/Images';
+        const imageFilePath = `${folderPathImg}/${currentPlay.title.replace(' ', '_')}.jpg`;
+
+        RNFS.mkdir(folderPathImg).then(() => {
+            RNFS.downloadFile({
+                fromUrl: imgUrl,
+                toFile: imageFilePath,
+                begin: (res) => {
+                    console.log('Download imgUrl has begun');
+                },
+                progress: (res) => {
+                    const percentage = (res.bytesWritten / res.contentLength) * 100;
+                    console.log(`Download imgUrl progress: ${percentage}%`);
+                },
+            })
+                .promise.then((res) => {
+                    console.log('Download imgUrl complete');
+                    console.log(`Image saved at: ${imageFilePath}`);
+                    setIsDownloadImg(true);
+                    setDownload({...download, artwork: imageFilePath})
+                })
+                .catch((error) => {
+                    console.log('Download error:', error);
+                });
+        }).catch((error) => {
+            console.log('Failed to create directory:', error);
+        });
+
+    }
+    const handleDownload = () => {
+       
+        downloadAudio();
+        downloadImg();
+
+     
+
+        
+
+    }
+
+    const readDown = async() => {
+        
+        try {
+            const listDownLoadSaved = await  getDataAsyncStorage('download');
+            console.log('getDataAsyncStorage(download)', listDownLoadSaved)
+            if (listDownLoadSaved) {
+                setListDownLoad(listDownLoadSaved)
+            }
+           
+           
+            
+        }  catch {
+
+        }
+       
+          
+         
+
+    }
+
+    const remove = async () => {
+        await removeDataAsyncStorage('download');
+    }
+
+    useEffect(() => {
+        // readDown()
+        // remove();
+        if (isDownloadAudio && isDownloadImg) {
+            // console.log("dddd", currentPlay)
+            readDown()
+            const currentDownload = {
+                ...download,
+                key: currentPlay.id,
+                title: currentPlay.title, 
+                lyrics: currentPlay.lyrics, 
+                artist: currentPlay.artist,
+                duration: currentPlay.duration,
+            };
+
+
+            const tempListDownLoad = listDownLoad;
+         
+            if (tempListDownLoad.length != []) {
+             
+                saveDataAsyncStorage('download',[...listDownLoad,currentDownload ] )
+               
+              
+            } else {
+                
+                saveDataAsyncStorage('download', [currentDownload] )
+               
+            }
+            
+           
+        }
+       return () => {
+        setListDownLoad([]);
+       }
+    }, [isDownloadAudio, isDownloadImg])
+
+   
     return (
         <View style={styles.container}>
 
             <HeaderApp
                 title={'Playing'}
                 iconLeft={icons.arrowBack}
-                iconRight={icons.option}
+                iconRight={icons.more}
                 goBack={goBack}
                 handleNavigator={handleToggleMore} />
 
             {/* ImageSong */}
             <View style={styles.contentContainer}>
+
 
                 <Image style={styles.ImageSong} source={(currentPlay && currentPlay.artwork) ? { uri: currentPlay.artwork } : images.demo} />
 
@@ -235,16 +349,25 @@ const Playing = ({ navigation, route }) => {
                         />
 
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleDownload()}>
+                        <Text>Download</Text>
+
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => remove()}>
+                        <Text>xóa Download</Text>
+
+                    </TouchableOpacity>
                 </View>
             </View>
 
             {/* Lyrics */}
-            <View style={styles.lyricContainer}>
+
+            {/* <View style={styles.lyricContainer}>
 
                 <View >
                     <TouchableOpacity  >
                         <View style={{ display: 'flex', justifyContent: 'center' }}>
-                            {/* <View style={{ height: 3, width: 40, backgroundColor: "#FFFFFF" }}></View> */}
+                      
                             <View style={{ flex: 1 }}>
                                 <Text style={styles.TextLyrics}>
                                     {song && song.lyrics}
@@ -253,8 +376,37 @@ const Playing = ({ navigation, route }) => {
                         </View>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View> */}
 
+            <TouchableOpacity onPress={() => setIsPopupLyrics(true)} style={[styles.lyricContainer, { backgroundColor: 'red' }]}>
+
+                <Modal
+                    animationType="slide"
+
+                    visible={isPoupLyrics}
+
+                >
+
+                    <TouchableWithoutFeedback onPressOut={() => setIsPopupLyrics(false)}>
+
+
+                        <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 15, marginRight: 15 }}>
+
+                            <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={[styles.TextLyrics, { textAlign: 'center' }]}>
+                                    {currentPlay && currentPlay.lyrics}
+                                </Text>
+                            </View>
+                        </View>
+
+
+
+                    </TouchableWithoutFeedback>
+
+                </Modal>
+
+
+            </TouchableOpacity>
             {toggleMore && <View style={{ position: 'absolute', height: '100%', width: '100%' }}>
                 <PlayingMore setToggleMore={setToggleMore} setComments={setIsComment} />
             </View>}
@@ -264,7 +416,7 @@ const Playing = ({ navigation, route }) => {
             {isComment && <Modal animationType='slide'
                 transparent={true}
                 visible={isComment}>
-                <Comments setIsComment={setIsComment} songId={songId}/>
+                <Comments setIsComment={setIsComment} songId={songId} />
             </Modal>
             }
         </View>
