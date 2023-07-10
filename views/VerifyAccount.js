@@ -2,12 +2,13 @@ import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import HeaderSign from '../components/header/HeaderSign';
 import MyInput from '../components/misc/MyInput';
-import { icons } from '../constants';
+import { colors, icons } from '../constants';
 import MyButton from '../components/misc/MyButton';
 import TitleText from '../components/forgotPassword.js/TitleText';
+import { Text } from 'react-native-svg';
 export default function VerifyAccount({navigation}) {
     const handleNavigatorNewPassword = () => {
-        navigation.navigate('NewPassword');
+        navigation.navigate('Login');
     }
 
     const goBack = () => {
@@ -19,16 +20,16 @@ export default function VerifyAccount({navigation}) {
                 <HeaderSign title={'Verify your account'} goBack={goBack} />
             </View>
             <View style={styles.contentContainer}>
-                <TitleText text={'We just sent a six-digit code to your Email Enter the code below confirm your account'} />
-                <MyInput icon={icons.lock} placeholder={'Activation code'} />
+                <TitleText text={'We just sent a link to your Email! \nAfter reset your password, you can login as usual!'} />
+                {/* <TitleText text={'After reset your password, you can login as usual!'} /> */}
+                {/* <MyInput icon={icons.lock} placeholder={'Activation code'} /> */}
                 <View style={{ marginTop: 36 }}>
-                    <MyButton title={'Active'}  handleNavigator={handleNavigatorNewPassword}/>
+                    <MyButton title={'Go to Login!'}  handleNavigator={handleNavigatorNewPassword}/>
                 </View>
             </View>
         </ScrollView>
     )
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         marginTop: 20,
         flex: 5,
+        // backgroundColor: colors.primary
     },
     footerContainer: {
         flex: 2,

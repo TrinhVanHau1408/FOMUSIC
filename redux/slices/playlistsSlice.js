@@ -10,7 +10,7 @@ export const getAllPlaylistByUserId = createAsyncThunk('song/getAllSongByUseId',
         const playlist = await readDataFirebaseWithChildCondition('playlists', 'userId', userId);
         // console.log('playlist:', playlist)
       
-    //    console.log(convertObjectToArray(playlist));
+       console.log('convert playlist:', convertObjectToArray(playlist));
     if (playlist) dispatch(setPlayLists(convertObjectToArray(playlist)))
     })
 

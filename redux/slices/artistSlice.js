@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { readDataFirebase, readDataFirebaseWithChildCondition } from '../../firebase/controllerDB';
 import { convertObjectToArray } from '../../utilities/Object';
+import { stat } from 'react-native-fs';
 
 
 export const getAllAritist = createAsyncThunk('artist/getAllAritist', 
@@ -14,6 +15,18 @@ export const getAllAritist = createAsyncThunk('artist/getAllAritist',
         }
     }
 )
+// export const getAllAritistByUserId = createAsyncThunk('artist/getAllAritistByUserId', async({userId}, {dispatch}) => {
+//     try{
+//         const resArtist = await readDataFirebase('artists');
+//         // const resFollowedArtist = readDataFirebaseWithChildCondition('artists', 'follows/' + userId, userId)
+//         dispatch(setArtist(convertObjectToArray(resFollowedArtist)));
+
+//     }catch (error) {
+//         console.log("get followed artist error: ", error)
+//     }
+
+// })
+
 export const getArtistByUserId = createAsyncThunk('artist/getArtistByUserId', async ({ userId }, { dispatch, rejectWithValue }) => {
     try {
         const resArtist = await readDataFirebase(`artists/${userId}`);
@@ -24,7 +37,21 @@ export const getArtistByUserId = createAsyncThunk('artist/getArtistByUserId', as
     }
 })
 
+export const getNumberFollowers = createAsyncThunk('artist/getCountFollowers', async({ artistId }, { dispatch })  => {
+    try{
+        const resFollowerArtist = await readDataFirebase(`artists/${artistId}/follows`);
+       
+        const Followers = convertObjectToArray(resFollowerArtist).filter(({ active }) => active == true);
+        // Followers.filter(({ active }) => active == true);
+        console.log('FOLLOWER: ', Followers);
 
+        const numberFollowers = Followers.length;
+        console.log('NUMBER FOLLOWER: ', numberFollowers);
+        dispatch(setNumberFollowers(numberFollowers));
+    }catch (error) {
+        console.log('get Artist Follower false', error, artistId);
+    }
+})
 export const getAllAlbumByAlbumIds = createAsyncThunk('artist/getAllAlbumByArtistId',
     async ({ albumIds }, { dispatch }) => {
         try {
@@ -66,6 +93,7 @@ const artistSlice = createSlice({
     name: 'artist',
     initialState: {
         artist: null,
+        numberFollowers: 0,
         albums: null,
         popularRelease: null,
         loading: false,
@@ -77,6 +105,9 @@ const artistSlice = createSlice({
         },
         setFollowedArtist: (state, action) => {
             state.followedArtist = action.payload;
+        },
+        setNumberFollowers: (state, action) => {
+            state.numberFollowers = action.payload;
         },
         setAlbum: (state, action) => {
             state.albums = action.payload;
@@ -104,5 +135,5 @@ const artistSlice = createSlice({
         // })
     }
 })
-export const { setArtist, setFollowedArtist, setAlbum, setPopularRelease } = artistSlice.actions;
+export const { setArtist, setFollowedArtist, setNumberFollowers, setAlbum, setPopularRelease } = artistSlice.actions;
 export default artistSlice.reducer;

@@ -143,7 +143,9 @@ export default function Playlist({ navigation, route }) {
 
   const handleNavigatorDetailPlaylist = (playlistSelectdId) => {
     const playlist = playlists.filter(({ key }) => key === playlistSelectdId)[0]
-    console.log('handleNavigatorDetailPlaylist', playlist[0])
+    const playlist2 = playlists.filter(({key }) => key)
+
+    console.log('handleNavigatorDetailPlaylist', playlist)
     navigation.navigate('DetailPlaylist', { playlist });
   }
 
@@ -219,9 +221,11 @@ const styles = StyleSheet.create({
   container: {
     marginLeft: 20,
     marginTop: 25,
+    marginBottom: 175,
+    // marginBottom: 50,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 175,
+   
   },
 })

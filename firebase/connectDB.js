@@ -12,7 +12,11 @@ import {
   signInWithRedirect,
   GoogleAuthProvider,
   sendEmailVerification,
-  signOut
+  signOut,
+  sendPasswordResetEmail,
+  verifyPasswordResetCode,
+  fetchSignInMethodsForEmail,
+  
 } from 'firebase/auth';
 import {
   getDatabase,
@@ -24,7 +28,7 @@ import {
   onValue,
   remove,
   orderByChild, equalTo, once,value ,query,
-  serverTimestamp, limitToFirst, limitToLast, orderByValue
+  serverTimestamp, limitToFirst, limitToLast, orderByValue,
 } from 'firebase/database'
 
 import { getStorage,
@@ -69,6 +73,9 @@ export {
   signInWithRedirect,
   sendEmailVerification,
   signOut,
+  sendPasswordResetEmail,
+  verifyPasswordResetCode,
+  fetchSignInMethodsForEmail,
   firebaseStorage,
   firebaseStorageRef,
   orderByChild, equalTo, once,value,query,limitToLast, limitToFirst, orderByValue
