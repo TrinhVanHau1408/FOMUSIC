@@ -8,7 +8,8 @@ export default function SquareAlbum(props) {
     
     return (
         <View style={[styles.container,isAlbum&&styles.marginx2]}>
-            <TouchableOpacity onPress={()=>handleNavigator(id, songs)}>
+            <TouchableOpacity onPress={()=>handleNavigator(id, songs
+                )}>
                 <Image source={artwork ? {uri: artwork} : images.demo} style={styles.img} />
                 <Text style={styles.textName}>{name}</Text>
             </TouchableOpacity>

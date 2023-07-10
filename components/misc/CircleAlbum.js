@@ -13,6 +13,7 @@ export default function CircleAlbum(props) {
             setArtist(filterArtist);
         }
     }, [id])
+    console.log('ARTIST IN CircleAlbum: ', aritst)
     return (
         <View style={styles.container}>
             <TouchableOpacity 

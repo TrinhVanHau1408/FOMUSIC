@@ -33,7 +33,7 @@ export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ s
 
     console.log('handle click heart');
     const dbRef = firebaseDatabaseRef(firebaseDatabase);
-    const responeSnapshot = await get(child(dbRef, `songs/song1/reactHeart/3XUNpCHKq3bC64NzVwHNRBEzzFx2`));
+    const responeSnapshot = await get(child(dbRef, `songs/${songId}/reactHeart/${userId}`));
 
     console.log(responeSnapshot.val());
     // True đã like rồi thì unlike
@@ -42,30 +42,30 @@ export const reactHeartSong = createAsyncThunk('song/reactHeartSong', async ({ s
     if (responeSnapshot.val()) {
         // true: update value false
         console.log("responeSnapshot.key: ", responeSnapshot.val());
-        nodeRef = firebaseDatabaseRef(firebaseDatabase, 'songs/song1/reactHeart');
+        nodeRef = firebaseDatabaseRef(firebaseDatabase, 'songs/${songId}/reactHeart');
 
         await firebaseUpdate(nodeRef, {
-            '3XUNpCHKq3bC64NzVwHNRBEzzFx2': false,
+            '${songId}': false,
         })
 
     } else {
         // false: update value true
         if (responeSnapshot.val() == false) {
             console.log("responeSnapshot.key: false");
-            nodeRef = firebaseDatabaseRef(firebaseDatabase, 'songs/song1/reactHeart');
+            nodeRef = firebaseDatabaseRef(firebaseDatabase, 'songs/${songId}/reactHeart');
 
             await firebaseUpdate(nodeRef, {
-                '3XUNpCHKq3bC64NzVwHNRBEzzFx2': true,
+                '${songId}': true,
             })
         }
 
         // null: add new
         if (responeSnapshot.val() == null) {
             console.log("responeSnapshot.key: null", responeSnapshot.val());
-            nodeRef = firebaseDatabaseRef(firebaseDatabase, 'songs/song1/reactHeart');
+            nodeRef = firebaseDatabaseRef(firebaseDatabase, 'songs/${songId}/reactHeart');
             const newChildRef = ref(nodeRef);
             await firebaseDatabaseSet(newChildRef, {
-                '3XUNpCHKq3bC64NzVwHNRBEzzFx2': true,
+                '${songId}': true,
             })
         }
     }

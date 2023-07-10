@@ -17,66 +17,9 @@ import { getAllPlaylistByUserId } from '../redux/slices/playlistsSlice';
 import { getAllAritist, getArtistByUserId } from '../redux/slices/artistSlice';
 import { getAllArtistFollowByUserId, getArtistFollowByUserId, getArtistFollowByUserUid } from '../redux/slices/userSlice';
 import { addTracks, playTrackBySongId, setTracks, setupPlayMusic } from '../redux/slices/playerSlice';
-const music = [
-    {
-        name: 'Lovely',
-        artist: 'Billie Eilish',
-        artwork: images.imgLovely,
-        // url: require('https://sample-music.netlify.app/death%20bed.mp3'),
-        duration: 2 * 60 + 53,
-        id: '1',
-    },
-    {
-        name: 'Understand',
-        artist: 'Keshi',
-        artwork: images.imgUnderstand,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '2',
-        track_number: '2'
-    }, {
-        name: 'Snooze',
-        artist: 'SZA',
-        artwork: images.imgSZATout,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '3',
-        track_number: '3'
-    }, {
-        name: 'If you',
-        artist: 'BigBang',
-        artwork: images.imgIfYou,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '4',
-        track_number: '4'
-    }, {
-        name: 'Shoong',
-        artist: 'Teayang',
-        artwork: images.imgSZATout,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '5',
-        track_number: '5'
-    }, {
-        name: 'Die For You',
-        artwork: 'The Weeknd',
-        songImg: images.imgDieForYou,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '6',
-        track_number: '6'
-    },
-    {
-        name: 'double take',
-        artist: 'dhruv',
-        artwork: images.imgDoubleTakeL,
-        // url: require('https://sample-music.netlify.app/Bad%20Liar.mp3'),
-        duration: 2 * 60,
-        id: '7',
-        track_number: '7'
-    }
-]
+import { getAlbum } from '../redux/slices/albumSlice';
+import CircleAlbum from '../components/misc/CircleAlbum';
+
 
 // 1685232000000 = 28/05/2022
 //1684627200000 = 21/05/2023
@@ -88,6 +31,7 @@ export default function Home({ navigation }) {
     const { artist } = useSelector((state) => state.artist)
     const { historySongs } = useSelector((state) => state.song)
     const { playlists } = useSelector((state) => state.playlists)
+    const { album } = useSelector((state) => state.album)
     const { ranking } = useSelector((state) => state.ranking)
     const [isVisible, setIsVisible] = useState(false);
     const [idSong, setIdSong] = useState(0);
@@ -103,14 +47,25 @@ export default function Home({ navigation }) {
 
 
         dispatch(addTracks({ songs, songCurrentId: id }));
+
+
+        dispatch(addTracks({ songs, songCurrentId: id }));
         // dispatch(playTrackBySongId({songId: id }))
         navigation.navigate('Playing', { songId: id });
 
     }
     const handleNavigatorPlaying1 = () => {
         navigation.navigate('Playing', {songId: currentPlay.key});
+    const handleNavigatorPlaying1 = () => {
+        navigation.navigate('Playing');
 
     }
+    const handleNavigatorAlbum = (id) => {
+        navigation.navigate('Album', { id: id });
+    }
+    const handleNavigatorArtist = (artist) => {
+        navigation.navigate('Artist', { artist });
+      }
 
     // console.log('artist', artist)
     const handleSelect = (option) => {
@@ -127,6 +82,16 @@ export default function Home({ navigation }) {
     useEffect(() => {
         dispatch(setupPlayMusic());
     }, [])
+
+    useEffect(() => {
+        dispatch(getAlbum())
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(getAllAritist())
+    }, [dispatch])
+
+
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -176,14 +141,14 @@ export default function Home({ navigation }) {
                             showsHorizontalScrollIndicator={false}
                         />
                     </View>
-
+                
                     <View style={(playBackState != null && playBackState != 'idle') && styles.marginBottomControl}>
                         <TitleAlbum
                             type={3}
                             name={'RECENTLY PLAYED'} />
                         <FlatList
                             data={historySongs && historySongs}
-                            style={{ marginBottom: 50 }}
+                            style={{marginBottom: 50}}
                             renderItem={({ item }) =>
                                 <SquareAlbum
                                     id={item.id}
@@ -198,12 +163,56 @@ export default function Home({ navigation }) {
                             showsHorizontalScrollIndicator={false}
                         />
                     </View>
+
+                    <View 
+                        // style={styles.marginBottomControl}
+                        >
+                        <TitleAlbum
+                            type={4}
+                            name={'Album'} />
+                        {album ? (
+                            <FlatList
+                                data={album}
+                                renderItem={({ item, index }) =>
+                                    <SquareAlbum
+                                        id={item.key}
+                                        name={item.name}
+                                        artwork={item.imgUrl}
+                                        handleNavigator={handleNavigatorAlbum} />}
+                                keyExtractor={(item, index) => index}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                            />) : null}
+                    </View>
+
+                    <View 
+                        style={styles.marginBottomControl}
+                    >
+                        <TitleAlbum
+                            type={4}
+                            name={'Artists'} />
+                        {artist ?
+                            (<FlatList
+                                data={artist}
+                                renderItem={({ item, index }) =>
+                                    <CircleAlbum
+                                        id={item.key}
+                                        name={item.name}
+                                        img={item.photoUrl}
+                                        handleNavigator={handleNavigatorArtist} />}
+                                keyExtractor={(item, index) => index.toString()}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                            />) : null}
+                    </View>
+
                 </View>
             </ScrollView>
             {(playBackState != null && playBackState != 'idle') && <ControlMusic handleNavigator={handleNavigatorPlaying1} />}
         </View>
 
     )
+}
 }
 
 const styles = StyleSheet.create({
